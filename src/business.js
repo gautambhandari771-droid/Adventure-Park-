@@ -21,10 +21,9 @@ const BUSINESS = {
  * of the booking form in public/index.html (a test checks this).
  */
 const ACTIVITIES = {
-  'rafting-9km': 'River Rafting 9 km (Brahmpuri to NIM Beach)',
-  'rafting-16km': 'River Rafting 16 km (Shivpuri to NIM Beach)',
-  'rafting-24km': 'River Rafting 24 km (Marine Drive to NIM Beach)',
-  'rafting-36km': 'River Rafting 36 km (Kaudiyala to NIM Beach)',
+  'rafting-12km': 'River Rafting 12 km (Club House to NIM Beach), ₹520 per person',
+  'rafting-16km': 'River Rafting 16 km (Shivpuri to NIM Beach), ₹820 per person',
+  'rafting-26km': 'River Rafting 26 km (Marine Drive to NIM Beach), ₹1,500 per person',
   camping: 'Riverside Camping & Bonfire',
   'rafting-camping': 'Rafting + Camping Package',
   other: 'Something else / custom group trip',

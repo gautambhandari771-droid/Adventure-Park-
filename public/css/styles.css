@@ -191,6 +191,10 @@ p { margin: 0 0 1em; }
 .meta li { background: var(--sky); color: var(--river-deep); font-size: .82rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
 .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); }
 .chip { font-size: .85rem; font-weight: 700; color: var(--forest); }
+.price { font-size: .85rem; color: var(--ink-soft); font-weight: 600; }
+.price strong { font-size: 1.35rem; font-weight: 900; color: var(--ink); margin-right: 2px; }
+.cards.cards-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .cards.cards-3 { grid-template-columns: 1fr; } }
 
 /* Timings */
 .two-col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }

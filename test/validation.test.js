@@ -50,6 +50,8 @@ test('uses India time for "today"', () => {
 
 test('rejects unknown activities, bad group sizes, missing consent, long messages', () => {
   assert.ok(validateBooking(validBooking({ activity: 'bungee' })).errors.activity);
+  assert.ok(validateBooking(validBooking({ activity: 'rafting-9km' })).errors.activity, '9 km trip is no longer offered');
+  for (const a of ['rafting-12km', 'rafting-16km', 'rafting-26km']) assert.equal(validateBooking(validBooking({ activity: a })).ok, true, a);
   assert.ok(validateBooking(validBooking({ activity: '__proto__' })).errors.activity);
   assert.ok(validateBooking(validBooking({ people: 0 })).errors.people);
   assert.ok(validateBooking(validBooking({ people: 2.5 })).errors.people);
