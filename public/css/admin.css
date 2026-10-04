@@ -41,3 +41,27 @@
 .empty { text-align: center; padding: 32px; color: var(--ink-soft); }
 .pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
 .saved { color: var(--success); font-size: .8rem; font-weight: 700; }
+
+/* Phones: show each booking as a card and the counts as compact chips. */
+@media (max-width: 760px) {
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+  .stat { display: flex; align-items: baseline; gap: 6px; padding: 6px 12px; border-left-width: 4px; box-shadow: none; border: 1px solid var(--line); border-left: 4px solid var(--line); }
+  .stat.s-new { border-left-color: var(--fire); }
+  .stat.s-contacted { border-left-color: var(--sun); }
+  .stat.s-confirmed { border-left-color: var(--water); }
+  .stat.s-completed { border-left-color: var(--leaf); }
+  .stat.s-cancelled { border-left-color: #98A2B3; }
+  .stat strong { display: inline; font-size: 1.1rem; }
+  .stat span { font-size: .72rem; }
+  .table-wrap { overflow: visible; background: transparent; box-shadow: none; }
+  .bookings { min-width: 0; display: block; }
+  .bookings thead { display: none; }
+  .bookings tbody { display: grid; gap: 12px; }
+  .bookings tr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; }
+  .bookings td { display: block; padding: 0; border: 0; min-width: 0; }
+  .bookings td:nth-child(2) { grid-column: 2; }
+  .bookings .msg, .bookings td:nth-child(5), .bookings td:nth-child(6) { grid-column: 1 / -1; max-width: none; }
+  .bookings .msg:empty { display: none; }
+  .bookings .actions { flex-direction: row; justify-content: flex-end; }
+  .pager { flex-wrap: wrap; }
+}
