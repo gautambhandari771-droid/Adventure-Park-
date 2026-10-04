@@ -28,7 +28,6 @@ const ACTIVITIES = {
   'rafting-26km': 'River Rafting 26 km (Marine Drive to NIM Beach), ₹1,500 per person (Sat & Sun ₹1,800)',
   'rafting-36km': 'River Rafting 36 km (Kaudiyala to NIM Beach), ₹2,500 per person (Sat & Sun ₹3,000)',
   'luxury-camping': 'Luxury Camping (from ₹1,500 per person per night)',
-  'rafting-camping': 'Rafting + Camping Package',
   'guest-house': 'Guest House AC Room (from ₹1,200 per night)',
   other: 'Something else / custom group trip',
 };
