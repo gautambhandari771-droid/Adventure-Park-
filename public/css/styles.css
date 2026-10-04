@@ -183,6 +183,8 @@ p { margin: 0 0 1em; }
 .card-top.water { background: linear-gradient(135deg, var(--water), var(--river-deep)); }
 .card-top.forest { background: linear-gradient(135deg, var(--leaf), var(--forest)); }
 .card-top.fire { background: linear-gradient(135deg, var(--sun), var(--fire)); }
+.card-top.sky { background: linear-gradient(135deg, #5BC0EB, var(--river)); }
+.km-sm { font-size: 1.15rem; font-weight: 800; }
 .km { font-size: 2rem; font-weight: 900; }
 .ribbon { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: var(--sun); color: var(--ink); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; padding: 3px 10px; border-radius: 999px; }
 .card-body { padding: 20px; flex: 1; }
@@ -317,3 +319,13 @@ address { font-style: normal; font-size: 1.05rem; margin-bottom: 8px; }
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* Price lists on stay cards */
+.cards.cards-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 960px) { .cards.cards-3 { grid-template-columns: 1fr; } }
+.price-list { margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
+.price-list div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.price-list div:last-child { border-bottom: 0; }
+.price-list dt { color: var(--ink-soft); font-size: .92rem; }
+.price-list dd { margin: 0; font-weight: 800; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.card-body .price-note { margin-top: 6px; font-size: .82rem; color: var(--ink-soft); }

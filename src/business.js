@@ -12,8 +12,10 @@ const BUSINESS = {
   email: 'adventurepark661@gmail.com',
   address: 'Badrinath Highway, near Shiv Mandir, Shivpuri, Rishikesh, Uttarakhand, India',
   timeZone: 'Asia/Kolkata',
-  // Months the river is open, 1 = January. July and August are closed for monsoon.
+  // Months rafting and camping are open, 1 = January. July and August are closed for monsoon.
   openMonths: [1, 2, 3, 4, 5, 6, 9, 10, 11, 12],
+  // Bookings that are open every month of the year.
+  yearRoundActivities: ['guest-house'],
 };
 
 /**
@@ -25,8 +27,9 @@ const ACTIVITIES = {
   'rafting-16km': 'River Rafting 16 km (Shivpuri to NIM Beach), ₹800 per person (Sat & Sun ₹960)',
   'rafting-26km': 'River Rafting 26 km (Marine Drive to NIM Beach), ₹1,500 per person (Sat & Sun ₹1,800)',
   'rafting-36km': 'River Rafting 36 km (Kaudiyala to NIM Beach), ₹2,500 per person (Sat & Sun ₹3,000)',
-  camping: 'Riverside Camping & Bonfire',
+  'luxury-camping': 'Luxury Camping (from ₹1,500 per person per night)',
   'rafting-camping': 'Rafting + Camping Package',
+  'guest-house': 'Guest House AC Room (from ₹1,200 per night)',
   other: 'Something else / custom group trip',
 };
 

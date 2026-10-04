@@ -53,4 +53,10 @@
   <symbol id="i-wave" viewBox="0 0 48 48">
     <path d="M4 20q5-5 10 0t10 0 10 0 10 0M4 30q5-5 10 0t10 0 10 0 10 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
   </symbol>
+  <symbol id="i-house" viewBox="0 0 48 48">
+    <path d="M6 22L24 7l18 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11 19v22h26V19" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="16" y="26" width="7" height="6" rx="1" fill="currentColor"/>
+    <path d="M28 41V29h6v12" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+  </symbol>
 </svg>

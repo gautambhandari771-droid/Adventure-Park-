@@ -36,6 +36,9 @@ test('rejects past dates, July/August, invalid and far-future dates', () => {
   assert.equal(validateBooking({ ...base, date: '2026-10-03' }, now).errors.date, 'The date cannot be in the past.');
   assert.match(validateBooking({ ...base, date: '2027-07-15' }, now).errors.date, /July and August/);
   assert.match(validateBooking({ ...base, date: '2027-08-01' }, now).errors.date, /July and August/);
+  assert.match(validateBooking({ ...base, activity: 'luxury-camping', date: '2027-07-15' }, now).errors.date, /July and August/);
+  assert.equal(validateBooking({ ...base, activity: 'guest-house', date: '2027-07-15' }, now).ok, true, 'guest house is open all year');
+  assert.equal(validateBooking({ ...base, activity: 'guest-house', date: '2027-08-20' }, now).ok, true);
   assert.ok(validateBooking({ ...base, date: '2027-02-30' }, now).errors.date);
   assert.ok(validateBooking({ ...base, date: '2028-01-10' }, now).errors.date);
   assert.equal(validateBooking({ ...base, date: '2026-10-04' }, now).ok, true, 'today is fine');
@@ -51,6 +54,7 @@ test('uses India time for "today"', () => {
 test('rejects unknown activities, bad group sizes, missing consent, long messages', () => {
   assert.ok(validateBooking(validBooking({ activity: 'bungee' })).errors.activity);
   assert.ok(validateBooking(validBooking({ activity: 'rafting-9km' })).errors.activity, '9 km trip is no longer offered');
+  assert.ok(validateBooking(validBooking({ activity: 'camping' })).errors.activity, 'riverside camping is no longer offered');
   for (const a of ['rafting-12km', 'rafting-16km', 'rafting-26km', 'rafting-36km']) assert.equal(validateBooking(validBooking({ activity: a })).ok, true, a);
   assert.ok(validateBooking(validBooking({ activity: '__proto__' })).errors.activity);
   assert.ok(validateBooking(validBooking({ people: 0 })).errors.people);
