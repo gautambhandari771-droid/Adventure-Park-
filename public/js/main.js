@@ -95,7 +95,7 @@
       errors.date = 'Please choose a date.';
     } else {
       var month = Number(data.date.slice(5, 7));
-      if ((month === 7 || month === 8) && data.activity !== 'guest-house') errors.date = 'Rafting and camping are closed in July and August (monsoon). Our guest house is open all year.';
+      if ((month === 7 || month === 8) && data.activity.indexOf('rafting-') === 0) errors.date = 'Rafting is closed in July and August (monsoon). Camping and the guest house are open all year.';
       else if (data.date < todayInIndia()) errors.date = 'The date cannot be in the past.';
     }
     if (!(data.people >= 1 && data.people <= 60)) errors.people = 'Group size must be between 1 and 60.';

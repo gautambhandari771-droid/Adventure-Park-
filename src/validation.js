@@ -76,7 +76,7 @@ function validateBooking(body, now = new Date()) {
     errors.date = 'Bookings can be made up to one year in advance.';
   } else if (!BUSINESS.yearRoundActivities.includes(activity)
              && !BUSINESS.openMonths.includes(Number(date.slice(5, 7)))) {
-    errors.date = 'Rafting and camping are closed in July and August (monsoon). Our guest house is open all year.';
+    errors.date = 'Rafting is closed in July and August (monsoon). Camping and the guest house are open all year.';
   }
 
   const people = Number(input.people);

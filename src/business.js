@@ -12,10 +12,10 @@ const BUSINESS = {
   email: 'adventurepark661@gmail.com',
   address: 'Badrinath Highway, near Shiv Mandir, Shivpuri, Rishikesh, Uttarakhand, India',
   timeZone: 'Asia/Kolkata',
-  // Months rafting and camping are open, 1 = January. July and August are closed for monsoon.
+  // Months rafting is open, 1 = January. July and August are closed for monsoon.
   openMonths: [1, 2, 3, 4, 5, 6, 9, 10, 11, 12],
   // Bookings that are open every month of the year.
-  yearRoundActivities: ['guest-house'],
+  yearRoundActivities: ['luxury-camping', 'guest-house', 'other'],
 };
 
 /**

@@ -36,7 +36,8 @@ test('rejects past dates, July/August, invalid and far-future dates', () => {
   assert.equal(validateBooking({ ...base, date: '2026-10-03' }, now).errors.date, 'The date cannot be in the past.');
   assert.match(validateBooking({ ...base, date: '2027-07-15' }, now).errors.date, /July and August/);
   assert.match(validateBooking({ ...base, date: '2027-08-01' }, now).errors.date, /July and August/);
-  assert.match(validateBooking({ ...base, activity: 'luxury-camping', date: '2027-07-15' }, now).errors.date, /July and August/);
+  assert.equal(validateBooking({ ...base, activity: 'luxury-camping', date: '2027-07-15' }, now).ok, true, 'camping is open all year');
+  assert.match(validateBooking({ ...base, activity: 'rafting-36km', date: '2027-07-15' }, now).errors.date, /Rafting is closed/);
   assert.equal(validateBooking({ ...base, activity: 'guest-house', date: '2027-07-15' }, now).ok, true, 'guest house is open all year');
   assert.equal(validateBooking({ ...base, activity: 'guest-house', date: '2027-08-20' }, now).ok, true);
   assert.ok(validateBooking({ ...base, date: '2027-02-30' }, now).errors.date);

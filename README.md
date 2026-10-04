@@ -61,8 +61,8 @@ All text is in `public/index.html`. Please check these points, since only you kn
 
 - [ ] **Activities.** The site lists four rafting trips: 12 km for ₹500, 16 km for ₹800, 26 km for ₹1,500 and 36 km for ₹2,500 per person. Saturday and Sunday prices are 20% higher: ₹600, ₹960, ₹1,800 and ₹3,000. It also lists luxury camping and guest house rooms. If you change the list, also update `src/business.js`, because a test checks that both match.
 - [ ] **Start points, durations and rapid grades.** The 12 km trip is shown as Marine Drive to Shivpuri, the 26 km trip as Marine Drive to NIM Beach and the 36 km trip as Kaudiyala to NIM Beach. Durations and grades are typical values. Correct them to match your trips.
-- [ ] **Luxury camping.** Quad or triple sharing ₹1,500 – ₹1,800 and double sharing ₹1,800 – ₹2,200 per person per night. Children aged 6 to 11 pay 50%. Camping follows the rafting season and is closed in July and August.
-- [ ] **Guest house.** 8 AC rooms, open all year: ₹1,200 per night from July to September, ₹1,500 – ₹1,600 from October to January, and ₹2,200 – ₹2,500 from February to June. The booking form accepts July and August dates only for the guest house.
+- [ ] **Luxury camping.** Quad or triple sharing ₹1,500 – ₹1,800 and double sharing ₹1,800 – ₹2,200 per person per night. Children aged 6 to 11 pay 50%. Camping is open all year.
+- [ ] **Guest house.** 8 AC rooms, open all year: ₹1,200 per night from July to September, ₹1,500 – ₹1,600 from October to January, and ₹2,200 – ₹2,500 from February to June. The booking form accepts July and August dates for camping and the guest house, but not for rafting.
 - [ ] **Tagline.** I suggested "Ride the Ganga. Feel the wild." Change it in the hero section if you like.
 - [ ] **Photos.** Real photos of your rafts, camp and team build trust. Put them in `public/images/` (JPG or WebP, under 300 KB each) and replace the illustration.
 - [ ] **Logo.** `public/images/logo-mark.svg` is a starter logo (sun, mountains, forest and river). Replace it if you have your own.
