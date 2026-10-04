@@ -55,6 +55,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <header class="site-header" id="top">
     <div class="container header-inner">
@@ -83,7 +84,67 @@
 
   <main id="main">
     <section class="hero">
-      <div class="hero-art" aria-hidden="true"></div>
+      <div class="hero-art" aria-hidden="true">
+        <svg class="hero-scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
+          <defs>
+            <linearGradient id="hs-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B86C5"/><stop offset="0.45" stop-color="#7CC6E8"/><stop offset="0.8" stop-color="#FFD9A0"/></linearGradient>
+            <radialGradient id="hs-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE066" stop-opacity="0.9"/><stop offset="0.4" stop-color="#FCA311" stop-opacity="0.35"/><stop offset="1" stop-color="#FCA311" stop-opacity="0"/></radialGradient>
+            <linearGradient id="hs-river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34B3D9"/><stop offset="1" stop-color="#0B5F7A"/></linearGradient>
+          </defs>
+          <rect width="1600" height="900" fill="url(#hs-sky)"/>
+          <g class="hs-sun">
+            <circle class="hs-glow" cx="1120" cy="430" r="300" fill="url(#hs-glow)"/>
+            <circle cx="1120" cy="430" r="90" fill="#FFC53D"/>
+            <circle cx="1120" cy="430" r="70" fill="#FFD43B"/>
+          </g>
+          <g class="hs-clouds" fill="#FFFFFF">
+            <g class="hs-cloud hs-cloud-1" opacity="0.85"><ellipse cx="300" cy="150" rx="90" ry="26"/><ellipse cx="350" cy="132" rx="55" ry="30"/><ellipse cx="260" cy="140" rx="45" ry="22"/></g>
+            <g class="hs-cloud hs-cloud-2" opacity="0.6"><ellipse cx="900" cy="110" rx="70" ry="18"/><ellipse cx="935" cy="97" rx="40" ry="20"/></g>
+            <g class="hs-cloud hs-cloud-3" opacity="0.7"><ellipse cx="1350" cy="200" rx="80" ry="22"/><ellipse cx="1395" cy="185" rx="46" ry="24"/></g>
+          </g>
+          <g class="hs-far">
+            <path d="M0 520 L180 330 L300 430 L470 250 L640 420 L780 300 L960 470 L1130 340 L1300 460 L1450 330 L1600 430 V900 H0Z" fill="#6A9FB5" opacity="0.75"/>
+            <path d="M470 250 L520 300 L495 296 L470 318 L450 290Z M1450 330 L1490 368 L1465 364 L1445 380 L1425 360Z" fill="#F5FBFF" opacity="0.9"/>
+          </g>
+          <g class="hs-mid">
+            <path d="M0 600 L220 430 L380 540 L560 400 L760 560 L930 440 L1130 590 L1330 450 L1600 580 V900 H0Z" fill="#2E8B57"/>
+          </g>
+          <g class="hs-near">
+            <path d="M0 660 Q300 560 620 650 T1250 640 T1600 630 V900 H0Z" fill="#1B5E3B"/>
+            <g fill="#123F28">
+              <path d="M60 660 l22 -70 22 70z"/><path d="M100 655 l18 -56 18 56z"/><path d="M140 650 l24 -78 24 78z"/>
+              <path d="M190 640 l18 -54 18 54z"/><path d="M420 640 l20 -62 20 62z"/><path d="M455 645 l24 -74 24 74z"/>
+              <path d="M1300 640 l22 -70 22 70z"/><path d="M1340 636 l18 -58 18 58z"/><path d="M1380 640 l26 -84 26 84z"/>
+              <path d="M1425 640 l18 -56 18 56z"/><path d="M1480 645 l22 -68 22 68z"/><path d="M1520 640 l20 -60 20 60z"/>
+            </g>
+          </g>
+          <path d="M0 720 Q200 680 420 720 T860 715 T1300 720 T1600 705 V900 H0Z" fill="url(#hs-river)"/>
+          <g class="hs-waves" stroke="#E6F7FC" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.85">
+            <path d="M90 770 q30 -14 60 0 q30 14 60 0"/><path d="M520 800 q30 -14 60 0 q30 14 60 0"/>
+            <path d="M1020 780 q30 -14 60 0 q30 14 60 0"/><path d="M1380 820 q30 -14 60 0 q30 14 60 0"/>
+            <path d="M300 860 q30 -14 60 0"/><path d="M820 870 q30 -14 60 0"/>
+          </g>
+          <g class="hs-waves hs-waves-2" stroke="#E6F7FC" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.5">
+            <path d="M240 830 q30 -12 60 0"/><path d="M680 760 q30 -12 60 0"/><path d="M1180 850 q30 -12 60 0"/><path d="M1500 760 q30 -12 60 0"/>
+          </g>
+          <g transform="translate(700 735)">
+            <g class="hs-raft">
+              <path d="M0 40 H190 Q200 40 196 50 L184 66 H14 L-4 50 Q-8 40 0 40Z" fill="#F76707"/>
+              <path d="M6 46 H186" stroke="#FFD43B" stroke-width="5"/>
+              <g fill="#0F3D3E">
+                <circle cx="40" cy="14" r="9"/><rect x="32" y="22" width="16" height="20" rx="6"/>
+                <circle cx="85" cy="12" r="9"/><rect x="77" y="20" width="16" height="22" rx="6"/>
+                <circle cx="130" cy="14" r="9"/><rect x="122" y="22" width="16" height="20" rx="6"/>
+                <circle cx="170" cy="10" r="9"/><rect x="162" y="18" width="16" height="24" rx="6"/>
+              </g>
+              <g fill="#FFD43B"><circle cx="40" cy="10" r="7"/><circle cx="85" cy="8" r="7"/><circle cx="130" cy="10" r="7"/><circle cx="170" cy="6" r="7"/></g>
+              <g class="hs-paddles" stroke="#7A3E00" stroke-width="5" stroke-linecap="round">
+                <path d="M52 28 L30 76"/><path d="M98 26 L120 74"/><path d="M142 28 L120 78"/><path d="M182 24 L206 70"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
       <div class="container hero-content">
         <p class="eyebrow">Shivpuri · Rishikesh · Uttarakhand</p>
         <h1>Ride the Ganga.<br><span class="accent">Feel the wild.</span></h1>
@@ -107,6 +168,22 @@
         <div class="fact"><svg class="icon" aria-hidden="true"><use href="/images/icons.svg#i-pin"></use></svg><div><strong>Find us</strong><span>Near Shiv Mandir, Shivpuri</span></div></div>
       </div>
     </section>
+
+    <section class="stats" aria-label="Adventure Park in numbers">
+      <div class="container stats-grid">
+        <div class="stat-item"><span class="stat-num" data-count="4">4</span><span class="stat-label">Rafting trips</span></div>
+        <div class="stat-item"><span class="stat-num" data-count="36" data-suffix=" km">36 km</span><span class="stat-label">Longest river run</span></div>
+        <div class="stat-item"><span class="stat-num" data-count="8">8</span><span class="stat-label">AC guest rooms</span></div>
+        <div class="stat-item"><span class="stat-num" data-count="500" data-prefix="₹">₹500</span><span class="stat-label">Rafting from, per person</span></div>
+      </div>
+    </section>
+
+    <div class="marquee" role="region" aria-label="What we offer">
+      <div class="marquee-track">
+        <ul class="marquee-list"><li>River rafting</li><li>Luxury camping</li><li>AC guest house</li><li>Cliff jumping</li><li>Body surfing</li><li>Rafting from ₹500</li><li>Shivpuri · Rishikesh</li><li>Camping &amp; rooms open all year</li></ul>
+        <ul class="marquee-list" aria-hidden="true"><li>River rafting</li><li>Luxury camping</li><li>AC guest house</li><li>Cliff jumping</li><li>Body surfing</li><li>Rafting from ₹500</li><li>Shivpuri · Rishikesh</li><li>Camping &amp; rooms open all year</li></ul>
+      </div>
+    </div>
 
     <section class="section" id="activities">
       <div class="container">
@@ -398,7 +475,7 @@
           </a>
         </div>
         <div class="map-card">
-          <div class="map-art" aria-hidden="true"><img src="/images/logo-mark.svg" alt="" width="96" height="96"></div>
+          <div class="map-art" aria-hidden="true"><img src="/images/logo-mark.svg" alt="" width="96" height="96" loading="lazy" decoding="async"></div>
           <div class="map-info">
             <h3>Adventure Park</h3>
             <address>Badrinath Highway, near Shiv Mandir,<br>Shivpuri, Rishikesh,<br>Uttarakhand, India</address>
@@ -415,7 +492,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="/images/logo-mark.svg" alt="" width="56" height="56">
+        <img src="/images/logo-mark.svg" alt="" width="56" height="56" loading="lazy" decoding="async">
         <div>
           <strong>Adventure Park</strong>
           <p>River rafting, camping &amp; guest house · Shivpuri, Rishikesh, Uttarakhand</p>
@@ -437,5 +514,6 @@
   </a>
 
   <script src="/js/main.js" defer></script>
+  <script src="/js/motion.js" defer></script>
 </body>
 </html>
