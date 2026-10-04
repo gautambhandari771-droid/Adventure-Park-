@@ -3,31 +3,31 @@
   --river: #0E6F8F;
   --river-deep: #0B4F66;
   --water: #1C9AC4;
-  --sky: #DFF3FB;
+  --sky: #E3F1FA;
   --forest: #1B5E3B;
   --leaf: #2E8B57;
   --sun: #FFC53D;
   --fire: #E8590C;
   --fire-dark: #C2410C;
-  --ink: #0F2A2E;
-  --ink-soft: #3F5A5E;
-  --sand: #FFF8EC;
+  --ink: #0B1B24;
+  --ink-soft: #445B6B;
+  --sand: #F5F9FC;
   --paper: #FFFFFF;
-  --line: #E3DDD0;
+  --line: #DCE6EE;
   --danger: #B42318;
   --success: #1B6E3B;
   /* Theme tokens: light values here, dark values in the blocks below. */
-  --link: #0E6F8F;
-  --link-hover: #0B4F66;
-  --green-text: #1B5E3B;
-  --chip-bg: #DFF3FB;
-  --chip-fg: #0B4F66;
-  --header-bg: rgba(255, 248, 236, .94);
-  --header-line: rgba(15, 42, 46, .08);
-  --sky-end: #F3FBFE;
-  --sand-alt: #FBF1DE;
-  --field-bg: #FFFDF8;
-  --field-border: #CFC7B6;
+  --link: #1668A8;
+  --link-hover: #0B4F80;
+  --green-text: #1668A8;
+  --chip-bg: #E3F1FA;
+  --chip-fg: #0B4F80;
+  --header-bg: rgba(245, 249, 252, .94);
+  --header-line: rgba(11, 27, 36, .08);
+  --sky-end: #F5F9FC;
+  --sand-alt: #EAF3F9;
+  --field-bg: #FFFFFF;
+  --field-border: #C3D3DF;
   --notice-bg: #FFF3D1;
   --notice-border: #F5D78A;
   --ok-bg: #E6F4EA;
@@ -35,10 +35,10 @@
   --err-bg: #FDECEA;
   --err-border: #F5C2BC;
   --ref-bg: #FFFFFF;
-  --footer-bg: #0F2A2E;
-  --price-weekend: #C2410C;
-  --admin-bg: #F4F1EA;
-  --th-bg: #FBF7EF;
+  --footer-bg: #0B1B24;
+  --price-weekend: #1668A8;
+  --admin-bg: #EEF4F8;
+  --th-bg: #F3F8FB;
   --badge-new-bg: #FFE8D9;
   --badge-new-fg: #C2410C;
   --badge-contacted-bg: #FFF3D1;
@@ -47,94 +47,100 @@
   --badge-cancelled-fg: #475467;
   --radius: 14px;
   --radius-sm: 8px;
-  --shadow: 0 10px 30px rgba(15, 42, 46, 0.10);
+  --shadow: 0 10px 30px rgba(11, 27, 36, 0.08);
   --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --container: 1160px;
+  --grad-from: #0B1B24;
+  --grad-to: #1668A8;
   color-scheme: light;
 }
 
 /* Dark theme: follows the device setting unless the visitor picked Light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --sand: #0D1A1D;
-    --paper: #142529;
-    --sky: #123540;
-    --ink: #E6F0EE;
-    --ink-soft: #A3B8B6;
-    --line: #2A4144;
+    --sand: #0A1219;
+    --paper: #111D27;
+    --sky: #10283A;
+    --ink: #F2F7FA;
+    --ink-soft: #B3C4D0;
+    --line: #23384A;
     --danger: #FF8A80;
     --success: #7BD9A1;
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-    --link: #6CCFF0;
-    --link-hover: #A5E3F8;
-    --green-text: #7FD3A0;
-    --chip-bg: #15404C;
-    --chip-fg: #A5E3F8;
-    --header-bg: rgba(13, 26, 29, .92);
+    --link: #7CC8F2;
+    --link-hover: #B5E2FA;
+    --green-text: #7CC8F2;
+    --chip-bg: #133048;
+    --chip-fg: #A9DBF7;
+    --header-bg: rgba(10, 18, 25, .92);
     --header-line: rgba(255, 255, 255, .08);
-    --sky-end: #0F2329;
-    --sand-alt: #112226;
-    --field-bg: #0F1F23;
-    --field-border: #3A5457;
+    --sky-end: #0C1822;
+    --sand-alt: #0D1720;
+    --field-bg: #0D1821;
+    --field-border: #33506A;
     --notice-bg: #2E2610;
     --notice-border: #6B5520;
     --ok-bg: #12301F;
     --ok-border: #2A6B45;
     --err-bg: #3A1714;
     --err-border: #7A2E27;
-    --ref-bg: #0D1A1D;
-    --footer-bg: #081214;
-    --price-weekend: #FF9A5C;
-    --admin-bg: #0B1618;
-    --th-bg: #182C30;
+    --ref-bg: #0A1219;
+    --footer-bg: #05090D;
+    --price-weekend: #7CC8F2;
+    --admin-bg: #081017;
+    --th-bg: #142433;
     --badge-new-bg: #3A2213;
     --badge-new-fg: #FFB38A;
     --badge-contacted-bg: #3A2F10;
     --badge-contacted-fg: #F5C96B;
     --badge-cancelled-bg: #263236;
     --badge-cancelled-fg: #B4C0C4;
+    --grad-from: #FFFFFF;
+    --grad-to: #7CC8F2;
     color-scheme: dark;
   }
 }
 /* Dark theme picked with the switch. */
 :root[data-theme="dark"] {
-  --sand: #0D1A1D;
-  --paper: #142529;
-  --sky: #123540;
-  --ink: #E6F0EE;
-  --ink-soft: #A3B8B6;
-  --line: #2A4144;
+  --sand: #0A1219;
+  --paper: #111D27;
+  --sky: #10283A;
+  --ink: #F2F7FA;
+  --ink-soft: #B3C4D0;
+  --line: #23384A;
   --danger: #FF8A80;
   --success: #7BD9A1;
   --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-  --link: #6CCFF0;
-  --link-hover: #A5E3F8;
-  --green-text: #7FD3A0;
-  --chip-bg: #15404C;
-  --chip-fg: #A5E3F8;
-  --header-bg: rgba(13, 26, 29, .92);
+  --link: #7CC8F2;
+  --link-hover: #B5E2FA;
+  --green-text: #7CC8F2;
+  --chip-bg: #133048;
+  --chip-fg: #A9DBF7;
+  --header-bg: rgba(10, 18, 25, .92);
   --header-line: rgba(255, 255, 255, .08);
-  --sky-end: #0F2329;
-  --sand-alt: #112226;
-  --field-bg: #0F1F23;
-  --field-border: #3A5457;
+  --sky-end: #0C1822;
+  --sand-alt: #0D1720;
+  --field-bg: #0D1821;
+  --field-border: #33506A;
   --notice-bg: #2E2610;
   --notice-border: #6B5520;
   --ok-bg: #12301F;
   --ok-border: #2A6B45;
   --err-bg: #3A1714;
   --err-border: #7A2E27;
-  --ref-bg: #0D1A1D;
-  --footer-bg: #081214;
-  --price-weekend: #FF9A5C;
-  --admin-bg: #0B1618;
-  --th-bg: #182C30;
+  --ref-bg: #0A1219;
+  --footer-bg: #05090D;
+  --price-weekend: #7CC8F2;
+  --admin-bg: #081017;
+  --th-bg: #142433;
   --badge-new-bg: #3A2213;
   --badge-new-fg: #FFB38A;
   --badge-contacted-bg: #3A2F10;
   --badge-contacted-fg: #F5C96B;
   --badge-cancelled-bg: #263236;
   --badge-cancelled-fg: #B4C0C4;
+  --grad-from: #FFFFFF;
+  --grad-to: #7CC8F2;
   color-scheme: dark;
 }
 
@@ -244,7 +250,7 @@ p { margin: 0 0 1em; }
   background: linear-gradient(90deg, rgba(11, 47, 56, .78) 0%, rgba(11, 47, 56, .45) 45%, rgba(11, 47, 56, 0) 75%);
 }
 .hero-content { position: relative; padding-top: 72px; padding-bottom: 120px; }
-.hero h1 { font-size: clamp(2.4rem, 7vw, 4.6rem); font-weight: 900; text-shadow: 0 2px 20px rgba(0, 0, 0, .25); }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 4.6rem); font-weight: 900; filter: drop-shadow(0 2px 14px rgba(0, 0, 0, .3)); }
 .hero .accent { color: var(--sun); }
 .hero .lead { font-size: clamp(1.05rem, 2.2vw, 1.3rem); max-width: 34em; color: #F1FAFD; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
@@ -429,6 +435,7 @@ address { font-style: normal; font-size: 1.05rem; margin-bottom: 8px; }
 .page h2 { font-size: 1.35rem; margin-top: 1.8em; }
 .page .updated { color: var(--ink-soft); }
 .page-404 { min-height: 60vh; display: grid; place-items: center; text-align: center; }
+.page-404 h1 { margin-inline: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -470,4 +477,23 @@ address { font-style: normal; font-size: 1.05rem; margin-bottom: 8px; }
   .brand img { width: 36px; height: 36px; }
   .brand-name { font-size: 1rem; }
   .brand-place { font-size: .66rem; }
+}
+
+/* Gradient text: black to blue in light mode, white to blue in dark mode. */
+h1, h2, h3, .eyebrow, .brand-name, .price strong, .price-list dd, .stat strong {
+  background-image: linear-gradient(100deg, var(--grad-from) 0%, var(--grad-from) 25%, var(--grad-to) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--grad-to);
+}
+h1, h2, h3, .eyebrow { width: fit-content; max-width: 100%; }
+.eyebrow { background-image: linear-gradient(100deg, var(--grad-to), var(--grad-from)); }
+/* On photos and dark green panels the gradient is always white to light blue. */
+.hero h1, .hero .eyebrow, .section-forest h2, .section-forest h3, .section-forest .eyebrow {
+  background-image: linear-gradient(100deg, #FFFFFF 0%, #FFFFFF 35%, #A9DBF7 100%);
+}
+.hero .accent { -webkit-text-fill-color: var(--sun); color: var(--sun); }
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  h1, h2, h3, .eyebrow, .brand-name, .price strong, .price-list dd, .stat strong { -webkit-text-fill-color: currentColor; background: none; color: var(--ink); }
 }
