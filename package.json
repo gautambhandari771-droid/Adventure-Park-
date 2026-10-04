@@ -1,0 +1,28 @@
+{
+  "name": "adventure-park-shivpuri",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website and booking system for Adventure Park, Shivpuri, Rishikesh (Uttarakhand)",
+  "main": "server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "NODE_ENV=development node --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
+    "hash-password": "node scripts/hash-password.js",
+    "backup": "node --disable-warning=ExperimentalWarning scripts/backup-db.js"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "nodemailer": "^10.0.14"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.1"
+  }
+}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="t">
+  <title id="t">Adventure Park</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5BC0EB"/>
+      <stop offset="0.75" stop-color="#FFE8B0"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#FFE066"/>
+      <stop offset="0.6" stop-color="#FCA311"/>
+      <stop offset="1" stop-color="#E8590C"/>
+    </radialGradient>
+    <clipPath id="c"><circle cx="60" cy="60" r="56"/></clipPath>
+  </defs>
+  <circle cx="60" cy="60" r="59" fill="#0F3D3E"/>
+  <g clip-path="url(#c)">
+    <rect width="120" height="120" fill="url(#sky)"/>
+    <g fill="#F76707" opacity="0.9">
+      <path d="M60 14 l3 10 h-6z"/>
+      <path d="M30 26 l9 6 -4 4z"/>
+      <path d="M90 26 l-9 6 4 4z"/>
+      <path d="M18 50 l10 2 -1 5z"/>
+      <path d="M102 50 l-10 2 1 5z"/>
+    </g>
+    <circle cx="60" cy="56" r="20" fill="url(#sun)"/>
+    <path d="M0 82 L30 46 L46 64 L68 38 L96 70 L120 56 V120 H0Z" fill="#2E8B57"/>
+    <path d="M68 38 L76 47 L71 46 L66 50 L62 45Z" fill="#E9F7EF"/>
+    <path d="M0 88 Q28 72 58 84 T120 80 V120 H0Z" fill="#1B5E3B"/>
+    <g fill="#123F28">
+      <path d="M14 86 l6 -16 6 16z"/><path d="M24 84 l5 -13 5 13z"/>
+      <path d="M86 84 l6 -16 6 16z"/><path d="M97 83 l5 -12 5 12z"/>
+    </g>
+    <path d="M0 94 Q15 88 30 94 T60 94 T90 94 T120 94 V120 H0Z" fill="#1C9AC4"/>
+    <path d="M0 104 Q15 98 30 104 T60 104 T90 104 T120 104 V120 H0Z" fill="#0E6F8F"/>
+    <path d="M8 99 q7 -4 14 0 M48 99 q7 -4 14 0 M88 99 q7 -4 14 0" stroke="#E6F7FC" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="#FFF8EC" stroke-width="3"/>
+</svg>

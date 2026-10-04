@@ -1,0 +1,34 @@
+# Caddy gets and renews free SSL/TLS certificates automatically.
+{
+	email {$ACME_EMAIL}
+	servers {
+		protocols h1 h2 h3
+	}
+}
+
+# Send www.yourdomain to yourdomain
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	request_body {
+		max_size 64KB
+	}
+
+	header {
+		-Server
+		-Via
+	}
+
+	reverse_proxy app:3000 {
+		header_up X-Forwarded-Proto https
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}
