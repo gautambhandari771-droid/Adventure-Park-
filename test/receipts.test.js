@@ -153,6 +153,8 @@ test('receipt for a booking confirms the booking when an advance is paid', async
   assert.equal(res.status, 201);
   assert.equal(res.body.bookingConfirmed, true);
   assert.equal(db.prepare('SELECT status FROM bookings WHERE id = ?').get(booking.id).status, 'confirmed');
+  const list = await authed(app, 'get', '/api/admin/bookings', s);
+  assert.equal(list.body.bookings[0].receipts, res.body.receipt.receipt_no, 'booking shows its receipt number');
   const missing = await authed(app, 'post', '/api/admin/receipts', s).send(sampleReceipt({ bookingId: 9999 }));
   assert.equal(missing.status, 422);
 });
@@ -174,6 +176,7 @@ test('stamp upload accepts only real images and stays private', async () => {
   const settings = await authed(app, 'get', '/api/admin/receipts/settings', s);
   assert.equal(settings.body.hasStamp, true);
   assert.equal(settings.body.business.tagline, 'Where Rishikesh Gets Wild.');
+  assert.equal(settings.body.business.phone, '+91 87555 42743', 'receipts use the website number');
 
   // Not reachable without logging in, and not in the public folder.
   assert.equal((await request(app).get('/api/admin/receipts/stamp/image')).status, 401);

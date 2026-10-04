@@ -163,7 +163,7 @@ The admin panel has a **Receipts & billing** tab that makes booking receipts in 
 
 If the receipt is for a booking and an advance was paid, the booking is marked **confirmed** automatically. Every receipt that is created, emailed or deleted is written to the audit log, and **Export CSV** downloads all receipts for your accounts.
 
-The phone number printed on receipts is `9456700638`, as on your sample. To print a different number, set `RECEIPT_PHONE` in `.env`.
+Receipts print the website phone number, +91 87555 42743, and use the website prices. Every receipt has a **Receipt no.** line, and each booking in the admin panel shows the numbers of its receipts, so any payment can be traced to its booking. If you give a discount, the form warns that the rate differs from the website price.
 
 ## Backups
 

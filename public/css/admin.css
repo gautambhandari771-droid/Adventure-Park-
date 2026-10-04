@@ -108,6 +108,8 @@
 .receipt-result p { margin: 0 0 10px; }
 .actions-wrap { flex-direction: row !important; flex-wrap: wrap; }
 .receipts-table .amounts small, .receipts-table .amounts strong { display: block; font-variant-numeric: tabular-nums; }
+.rate-warn { color: var(--price-weekend); font-weight: 700; }
+.receipt-link { font-weight: 700; color: var(--link) !important; }
 .receipt-sums { margin: 12px 0 0; font-weight: 700; color: var(--ink-soft); }
 .receipt-preview-wrap { position: sticky; top: 80px; min-width: 0; }
 .receipt-preview-wrap > .small { margin: 0 0 6px; }

@@ -205,7 +205,8 @@
         el('td', null, [
           el('strong', { text: b.date }),
           el('small', { text: state.activities[b.activity] || b.activity }),
-          el('small', { text: b.people + (b.people === 1 ? ' person' : ' people') })
+          el('small', { text: b.people + (b.people === 1 ? ' person' : ' people') }),
+          b.receipts ? el('small', { className: 'receipt-link', text: 'Receipt: ' + b.receipts }) : ''
         ]),
         el('td', { className: 'msg', text: b.message || '–' }),
         el('td', null, [select, notes, saved]),
@@ -310,15 +311,32 @@
     R.items[0].description = p ? p.description : $('r-service').value;
     R.items[0].rate = s.rate;
     R.autoRate = s.rate;
+    $('rate-hint').setAttribute('data-hint', s.hint);
     $('rate-hint').textContent = s.hint;
     renderItems();
     update();
+  }
+
+  // Warn when the first line's rate is not the website price (for example a discount).
+  function priceCheck() {
+    var box = $('rate-hint');
+    var s = suggestRate($('r-activity').value, $('r-arrival').value);
+    var base = box.getAttribute('data-hint') || '';
+    var rate = R.items[0] ? R.items[0].rate : '';
+    if (s.rate !== '' && rate !== '' && Number(rate) !== Number(s.rate)) {
+      box.textContent = 'Note: line 1 rate ' + inr(rate) + ' is different from the website price ' + inr(s.rate) + '.';
+      box.classList.add('rate-warn');
+    } else {
+      box.textContent = base;
+      box.classList.remove('rate-warn');
+    }
   }
 
   function applyArrival() {
     var s = suggestRate($('r-activity').value, $('r-arrival').value);
     if (String(R.items[0].rate) === String(R.autoRate)) R.items[0].rate = s.rate;
     R.autoRate = s.rate;
+    $('rate-hint').setAttribute('data-hint', s.hint);
     $('rate-hint').textContent = s.hint;
     renderItems();
     update();
@@ -375,6 +393,7 @@
   }
 
   function update() {
+    priceCheck();
     var t = totals();
     $('t-total').textContent = inr(t.total);
     $('t-advance').textContent = inr(t.advance);

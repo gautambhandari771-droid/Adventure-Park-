@@ -7,12 +7,12 @@ const { ACTIVITIES, BUSINESS } = require('./business');
 const FONT_REGULAR = path.join(__dirname, '..', 'assets', 'fonts', 'DejaVuSans.ttf');
 const FONT_BOLD = path.join(__dirname, '..', 'assets', 'fonts', 'DejaVuSans-Bold.ttf');
 
-/** What is printed on every receipt. The phone can be changed with RECEIPT_PHONE. */
+/** What is printed on every receipt. Uses the website phone number unless RECEIPT_PHONE is set. */
 function receiptBusiness(env = process.env) {
   return {
     name: BUSINESS.name,
     address: 'Badrinath Highway, Shivpuri, Near Shiv Mandir',
-    phone: env.RECEIPT_PHONE || '9456700638',
+    phone: env.RECEIPT_PHONE || BUSINESS.phoneDisplay,
     email: BUSINESS.email,
     tagline: 'Where Rishikesh Gets Wild.',
     footer: 'Adventure Park  |  Shivpuri, Rishikesh  |  Instagram: adventure_park771',

@@ -126,7 +126,7 @@ function adminRoutes({ db, config, sessions, logger, mailer }) {
     return { sql: where.length ? `WHERE ${where.join(' AND ')}` : '', params, upcoming };
   }
 
-  const COLUMNS = 'id, reference, name, phone, email, activity, activity_date AS date, people, message, status, admin_notes AS notes, created_at, updated_at';
+  const COLUMNS = "id, reference, name, phone, email, activity, activity_date AS date, people, message, status, admin_notes AS notes, created_at, updated_at, (SELECT group_concat(receipt_no, ', ') FROM receipts WHERE receipts.booking_id = bookings.id) AS receipts";
 
   router.get('/bookings', requireAdmin, (req, res) => {
     const { sql, params, upcoming } = buildFilter(req.query);
@@ -146,12 +146,12 @@ function adminRoutes({ db, config, sessions, logger, mailer }) {
   router.get('/bookings.csv', requireAdmin, (req, res) => {
     const { sql, params } = buildFilter(req.query);
     const rows = db.prepare(`SELECT ${COLUMNS} FROM bookings ${sql} ORDER BY id DESC`).all(...params);
-    const header = ['Reference', 'Name', 'Phone', 'Email', 'Activity', 'Date', 'People', 'Message', 'Status', 'Notes', 'Received'];
+    const header = ['Reference', 'Name', 'Phone', 'Email', 'Activity', 'Date', 'People', 'Message', 'Status', 'Notes', 'Receipts', 'Received'];
     const lines = [header.map(csvCell).join(',')];
     for (const r of rows) {
       lines.push([
         r.reference, r.name, r.phone, r.email, ACTIVITIES[r.activity] || r.activity, r.date,
-        r.people, r.message, r.status, r.notes, r.created_at,
+        r.people, r.message, r.status, r.notes, r.receipts, r.created_at,
       ].map(csvCell).join(','));
     }
     audit(db, req.admin.username, 'export_csv', `${rows.length} rows`);
