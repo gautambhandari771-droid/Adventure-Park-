@@ -35,6 +35,31 @@ CREATE TABLE IF NOT EXISTS sessions (
   expires_at  INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS receipts (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  receipt_no    TEXT    NOT NULL UNIQUE,
+  booking_id    INTEGER,
+  client_name   TEXT    NOT NULL,
+  client_phone  TEXT,
+  client_email  TEXT,
+  booking_at    TEXT    NOT NULL,
+  arrival_date  TEXT    NOT NULL,
+  service       TEXT    NOT NULL,
+  items         TEXT    NOT NULL,
+  total         INTEGER NOT NULL CHECK (total >= 0),
+  advance       INTEGER NOT NULL CHECK (advance >= 0),
+  balance       INTEGER NOT NULL CHECK (balance >= 0),
+  created_at    TEXT    NOT NULL,
+  created_by    TEXT    NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_receipts_created ON receipts(created_at);
+
+-- Receipt numbers are never reused, even if a receipt is deleted.
+CREATE TABLE IF NOT EXISTS receipt_counters (
+  year  TEXT PRIMARY KEY,
+  last  INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS audit_log (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,
   at         TEXT NOT NULL,

@@ -14,7 +14,13 @@ www.{$DOMAIN} {
 {$DOMAIN} {
 	encode zstd gzip
 
-	request_body {
+	# Small request limit everywhere, except the stamp upload (images up to 1 MB).
+	@stamp path /api/admin/receipts/stamp/image
+	request_body @stamp {
+		max_size 2MB
+	}
+	@other not path /api/admin/receipts/stamp/image
+	request_body @other {
 		max_size 64KB
 	}
 

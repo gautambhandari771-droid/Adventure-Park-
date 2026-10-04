@@ -11,7 +11,7 @@ const { ACTIVITIES, BUSINESS } = require('./business');
  */
 function createMailer(config, logger = console) {
   if (!config.mail.host || !config.mail.user || !config.mail.pass) {
-    return { enabled: false, async sendBookingAlert() {} };
+    return { enabled: false, async sendBookingAlert() {}, async sendReceipt() { throw new Error('Email is not set up.'); } };
   }
 
   const transport = nodemailer.createTransport({
@@ -25,6 +25,26 @@ function createMailer(config, logger = console) {
 
   return {
     enabled: true,
+    /** Sent only when a logged-in admin presses "Email receipt". */
+    async sendReceipt({ to, receiptNo, clientName, pdf, fileName }) {
+      await transport.sendMail({
+        from: `"${BUSINESS.name}" <${config.mail.from}>`,
+        to,
+        replyTo: config.mail.notifyTo,
+        subject: `Your Adventure Park booking receipt ${receiptNo}`,
+        text: [
+          `Dear ${clientName},`,
+          '',
+          'Thank you for booking with Adventure Park, Shivpuri. Your booking receipt is attached.',
+          'Please carry it and a valid photo ID on your arrival date.',
+          '',
+          `Questions? Call or WhatsApp ${BUSINESS.phoneDisplay}.`,
+          '',
+          'Adventure Park',
+        ].join('\n'),
+        attachments: [{ filename: fileName, content: pdf, contentType: 'application/pdf' }],
+      });
+    },
     async sendBookingAlert(booking) {
       const lines = [
         `New booking request ${booking.reference}`,

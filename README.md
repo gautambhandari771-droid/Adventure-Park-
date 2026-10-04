@@ -138,6 +138,19 @@ Wait a minute, then open `https://yourdomain`. The padlock means SSL is working.
 - **Export:** "Export CSV" downloads the list for Excel or Google Sheets.
 - **Delete:** remove a booking when a customer asks you to delete their data.
 
+## Billing and receipts
+
+The admin panel has a **Receipts & billing** tab that makes booking receipts in the same layout as the Adventure Park sample receipt.
+
+1. **Upload your stamp once.** At the bottom of the tab, upload a photo or scan of your stamp (PNG or JPEG, up to 1 MB). It is kept privately on the server and printed above the signature on every receipt. It is never on the public website, so nobody can copy it to make fake receipts.
+2. **Make a receipt.** Press **Create receipt** on a booking, or **New receipt** for a walk-in customer. The client details, service, date and number of people fill in from the booking. Rates fill in from your price list, including the 20% weekend price for rafting and the season price for guest house rooms. You can change any rate, add up to 10 lines (for example rafting plus camping), and enter the advance.
+3. **Check the live preview**, then press **Save and create PDF**. Totals and balance are worked out by the server, and every receipt gets its own number, such as `AP-2026-0001`. Numbers are never reused.
+4. **Send it.** View or download the PDF, send a summary to the client on WhatsApp, or email the PDF to the client (when email is set up).
+
+If the receipt is for a booking and an advance was paid, the booking is marked **confirmed** automatically. Every receipt that is created, emailed or deleted is written to the audit log, and **Export CSV** downloads all receipts for your accounts.
+
+The phone number printed on receipts is `9456700638`, as on your sample. To print a different number, set `RECEIPT_PHONE` in `.env`.
+
 ## Backups
 
 Bookings live in a SQLite database inside the Docker volume. Back it up weekly:

@@ -6,6 +6,7 @@ const { audit } = require('../db');
 const { ACTIVITIES } = require('../business');
 const { validateBookingUpdate, STATUSES } = require('../validation');
 const { verifyPassword, safeEqual, parseCookies, createLoginGuard, requireJson } = require('../security');
+const { receiptRoutes } = require('./receipts');
 
 const PAGE_SIZE = 50;
 
@@ -16,7 +17,7 @@ function csvCell(value) {
   return `"${s.replace(/"/g, '""')}"`;
 }
 
-function adminRoutes({ db, config, sessions, logger }) {
+function adminRoutes({ db, config, sessions, logger, mailer }) {
   const router = express.Router();
   const guard = createLoginGuard();
 
@@ -190,6 +191,8 @@ function adminRoutes({ db, config, sessions, logger }) {
     audit(db, req.admin.username, 'delete_booking', existing.reference);
     return res.json({ ok: true });
   });
+
+  router.use('/receipts', receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }));
 
   return router;
 }

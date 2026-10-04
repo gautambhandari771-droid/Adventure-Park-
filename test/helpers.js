@@ -3,6 +3,9 @@
 const { loadConfig } = require('../src/config');
 const { createApp } = require('../src/app');
 const { openDatabase } = require('../src/db');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const silentLogger = { info() {}, warn() {}, error() {}, log() {} };
 
@@ -10,6 +13,7 @@ function makeApp(env = {}, { mailer } = {}) {
   const config = loadConfig({
     NODE_ENV: 'test',
     DB_FILE: ':memory:',
+    DATA_DIR: fs.mkdtempSync(path.join(os.tmpdir(), 'ap-test-')),
     IP_HASH_SECRET: 'test-secret-test-secret-test-secret-123',
     ...env,
   });

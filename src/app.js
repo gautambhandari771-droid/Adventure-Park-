@@ -121,7 +121,7 @@ function createApp(config, { logger = console, db: providedDb, mailer: providedM
     next();
   });
   api.use(publicRoutes({ db, config, mailer, logger }));
-  api.use('/admin', adminRoutes({ db, config, sessions, logger }));
+  api.use('/admin', adminRoutes({ db, config, sessions, logger, mailer }));
   api.use((req, res) => res.status(404).json({ error: 'Not found.' }));
   app.use('/api', api);
 

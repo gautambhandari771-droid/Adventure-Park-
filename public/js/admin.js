@@ -39,11 +39,45 @@
           showLogin();
           throw new Error('Your session has ended. Please log in again.');
         }
-        if (!res.ok) throw new Error(data.error || 'Request failed.');
+        if (!res.ok) {
+          var error = new Error(data.error || 'Request failed.');
+          error.fields = data.fields;
+          throw error;
+        }
         return data;
       });
     });
   }
+
+  /* PLATFORM-START: how PDFs, CSV files and the stamp are handled. */
+  var platform = {
+    openPdf: function (r, download) {
+      var url = '/api/admin/receipts/' + r.id + '/pdf' + (download ? '?download=1' : '');
+      if (!download) { window.open(url, '_blank', 'noopener'); return; }
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    },
+    uploadStamp: function (file) {
+      return fetch('/api/admin/receipts/stamp/image', {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type, 'X-CSRF-Token': csrfToken || '', Accept: 'application/json' },
+        credentials: 'same-origin',
+        body: file
+      }).then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (d) {
+          if (!res.ok) throw new Error(d.error || 'Upload failed.');
+          return d;
+        });
+      });
+    },
+    stampUrl: function () { return '/api/admin/receipts/stamp/image?t=' + Date.now(); },
+    exportReceipts: function (params) { window.location.href = '/api/admin/receipts/export.csv?' + params; }
+  };
+  /* PLATFORM-END */
 
   function showError(id, message) {
     var box = $(id);
@@ -158,6 +192,9 @@
           .catch(function (err) { showError('dash-error', err.message); });
       });
 
+      var mk = el('button', { type: 'button', className: 'btn btn-water btn-sm', text: 'Create receipt' });
+      mk.addEventListener('click', function () { openReceiptForm(b); });
+
       tbody.append(el('tr', null, [
         el('td', null, [
           el('strong', { text: b.reference }),
@@ -172,7 +209,7 @@
         ]),
         el('td', { className: 'msg', text: b.message || '–' }),
         el('td', null, [select, notes, saved]),
-        el('td', null, [el('div', { className: 'actions' }, [del])])
+        el('td', null, [el('div', { className: 'actions' }, [mk, del])])
       ]));
     });
   }
@@ -206,6 +243,410 @@
   $('next-btn').addEventListener('click', function () { state.page += 1; load(); });
   $('export-btn').addEventListener('click', function () {
     window.location.href = '/api/admin/bookings.csv?' + filters().toString();
+  });
+
+
+  // ======================= Receipts & billing =======================
+  var R = { settings: null, items: [], autoRate: '', q: '' };
+  var inrFmt = new Intl.NumberFormat('en-IN');
+  function inr(n) { return '₹' + inrFmt.format(Number(n) || 0); }
+
+  function showReceiptError(err) { showError('receipt-error', err && err.message ? err.message : String(err || '')); }
+
+  function setTab(name) {
+    var bookings = name === 'bookings';
+    $('tab-bookings').setAttribute('aria-selected', String(bookings));
+    $('tab-receipts').setAttribute('aria-selected', String(!bookings));
+    $('tab-bookings').tabIndex = bookings ? 0 : -1;
+    $('tab-receipts').tabIndex = bookings ? -1 : 0;
+    $('panel-bookings').hidden = !bookings;
+    $('panel-receipts').hidden = bookings;
+    if (bookings) { load(); return Promise.resolve(); }
+    return ensureSettings().then(loadReceipts).catch(showReceiptError);
+  }
+  $('tab-bookings').addEventListener('click', function () { setTab('bookings'); });
+  $('tab-receipts').addEventListener('click', function () { setTab('receipts'); });
+  [$('tab-bookings'), $('tab-receipts')].forEach(function (t) {
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var other = t.id === 'tab-bookings' ? $('tab-receipts') : $('tab-bookings');
+      other.focus();
+      other.click();
+    });
+  });
+
+  function ensureSettings() {
+    if (R.settings) return Promise.resolve(R.settings);
+    return api('GET', '/api/admin/receipts/settings').then(function (s) {
+      R.settings = s;
+      var sel = $('r-activity');
+      sel.replaceChildren();
+      Object.keys(s.activities).forEach(function (k) { sel.append(el('option', { value: k, text: s.activities[k] })); });
+      renderStamp();
+      return s;
+    });
+  }
+
+  // ---- Automatic prices from the price list ----
+  function suggestRate(activity, dateStr) {
+    var p = R.settings && R.settings.priceList[activity];
+    if (!p) return { rate: '', hint: 'Enter the rate for this service.' };
+    if (p.seasonalRate) {
+      if (!dateStr) return { rate: '', hint: 'Choose the arrival date to fill in the season price.' };
+      return { rate: p.seasonalRate[Number(dateStr.slice(5, 7))], hint: 'Season price for that month from your price list. Change it if needed.' };
+    }
+    if (p.weekendRate && dateStr) {
+      var day = new Date(dateStr + 'T00:00:00Z').getUTCDay();
+      if (day === 0 || day === 6) return { rate: p.weekendRate, hint: 'Weekend price (Saturday or Sunday, 20% more). Change it if needed.' };
+    }
+    return { rate: p.rate, hint: p.weekendRate ? 'Weekday price from your price list. Change it if needed.' : 'Starting price from your price list. Change it if needed.' };
+  }
+
+  function applyActivity() {
+    var a = $('r-activity').value;
+    var p = R.settings.priceList[a];
+    $('r-service').value = p ? p.service : (a === 'other' ? '' : (R.settings.activities[a] || ''));
+    var s = suggestRate(a, $('r-arrival').value);
+    R.items[0].description = p ? p.description : $('r-service').value;
+    R.items[0].rate = s.rate;
+    R.autoRate = s.rate;
+    $('rate-hint').textContent = s.hint;
+    renderItems();
+    update();
+  }
+
+  function applyArrival() {
+    var s = suggestRate($('r-activity').value, $('r-arrival').value);
+    if (String(R.items[0].rate) === String(R.autoRate)) R.items[0].rate = s.rate;
+    R.autoRate = s.rate;
+    $('rate-hint').textContent = s.hint;
+    renderItems();
+    update();
+  }
+
+  function renderItems() {
+    var box = $('items');
+    box.replaceChildren();
+    R.items.forEach(function (it, i) {
+      var desc = el('input', { type: 'text', maxlength: '120', 'aria-label': 'Description, line ' + (i + 1), placeholder: 'Description' });
+      desc.value = it.description;
+      var pax = el('input', { type: 'number', min: '1', max: '500', step: '1', inputmode: 'numeric', 'aria-label': 'Pax, line ' + (i + 1) });
+      pax.value = it.pax;
+      var rate = el('input', { type: 'number', min: '0', step: '1', inputmode: 'numeric', 'aria-label': 'Rate in rupees, line ' + (i + 1) });
+      rate.value = it.rate;
+      var amount = el('span', { className: 'item-amount', text: inr((Number(it.pax) || 0) * (Number(it.rate) || 0)) });
+      function sync() {
+        it.description = desc.value;
+        it.pax = pax.value;
+        it.rate = rate.value;
+        amount.textContent = inr((Number(it.pax) || 0) * (Number(it.rate) || 0));
+        update();
+      }
+      desc.addEventListener('input', sync);
+      pax.addEventListener('input', sync);
+      rate.addEventListener('input', sync);
+      var remove = el('button', { type: 'button', className: 'btn btn-danger btn-sm', text: 'Remove', 'aria-label': 'Remove line ' + (i + 1) });
+      remove.hidden = R.items.length < 2;
+      remove.addEventListener('click', function () { R.items.splice(i, 1); renderItems(); update(); });
+      box.append(el('div', { className: 'item-row' }, [
+        el('label', { className: 'item-desc' }, [el('span', { text: 'Description' }), desc]),
+        el('label', null, [el('span', { text: 'Pax' }), pax]),
+        el('label', null, [el('span', { text: 'Rate ₹' }), rate]),
+        el('div', { className: 'item-amount-wrap' }, [el('span', { text: 'Amount' }), amount]),
+        remove
+      ]));
+    });
+  }
+
+  $('add-item-btn').addEventListener('click', function () {
+    if (R.items.length >= 10) return;
+    R.items.push({ description: '', pax: 1, rate: '' });
+    renderItems();
+    update();
+  });
+  $('r-activity').addEventListener('change', applyActivity);
+  $('r-arrival').addEventListener('change', applyArrival);
+  ['r-name', 'r-service', 'r-advance', 'r-booked-at'].forEach(function (id) { $(id).addEventListener('input', update); });
+
+  function totals() {
+    var total = R.items.reduce(function (sum, it) { return sum + (Number(it.pax) || 0) * (Number(it.rate) || 0); }, 0);
+    var advance = Number($('r-advance').value) || 0;
+    return { total: total, advance: advance, balance: Math.max(0, total - advance) };
+  }
+
+  function update() {
+    var t = totals();
+    $('t-total').textContent = inr(t.total);
+    $('t-advance').textContent = inr(t.advance);
+    $('t-balance').textContent = inr(t.balance);
+    var bookedAt = $('r-booked-at').value ? new Date($('r-booked-at').value) : new Date();
+    renderPreview($('receipt-preview'), {
+      receipt_no: 'Given when saved',
+      client_name: $('r-name').value || 'Client name',
+      booking_at: isNaN(bookedAt) ? new Date().toISOString() : bookedAt.toISOString(),
+      arrival_date: $('r-arrival').value,
+      service: $('r-service').value || 'Service',
+      items: R.items.map(function (it) {
+        var pax = Number(it.pax) || 0;
+        var rate = Number(it.rate) || 0;
+        return { description: it.description || 'Description', pax: pax, rate: rate, amount: pax * rate };
+      }),
+      total: t.total, advance: t.advance, balance: t.balance
+    });
+  }
+
+  // ---- Receipt preview (same layout as the PDF) ----
+  function fmtDateTime(iso) {
+    var d = new Date(iso);
+    var date = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+    var time = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true }).format(d);
+    return date + ', ' + time;
+  }
+  function fmtDate(isoDate) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(isoDate || '')) return '—';
+    return new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(isoDate + 'T00:00:00Z'));
+  }
+
+  function renderPreview(box, r) {
+    var b = R.settings.business;
+    var rows = [['Receipt no.', r.receipt_no], ['Client name', String(r.client_name).toUpperCase()], ['Booking date', fmtDateTime(r.booking_at)], ['Arrival date', fmtDate(r.arrival_date)], ['Service', r.service]];
+    var auth = [];
+    if (R.settings.hasStamp) auth.push(el('img', { className: 'rp-stamp', src: R.stampSrc || (R.stampSrc = platform.stampUrl()), alt: '' }));
+    auth.push(el('div', { className: 'rp-line' }), el('strong', { text: 'Proprietor / Authorised Signatory' }));
+    box.replaceChildren(el('div', { className: 'rp' }, [
+      el('div', { className: 'rp-head' }, [
+        el('div', null, [el('div', { className: 'rp-name', text: b.name }), el('div', { className: 'rp-sub', text: b.address }),
+          el('div', { className: 'rp-sub', text: 'Phone / WhatsApp: ' + b.phone + '  |  ' + b.email })]),
+        el('div', { className: 'rp-title' }, [el('strong', { text: 'BOOKING RECEIPT' }), el('span', { text: b.tagline })])
+      ]),
+      el('div', { className: 'rp-body' }, [
+        el('div', { className: 'rp-info' }, rows.map(function (row) {
+          return el('div', null, [el('span', { text: row[0] }), el('strong', { text: row[1] })]);
+        })),
+        el('table', { className: 'rp-items' }, [
+          el('thead', null, [el('tr', null, [el('th', { text: 'Description' }), el('th', { text: 'Pax' }), el('th', { text: 'Rate' }), el('th', { text: 'Amount' })])]),
+          el('tbody', null, r.items.map(function (it) {
+            return el('tr', null, [el('td', { text: it.description }), el('td', { text: String(it.pax) }), el('td', { text: inr(it.rate) }), el('td', { text: inr(it.amount) })]);
+          }))
+        ]),
+        el('div', { className: 'rp-totals' }, [
+          el('div', null, [el('span', { text: 'Total amount' }), el('span', { text: inr(r.total) })]),
+          el('div', null, [el('span', { text: 'Advance received' }), el('span', { text: inr(r.advance) })]),
+          el('div', { className: 'rp-balance' }, [el('span', { text: 'Balance amount' }), el('span', { text: inr(r.balance) })])
+        ]),
+        el('p', { className: 'rp-note', text: b.thanks + ' ' + (r.balance > 0 ? b.balanceNote : 'Paid in full. No balance is due.') }),
+        el('div', { className: 'rp-sign' }, [el('span', { text: 'Client signature: ________________' }), el('div', { className: 'rp-auth' }, auth)])
+      ]),
+      el('div', { className: 'rp-foot', text: b.footer })
+    ]));
+  }
+
+  function clearReceiptErrors() {
+    ['clientName', 'clientPhone', 'clientEmail', 'arrivalDate', 'service', 'items', 'advance', 'bookingAt'].forEach(function (k) {
+      var e = $('re-' + k);
+      if (e) e.textContent = '';
+    });
+    showError('receipt-error', '');
+  }
+
+  function openReceiptForm(booking) {
+    var go = $('panel-receipts').hidden ? setTab('receipts') : Promise.resolve();
+    go.then(ensureSettings).then(function () {
+      clearReceiptErrors();
+      $('receipt-result').hidden = true;
+      $('receipt-form').hidden = false;
+      $('r-booking-id').value = booking ? booking.id : '';
+      $('receipt-form-title').textContent = booking ? 'Receipt for booking ' + booking.reference : 'New receipt';
+      $('receipt-booking-note').hidden = !booking;
+      $('receipt-booking-note').textContent = booking ? 'Saving a receipt with an advance marks this booking as confirmed.' : '';
+      $('r-name').value = booking ? booking.name : '';
+      $('r-phone').value = booking ? booking.phone : '';
+      $('r-email').value = booking && booking.email ? booking.email : '';
+      $('r-arrival').value = booking ? booking.date : '';
+      $('r-activity').value = booking && R.settings.activities[booking.activity] ? booking.activity : Object.keys(R.settings.activities)[0];
+      $('r-advance').value = '0';
+      $('r-booked-at').value = '';
+      R.items = [{ description: '', pax: booking ? booking.people : 1, rate: '' }];
+      applyActivity();
+      $('receipt-form').scrollIntoView({ block: 'start' });
+      $('r-name').focus({ preventScroll: true });
+    }).catch(showReceiptError);
+  }
+  $('new-receipt-btn').addEventListener('click', function () { openReceiptForm(null); });
+  $('cancel-receipt-btn').addEventListener('click', function () { $('receipt-form').hidden = true; });
+
+  $('receipt-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    clearReceiptErrors();
+    var bookedAt = $('r-booked-at').value;
+    var payload = {
+      bookingId: $('r-booking-id').value || null,
+      clientName: $('r-name').value,
+      clientPhone: $('r-phone').value,
+      clientEmail: $('r-email').value,
+      arrivalDate: $('r-arrival').value,
+      service: $('r-service').value,
+      items: R.items.map(function (it) { return { description: it.description, pax: Number(it.pax), rate: Number(it.rate) }; }),
+      advance: Number($('r-advance').value || 0)
+    };
+    if (bookedAt) payload.bookingAt = new Date(bookedAt).toISOString();
+    var btn = $('save-receipt-btn');
+    btn.disabled = true;
+    api('POST', '/api/admin/receipts', payload)
+      .then(function (data) {
+        $('receipt-form').hidden = true;
+        showResult(data.receipt, data.bookingConfirmed);
+        loadReceipts();
+      })
+      .catch(function (err) {
+        if (err.fields) {
+          Object.keys(err.fields).forEach(function (k) {
+            var target = $('re-' + (k.indexOf('items.') === 0 ? 'items' : k));
+            if (target) target.textContent = err.fields[k];
+          });
+        }
+        showReceiptError(err);
+      })
+      .finally(function () { btn.disabled = false; });
+  });
+
+  function whatsappText(r) {
+    return [
+      'Hello ' + r.client_name + ', thank you for booking with Adventure Park, Shivpuri.',
+      'Receipt: ' + r.receipt_no,
+      'Service: ' + r.service,
+      'Arrival: ' + fmtDate(r.arrival_date),
+      'Total: ' + inr(r.total),
+      'Advance received: ' + inr(r.advance),
+      'Balance (payable at the venue): ' + inr(r.balance),
+      'Please carry a valid photo ID. See you at the river!'
+    ].join('\n');
+  }
+
+  function receiptActions(r, withDelete) {
+    var status = el('span', { className: 'saved', 'aria-live': 'polite' });
+    var view = el('button', { type: 'button', className: 'btn btn-water btn-sm', text: 'View PDF' });
+    view.addEventListener('click', function () { platform.openPdf(r, false); });
+    var dl = el('button', { type: 'button', className: 'btn btn-outline btn-sm', text: 'Download PDF' });
+    dl.addEventListener('click', function () { platform.openPdf(r, true); });
+    var list = [view, dl];
+    if (r.client_phone) {
+      list.push(el('a', {
+        className: 'btn btn-outline btn-sm', target: '_blank', rel: 'noopener noreferrer', text: 'WhatsApp client',
+        href: 'https://wa.me/' + r.client_phone.replace(/\D/g, '') + '?text=' + encodeURIComponent(whatsappText(r))
+      }));
+    }
+    if (r.client_email && R.settings.mailEnabled) {
+      var mail = el('button', { type: 'button', className: 'btn btn-outline btn-sm', text: 'Email receipt' });
+      mail.addEventListener('click', function () {
+        mail.disabled = true;
+        status.textContent = '';
+        api('POST', '/api/admin/receipts/' + r.id + '/email', {})
+          .then(function () { status.textContent = 'Emailed to ' + r.client_email; })
+          .catch(showReceiptError)
+          .finally(function () { mail.disabled = false; });
+      });
+      list.push(mail);
+    }
+    if (withDelete) {
+      var del = el('button', { type: 'button', className: 'btn btn-danger btn-sm', text: 'Delete' });
+      var armed = null;
+      del.addEventListener('click', function () {
+        if (!armed) {
+          del.textContent = 'Tap again to delete';
+          armed = setTimeout(function () { armed = null; del.textContent = 'Delete'; }, 4000);
+          return;
+        }
+        clearTimeout(armed);
+        api('DELETE', '/api/admin/receipts/' + r.id).then(loadReceipts).catch(showReceiptError);
+      });
+      list.push(del);
+    }
+    list.push(status);
+    return list;
+  }
+
+  function showResult(r, bookingConfirmed) {
+    var box = $('receipt-result');
+    var lines = [el('p', null, [el('strong', { text: 'Receipt ' + r.receipt_no + ' saved.' }), ' ' + r.client_name + ', balance ' + inr(r.balance) + '.'])];
+    if (bookingConfirmed) lines.push(el('p', { className: 'small', text: 'The linked booking is now marked as confirmed.' }));
+    lines.push(el('div', { className: 'actions-row' }, receiptActions(r, false)));
+    box.replaceChildren.apply(box, lines);
+    box.hidden = false;
+    box.scrollIntoView({ block: 'nearest' });
+  }
+
+  function loadReceipts() {
+    showError('receipt-error', '');
+    var params = new URLSearchParams();
+    if (R.q) params.set('q', R.q);
+    return api('GET', '/api/admin/receipts?' + params.toString()).then(function (data) {
+      var tbody = $('receipt-rows');
+      tbody.replaceChildren();
+      $('receipt-empty').hidden = data.receipts.length > 0;
+      data.receipts.forEach(function (r) {
+        tbody.append(el('tr', null, [
+          el('td', null, [el('strong', { text: r.receipt_no }), el('small', { text: fmtDateTime(r.booking_at) })]),
+          el('td', null, [el('strong', { text: r.client_name }), r.client_phone ? el('small', { text: r.client_phone }) : '']),
+          el('td', null, [el('strong', { text: fmtDate(r.arrival_date) }), el('small', { text: r.service })]),
+          el('td', { className: 'amounts' }, [
+            el('small', { text: 'Total ' + inr(r.total) }),
+            el('small', { text: 'Advance ' + inr(r.advance) }),
+            el('strong', { text: 'Balance ' + inr(r.balance) })
+          ]),
+          el('td', null, [el('div', { className: 'actions actions-wrap' }, receiptActions(r, true))])
+        ]));
+      });
+      $('receipt-sums').textContent = data.total
+        ? data.total + (data.total === 1 ? ' receipt' : ' receipts') + '. Total ' + inr(data.sums.total) + ', advance received ' + inr(data.sums.advance) + ', balance due ' + inr(data.sums.balance) + '.'
+        : '';
+    }).catch(showReceiptError);
+  }
+  $('r-search-btn').addEventListener('click', function () { R.q = $('rq').value.trim(); loadReceipts(); });
+  $('rq').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); R.q = $('rq').value.trim(); loadReceipts(); } });
+  $('r-export-btn').addEventListener('click', function () {
+    var params = new URLSearchParams();
+    if (R.q) params.set('q', R.q);
+    platform.exportReceipts(params.toString());
+  });
+
+  // ---- Official stamp ----
+  function renderStamp() {
+    var has = Boolean(R.settings && R.settings.hasStamp);
+    $('stamp-img').hidden = !has;
+    $('stamp-empty').hidden = has;
+    $('stamp-remove-btn').hidden = !has;
+    if (has) {
+      R.stampSrc = platform.stampUrl();
+      $('stamp-img').src = R.stampSrc;
+    }
+  }
+  $('stamp-upload-btn').addEventListener('click', function () {
+    var file = $('stamp-file').files[0];
+    var status = $('stamp-status');
+    if (!file) { status.textContent = 'Choose a PNG or JPEG image first.'; return; }
+    if (['image/png', 'image/jpeg'].indexOf(file.type) === -1) { status.textContent = 'Only PNG or JPEG images can be used.'; return; }
+    if (file.size > 1024 * 1024) { status.textContent = 'The image is larger than 1 MB. Please use a smaller photo.'; return; }
+    status.textContent = 'Uploading…';
+    platform.uploadStamp(file)
+      .then(function () {
+        R.settings.hasStamp = true;
+        renderStamp();
+        status.textContent = 'Stamp uploaded. It now appears on every receipt.';
+        $('stamp-file').value = '';
+        if (!$('receipt-form').hidden) update();
+      })
+      .catch(function (err) { status.textContent = err.message; });
+  });
+  $('stamp-remove-btn').addEventListener('click', function () {
+    api('DELETE', '/api/admin/receipts/stamp/image')
+      .then(function () {
+        R.settings.hasStamp = false;
+        renderStamp();
+        $('stamp-status').textContent = 'Stamp removed.';
+        if (!$('receipt-form').hidden) update();
+      })
+      .catch(function (err) { $('stamp-status').textContent = err.message; });
   });
 
   api('GET', '/api/admin/session')
