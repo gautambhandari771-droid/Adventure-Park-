@@ -1,0 +1,43 @@
+.admin { background: #F4F1EA; }
+.admin-header { background: var(--paper); border-bottom: 1px solid var(--line); }
+.admin-header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 12px; flex-wrap: wrap; }
+.admin-user { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.admin-main { padding-top: 28px; padding-bottom: 60px; }
+.login-card { max-width: 400px; margin: 48px auto; background: var(--paper); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow); border-top: 6px solid var(--river); }
+.login-card h1 { font-size: 1.6rem; }
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat { background: var(--paper); border-radius: var(--radius-sm); padding: 14px 16px; box-shadow: var(--shadow); border-left: 5px solid var(--line); }
+.stat strong { display: block; font-size: 1.6rem; line-height: 1.1; }
+.stat span { font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 700; }
+.stat.s-new { border-color: var(--fire); }
+.stat.s-contacted { border-color: var(--sun); }
+.stat.s-confirmed { border-color: var(--water); }
+.stat.s-completed { border-color: var(--leaf); }
+.stat.s-cancelled { border-color: #98A2B3; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: flex-end; background: var(--paper); padding: 16px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; }
+.toolbar .field { margin: 0; flex: 1 1 180px; }
+.toolbar .field-inline { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; min-height: 48px; }
+.toolbar .field-inline input { width: 20px; height: 20px; min-height: 0; accent-color: var(--river); }
+.toolbar .field-inline label { margin: 0; }
+.toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.table-wrap { overflow-x: auto; background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); }
+.bookings { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 900px; }
+.bookings th, .bookings td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.bookings th { background: #FBF7EF; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.bookings td small { display: block; color: var(--ink-soft); }
+.bookings .msg { max-width: 260px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.bookings select, .bookings textarea { font: inherit; font-size: .9rem; width: 100%; border: 1.5px solid #CFC7B6; border-radius: 6px; padding: 6px 8px; background: #FFFDF8; }
+.bookings textarea { margin-top: 6px; min-height: 54px; resize: vertical; }
+.bookings .actions { display: flex; flex-direction: column; gap: 6px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .75rem; font-weight: 800; text-transform: uppercase; }
+.badge-new { background: #FFE8D9; color: var(--fire-dark); }
+.badge-contacted { background: #FFF3D1; color: #8A5A00; }
+.badge-confirmed { background: #DFF3FB; color: var(--river-deep); }
+.badge-completed { background: #E6F4EA; color: var(--success); }
+.badge-cancelled { background: #EEF0F3; color: #475467; }
+.btn-danger { border-color: var(--danger); color: var(--danger); background: transparent; }
+.btn-danger:hover { background: var(--danger); color: #fff; }
+.empty { text-align: center; padding: 32px; color: var(--ink-soft); }
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
+.saved { color: var(--success); font-size: .8rem; font-weight: 700; }

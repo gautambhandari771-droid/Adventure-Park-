@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bookings Admin | Adventure Park</title>
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <a class="brand" href="/">
+        <img src="/images/logo-mark.svg" alt="" width="40" height="40">
+        <span class="brand-text"><span class="brand-name">Adventure Park</span><span class="brand-place">Bookings admin</span></span>
+      </a>
+      <div class="admin-user" id="admin-user" hidden>
+        <span id="admin-username"></span>
+        <button class="btn btn-outline btn-sm" type="button" id="logout-btn">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <section id="login-view" hidden>
+      <form class="login-card" id="login-form" autocomplete="on">
+        <h1>Admin login</h1>
+        <div class="field">
+          <label for="l-user">Username</label>
+          <input id="l-user" name="username" type="text" autocomplete="username" required maxlength="100">
+        </div>
+        <div class="field">
+          <label for="l-pass">Password</label>
+          <input id="l-pass" name="password" type="password" autocomplete="current-password" required maxlength="200">
+        </div>
+        <button class="btn btn-fire btn-block" type="submit">Log in</button>
+        <p class="form-status error" id="login-error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section id="dash-view" hidden>
+      <div class="stats" id="stats"></div>
+
+      <form class="toolbar" id="filters">
+        <div class="field">
+          <label for="q">Search</label>
+          <input id="q" name="q" type="search" placeholder="Name, phone or reference" maxlength="80">
+        </div>
+        <div class="field">
+          <label for="status-filter">Status</label>
+          <select id="status-filter" name="status">
+            <option value="">All</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="field field-inline">
+          <input id="upcoming" name="upcoming" type="checkbox">
+          <label for="upcoming">Upcoming trips only</label>
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn btn-water btn-sm" type="submit">Apply</button>
+          <button class="btn btn-outline btn-sm" type="button" id="refresh-btn">Refresh</button>
+          <button class="btn btn-outline btn-sm" type="button" id="export-btn">Export CSV</button>
+        </div>
+      </form>
+
+      <p class="form-status error" id="dash-error" role="alert" hidden></p>
+      <div class="table-wrap">
+        <table class="bookings">
+          <thead>
+            <tr>
+              <th scope="col">Ref / received</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Trip</th>
+              <th scope="col">Message</th>
+              <th scope="col">Status &amp; notes</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="empty" hidden>No bookings found.</p>
+      <div class="pager">
+        <button class="btn btn-outline btn-sm" type="button" id="prev-btn">Previous</button>
+        <span id="page-info"></span>
+        <button class="btn btn-outline btn-sm" type="button" id="next-btn">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/admin.js" defer></script>
+</body>
+</html>
