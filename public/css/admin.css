@@ -108,6 +108,10 @@
 .receipt-result p { margin: 0 0 10px; }
 .actions-wrap { flex-direction: row !important; flex-wrap: wrap; }
 .receipts-table .amounts small, .receipts-table .amounts strong { display: block; font-variant-numeric: tabular-nums; }
+.btn-wa { background: #25D366; color: #06371C; border-color: #25D366; }
+.btn-wa:hover { background: #1EBE5A; color: #06371C; }
+.warn-text { color: var(--price-weekend); font-weight: 700; }
+.send-check { margin-top: 8px; }
 .rate-warn { color: var(--price-weekend); font-weight: 700; }
 .receipt-link { font-weight: 700; color: var(--link) !important; }
 .receipt-sums { margin: 12px 0 0; font-weight: 700; color: var(--ink-soft); }

@@ -9,10 +9,21 @@ const { ACTIVITIES } = require('../business');
 const {
   PRICE_LIST, receiptBusiness, validateReceipt, renderReceiptPdf, safeFileName, inr, formatDate,
 } = require('../receipts');
-const { requireJson } = require('../security');
+const { rateLimit } = require('express-rate-limit');
+const { requireJson, randomToken } = require('../security');
+const { siteUrl } = require('../site-url');
 
 const PAGE_SIZE = 50;
 const STAMP_TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg' };
+const SHARE_DAYS = 365;
+
+function stampPath(config) {
+  const base = path.join(config.dataDir, 'receipt-stamp');
+  for (const ext of ['png', 'jpg']) {
+    if (fs.existsSync(`${base}.${ext}`)) return `${base}.${ext}`;
+  }
+  return null;
+}
 
 function isPng(buf) {
   return buf.length > 8 && buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
@@ -44,11 +55,13 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
     return s ? fs.readFileSync(s.file) : null;
   }
 
-  const COLUMNS = 'id, receipt_no, booking_id, client_name, client_phone, client_email, booking_at, arrival_date, service, items, total, advance, balance, created_at, created_by';
+  const COLUMNS = 'id, receipt_no, booking_id, client_name, client_phone, client_email, booking_at, arrival_date, service, items, total, advance, balance, created_at, created_by, share_token, share_expires';
   const getReceipt = db.prepare(`SELECT ${COLUMNS} FROM receipts WHERE id = ?`);
 
-  function toJson(r) {
-    return { ...r, items: JSON.parse(r.items) };
+  // The share link lets the customer open the PDF without logging in.
+  function toJson(r, req) {
+    const { share_token: token, ...rest } = r;
+    return { ...rest, items: JSON.parse(r.items), share_url: token ? `${siteUrl(req, config)}/r/${token}` : null };
   }
 
   function parseId(raw) {
@@ -83,7 +96,7 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
     const rows = db.prepare(`SELECT ${COLUMNS} FROM receipts ${sql} ORDER BY id DESC LIMIT ? OFFSET ?`)
       .all(...params, PAGE_SIZE, (page - 1) * PAGE_SIZE);
     const sums = db.prepare(`SELECT COALESCE(SUM(total),0) AS total, COALESCE(SUM(advance),0) AS advance, COALESCE(SUM(balance),0) AS balance FROM receipts ${sql}`).get(...params);
-    res.json({ receipts: rows.map(toJson), total, page, pageSize: PAGE_SIZE, sums });
+    res.json({ receipts: rows.map((r) => toJson(r, req)), total, page, pageSize: PAGE_SIZE, sums });
   });
 
   router.get('/export.csv', requireAdmin, (req, res) => {
@@ -108,11 +121,11 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
   `);
   const insertReceipt = db.prepare(`
     INSERT INTO receipts (receipt_no, booking_id, client_name, client_phone, client_email, booking_at, arrival_date,
-                          service, items, total, advance, balance, created_at, created_by)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                          service, items, total, advance, balance, created_at, created_by, share_token, share_expires)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-  router.post('/', requireAdmin, requireJson, (req, res) => {
+  router.post('/', requireAdmin, requireJson, async (req, res) => {
     const result = validateReceipt(req.body);
     if (!result.ok) return res.status(422).json({ error: 'Please check the highlighted fields.', fields: result.errors });
     const r = result.value;
@@ -131,7 +144,8 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
       const n = nextNumber.get(year).last;
       receiptNo = `AP-${year}-${String(n).padStart(4, '0')}`;
       const info = insertReceipt.run(receiptNo, r.bookingId, r.clientName, r.clientPhone, r.clientEmail, r.bookingAt,
-        r.arrivalDate, r.service, JSON.stringify(r.items), r.total, r.advance, r.balance, new Date().toISOString(), req.admin.username);
+        r.arrivalDate, r.service, JSON.stringify(r.items), r.total, r.advance, r.balance, new Date().toISOString(), req.admin.username,
+        randomToken(24), new Date(Date.now() + SHARE_DAYS * 86400000).toISOString());
       id = Number(info.lastInsertRowid);
       // Automation: an advance on a new or contacted booking confirms it.
       if (booking && r.advance > 0 && ['new', 'contacted'].includes(booking.status)) {
@@ -144,7 +158,33 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
     }
     audit(db, req.admin.username, 'create_receipt', `${receiptNo} ${inr(r.total)}${booking ? ` for ${booking.reference}` : ''}`);
     logger.info(`[receipts] created ${receiptNo}`);
-    return res.status(201).json({ ok: true, receipt: toJson(getReceipt.get(id)), bookingConfirmed: Boolean(booking && r.advance > 0 && ['new', 'contacted'].includes(booking.status)) });
+    const saved = getReceipt.get(id);
+
+    // Automation: email the PDF to the customer straight away when asked.
+    let emailed = false;
+    let emailError = null;
+    if (req.body.sendEmail === true) {
+      if (!mailer.enabled) emailError = 'Email is not set up yet, so the receipt was not emailed.';
+      else if (!saved.client_email) emailError = 'No client email address, so the receipt was not emailed.';
+      else {
+        try {
+          const pdf = await renderReceiptPdf(saved, { business, stamp: readStamp() });
+          await mailer.sendReceipt({ to: saved.client_email, receiptNo: saved.receipt_no, clientName: saved.client_name, pdf, fileName: safeFileName(saved), link: toJson(saved, req).share_url });
+          emailed = true;
+          audit(db, req.admin.username, 'email_receipt', `${saved.receipt_no} to ${saved.client_email}`);
+        } catch (err) {
+          logger.error(`[receipts] email failed: ${err.message}`);
+          emailError = 'The receipt was saved, but the email could not be sent. Try "Email receipt" again later.';
+        }
+      }
+    }
+    return res.status(201).json({
+      ok: true,
+      receipt: toJson(saved, req),
+      bookingConfirmed: Boolean(booking && r.advance > 0 && ['new', 'contacted'].includes(booking.status)),
+      emailed,
+      emailError,
+    });
   });
 
   router.get('/:id/pdf', requireAdmin, async (req, res, next) => {
@@ -170,7 +210,7 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
       if (!mailer.enabled) return res.status(409).json({ error: 'Email is not set up yet. Add the Gmail app password in the settings first.' });
       if (!r.client_email) return res.status(409).json({ error: 'This receipt has no client email address.' });
       const pdf = await renderReceiptPdf(r, { business, stamp: readStamp() });
-      await mailer.sendReceipt({ to: r.client_email, receiptNo: r.receipt_no, clientName: r.client_name, pdf, fileName: safeFileName(r) });
+      await mailer.sendReceipt({ to: r.client_email, receiptNo: r.receipt_no, clientName: r.client_name, pdf, fileName: safeFileName(r), link: toJson(r, req).share_url });
       audit(db, req.admin.username, 'email_receipt', `${r.receipt_no} to ${r.client_email}`);
       return res.json({ ok: true });
     } catch (err) {
@@ -232,4 +272,35 @@ function receiptRoutes({ db, config, mailer, logger, requireAdmin, csvCell }) {
   return router;
 }
 
-module.exports = { receiptRoutes };
+/**
+ * Public, login-free link to one receipt PDF: /r/<token>.
+ * The token is long and random, so links cannot be guessed; links expire.
+ */
+function receiptShareRoute({ db, config, logger }) {
+  const limiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: 'draft-7', legacyHeaders: false });
+  const find = db.prepare('SELECT * FROM receipts WHERE share_token = ?');
+  const business = receiptBusiness();
+  return [limiter, async (req, res, next) => {
+    res.set('Cache-Control', 'private, no-store');
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    res.set('Referrer-Policy', 'no-referrer');
+    const token = String(req.params.token || '');
+    const r = /^[A-Za-z0-9_-]{32}$/.test(token) ? find.get(token) : null;
+    if (!r) return res.status(404).type('text').send('Receipt not found. Please check the link, or call or WhatsApp +91 87555 42743.');
+    if (!r.share_expires || Date.parse(r.share_expires) < Date.now()) {
+      return res.status(410).type('text').send('This receipt link has expired. Please call or WhatsApp +91 87555 42743 for a new copy.');
+    }
+    try {
+      const stampFile = stampPath(config);
+      const pdf = await renderReceiptPdf(r, { business, stamp: stampFile ? fs.readFileSync(stampFile) : null });
+      res.set('Content-Type', 'application/pdf');
+      res.set('Content-Disposition', `inline; filename="${safeFileName(r)}"`);
+      return res.send(pdf);
+    } catch (err) {
+      logger.error(`[receipts] share link failed: ${err.message}`);
+      return next(err);
+    }
+  }];
+}
+
+module.exports = { receiptRoutes, receiptShareRoute };

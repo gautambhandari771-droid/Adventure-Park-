@@ -19,12 +19,18 @@ function makeApp(env = {}, { mailer } = {}) {
   });
   const db = openDatabase(':memory:');
   const sent = [];
+  const confirmations = [];
   const app = createApp(config, {
     logger: silentLogger,
     db,
-    mailer: mailer || { enabled: true, async sendBookingAlert(b) { sent.push(b); } },
+    mailer: mailer || {
+      enabled: true,
+      async sendBookingAlert(b) { sent.push(b); },
+      async sendBookingConfirmation(b) { confirmations.push(b); },
+      async sendReceipt() {},
+    },
   });
-  return { app, db, config, sent };
+  return { app, db, config, sent, confirmations };
 }
 
 /** A valid future date inside the September to June season. */

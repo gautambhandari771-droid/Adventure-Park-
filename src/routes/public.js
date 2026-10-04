@@ -6,6 +6,7 @@ const { rateLimit } = require('express-rate-limit');
 const { validateBooking } = require('../validation');
 const { ACTIVITIES, BUSINESS } = require('../business');
 const { requireJson } = require('../security');
+const { estimate } = require('../pricing');
 
 function makeReference() {
   // Unambiguous characters only (no 0/O, 1/I).
@@ -70,18 +71,34 @@ function publicRoutes({ db, config, mailer, logger }) {
     }
 
     logger.info(`[bookings] new booking ${reference} for ${b.date}`);
-    mailer.sendBookingAlert({ ...b, reference }).catch(() => {});
+    const est = estimate(b.activity, b.date, b.people);
+    const estimateText = est ? est.text : null;
+    mailer.sendBookingAlert({ ...b, reference, estimate: estimateText }).catch(() => {});
+
+    // Confirmation email to the customer, at most 3 per address per day.
+    let confirmationEmail = false;
+    if (b.email && mailer.enabled) {
+      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const recent = db.prepare('SELECT COUNT(*) AS n FROM bookings WHERE email = ? AND created_at > ?').get(b.email, since).n;
+      if (recent <= 3) {
+        confirmationEmail = true;
+        mailer.sendBookingConfirmation({ ...b, reference, estimate: estimateText }).catch(() => {});
+      }
+    }
 
     const waText = [
       `Hello ${BUSINESS.name}, I sent booking request ${reference}.`,
       `Activity: ${ACTIVITIES[b.activity]}`,
       `Date: ${b.date}, People: ${b.people}`,
+      estimateText ? `Estimate: ${estimateText}` : null,
       `Name: ${b.name}`,
-    ].join('\n');
+    ].filter(Boolean).join('\n');
 
     return res.status(201).json({
       ok: true,
       reference,
+      estimate: estimateText,
+      confirmationEmail,
       whatsappUrl: `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(waText)}`,
     });
   });

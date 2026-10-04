@@ -460,6 +460,25 @@
     ]));
   }
 
+  function updateSendEmail() {
+    var box = $('r-send-email');
+    var hint = $('send-email-hint');
+    var hasEmail = /@/.test($('r-email').value);
+    if (!R.settings.mailEnabled) {
+      box.checked = false;
+      box.disabled = true;
+      hint.textContent = 'Email is not set up yet, so receipts cannot be emailed. You can still send them on WhatsApp.';
+    } else if (!hasEmail) {
+      box.disabled = true;
+      hint.textContent = 'Add the client\'s email address to send the receipt by email.';
+    } else {
+      if (box.disabled) box.checked = true;
+      box.disabled = false;
+      hint.textContent = '';
+    }
+  }
+  $('r-email').addEventListener('input', updateSendEmail);
+
   function clearReceiptErrors() {
     ['clientName', 'clientPhone', 'clientEmail', 'arrivalDate', 'service', 'items', 'advance', 'bookingAt'].forEach(function (k) {
       var e = $('re-' + k);
@@ -486,6 +505,9 @@
       $('r-advance').value = '0';
       $('r-booked-at').value = '';
       R.items = [{ description: '', pax: booking ? booking.people : 1, rate: '' }];
+      $('r-send-email').checked = true;
+      $('r-send-email').disabled = false;
+      updateSendEmail();
       applyActivity();
       $('receipt-form').scrollIntoView({ block: 'start' });
       $('r-name').focus({ preventScroll: true });
@@ -506,7 +528,8 @@
       arrivalDate: $('r-arrival').value,
       service: $('r-service').value,
       items: R.items.map(function (it) { return { description: it.description, pax: Number(it.pax), rate: Number(it.rate) }; }),
-      advance: Number($('r-advance').value || 0)
+      advance: Number($('r-advance').value || 0),
+      sendEmail: $('r-send-email').checked && !$('r-send-email').disabled
     };
     if (bookedAt) payload.bookingAt = new Date(bookedAt).toISOString();
     var btn = $('save-receipt-btn');
@@ -514,7 +537,7 @@
     api('POST', '/api/admin/receipts', payload)
       .then(function (data) {
         $('receipt-form').hidden = true;
-        showResult(data.receipt, data.bookingConfirmed);
+        showResult(data.receipt, data);
         loadReceipts();
       })
       .catch(function (err) {
@@ -538,8 +561,9 @@
       'Total: ' + inr(r.total),
       'Advance received: ' + inr(r.advance),
       'Balance (payable at the venue): ' + inr(r.balance),
-      'Please carry a valid photo ID. See you at the river!'
-    ].join('\n');
+      r.share_url ? 'Your receipt (PDF): ' + r.share_url : null,
+      'Please carry this receipt and a valid photo ID. See you at the river!'
+    ].filter(Boolean).join('\n');
   }
 
   function receiptActions(r, withDelete) {
@@ -548,12 +572,25 @@
     view.addEventListener('click', function () { platform.openPdf(r, false); });
     var dl = el('button', { type: 'button', className: 'btn btn-outline btn-sm', text: 'Download PDF' });
     dl.addEventListener('click', function () { platform.openPdf(r, true); });
-    var list = [view, dl];
+    var list = [];
     if (r.client_phone) {
       list.push(el('a', {
-        className: 'btn btn-outline btn-sm', target: '_blank', rel: 'noopener noreferrer', text: 'WhatsApp client',
+        className: 'btn btn-wa btn-sm', target: '_blank', rel: 'noopener noreferrer', text: 'Send receipt on WhatsApp',
         href: 'https://wa.me/' + r.client_phone.replace(/\D/g, '') + '?text=' + encodeURIComponent(whatsappText(r))
       }));
+    }
+    list.push(view, dl);
+    if (r.share_url) {
+      var copy = el('button', { type: 'button', className: 'btn btn-outline btn-sm', text: 'Copy receipt link' });
+      copy.addEventListener('click', function () {
+        var done = function () { status.textContent = 'Link copied. Paste it into any chat.'; };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(r.share_url).then(done, function () { status.textContent = r.share_url; });
+        } else {
+          status.textContent = r.share_url;
+        }
+      });
+      list.push(copy);
     }
     if (r.client_email && R.settings.mailEnabled) {
       var mail = el('button', { type: 'button', className: 'btn btn-outline btn-sm', text: 'Email receipt' });
@@ -585,10 +622,14 @@
     return list;
   }
 
-  function showResult(r, bookingConfirmed) {
+  function showResult(r, info) {
+    info = info || {};
     var box = $('receipt-result');
     var lines = [el('p', null, [el('strong', { text: 'Receipt ' + r.receipt_no + ' saved.' }), ' ' + r.client_name + ', balance ' + inr(r.balance) + '.'])];
-    if (bookingConfirmed) lines.push(el('p', { className: 'small', text: 'The linked booking is now marked as confirmed.' }));
+    if (info.emailed) lines.push(el('p', { className: 'small', text: 'The receipt PDF was emailed to ' + r.client_email + '.' }));
+    if (info.emailError) lines.push(el('p', { className: 'small warn-text', text: info.emailError }));
+    if (r.client_phone) lines.push(el('p', { className: 'small', text: 'Tap "Send receipt on WhatsApp" to send the customer the receipt link and summary.' }));
+    if (info.bookingConfirmed) lines.push(el('p', { className: 'small', text: 'The linked booking is now marked as confirmed.' }));
     lines.push(el('div', { className: 'actions-row' }, receiptActions(r, false)));
     box.replaceChildren.apply(box, lines);
     box.hidden = false;

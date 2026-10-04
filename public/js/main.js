@@ -26,6 +26,38 @@
   var form = document.getElementById('booking-form');
   if (!form) return;
 
+  // Website price list (kept in step with the server by a test).
+  var PRICES = /* prices:start */{"rafting-12km":{"rate":500,"weekendRate":600},"rafting-16km":{"rate":800,"weekendRate":960},"rafting-26km":{"rate":1500,"weekendRate":1800},"rafting-36km":{"rate":2500,"weekendRate":3000},"luxury-camping":{"rate":1500},"guest-house":{"seasonalRate":{"1":1500,"2":2200,"3":2200,"4":2200,"5":2200,"6":2200,"7":1200,"8":1200,"9":1200,"10":1500,"11":1500,"12":1500}}}/* prices:end */;
+  var inrFmt = new Intl.NumberFormat('en-IN');
+  function inr(n) { return '₹' + inrFmt.format(n); }
+
+  function estimateText(activity, date, people) {
+    var p = PRICES[activity];
+    if (!p || !/^\d{4}-\d{2}-\d{2}$/.test(date || '')) return '';
+    var n = Math.max(1, Number(people) || 1);
+    if (p.weekendRate) {
+      var day = new Date(date + 'T00:00:00Z').getUTCDay();
+      var weekend = day === 0 || day === 6;
+      var rate = weekend ? p.weekendRate : p.rate;
+      return inr(rate * n) + ' (' + n + ' × ' + inr(rate) + ' per person, ' + (weekend ? 'weekend' : 'weekday') + ' price)';
+    }
+    if (p.seasonalRate) return 'from ' + inr(p.seasonalRate[Number(date.slice(5, 7))]) + ' per room per night for that season';
+    return 'from ' + inr(p.rate * n) + ' per night (' + n + ' × ' + inr(p.rate) + ' per person)';
+  }
+
+  var estimateBox = document.getElementById('price-estimate');
+  function updateEstimate() {
+    if (!estimateBox) return;
+    var text = estimateText(form.elements.activity.value, form.elements.date.value, form.elements.people.value);
+    estimateBox.hidden = !text;
+    estimateBox.textContent = text ? 'Estimated price: ' + text + '. We confirm the final price when we call you.' : '';
+  }
+  ['change', 'input'].forEach(function (evt) {
+    ['activity', 'date', 'people'].forEach(function (name) {
+      if (form.elements[name]) form.elements[name].addEventListener(evt, updateEstimate);
+    });
+  });
+
   var statusBox = document.getElementById('form-status');
   var submitBtn = form.querySelector('button[type="submit"]');
   var dateInput = document.getElementById('f-date');
@@ -53,6 +85,7 @@
   document.querySelectorAll('[data-activity]').forEach(function (link) {
     link.addEventListener('click', function () {
       if (activitySelect) activitySelect.value = link.getAttribute('data-activity');
+      updateEstimate();
     });
   });
 
@@ -154,6 +187,8 @@
           var p1 = document.createElement('p');
           p1.append('Thank you! Your request ', ref, ' has been received. We will call or WhatsApp you soon to confirm.');
           var nodes = [p1];
+          if (result.body.estimate) nodes.push(para('Estimated price: ' + result.body.estimate + '.'));
+          if (result.body.confirmationEmail) nodes.push(para('A confirmation email is on its way to ' + data.email + '.'));
           if (result.body.whatsappUrl && /^https:\/\/wa\.me\//.test(result.body.whatsappUrl)) {
             var a = document.createElement('a');
             a.className = 'btn btn-water btn-sm';
@@ -167,6 +202,7 @@
           }
           showStatus('success', nodes);
           form.reset();
+          updateEstimate();
           return;
         }
         if (result.status === 422 && result.body.fields) {

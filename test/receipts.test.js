@@ -211,3 +211,60 @@ test('email receipt sends the PDF when email is set up', async () => {
   assert.equal(sent[0].to, 'client@example.com');
   assert.equal(sent[0].pdf.subarray(0, 5).toString(), '%PDF-');
 });
+
+test('customer receipt link opens the PDF without login, and can expire', async () => {
+  const { app, db } = makeApp({ ADMIN_PASSWORD_HASH: passwordHash, NODE_ENV: 'production', PUBLIC_URL: 'https://adventurepark.example' });
+  const res = await request(app).post('/api/admin/login').set('X-Forwarded-Proto', 'https')
+    .set('Origin', 'https://adventurepark.example').set('Host', 'adventurepark.example').send({ username: 'admin', password: PASSWORD });
+  const cookie = res.headers['set-cookie'][0];
+  const created = await request(app).post('/api/admin/receipts').set('X-Forwarded-Proto', 'https')
+    .set('Origin', 'https://adventurepark.example').set('Host', 'adventurepark.example')
+    .set('Cookie', cookie).set('X-CSRF-Token', res.body.csrfToken).send(sampleReceipt());
+  assert.equal(created.status, 201);
+  const url = created.body.receipt.share_url;
+  assert.match(url, /^https:\/\/adventurepark\.example\/r\/[A-Za-z0-9_-]{32}$/);
+  assert.equal(created.body.receipt.share_token, undefined, 'raw token field is not exposed separately');
+  const pathOnly = new URL(url).pathname;
+
+  const pdf = await request(app).get(pathOnly).set('X-Forwarded-Proto', 'https');
+  assert.equal(pdf.status, 200);
+  assert.equal(pdf.headers['content-type'], 'application/pdf');
+  assert.equal(pdf.headers['x-robots-tag'], 'noindex, nofollow');
+  assert.match(pdf.headers['cache-control'], /no-store/);
+
+  assert.equal((await request(app).get('/r/notavalidtoken').set('X-Forwarded-Proto', 'https')).status, 404);
+  assert.equal((await request(app).get(`/r/${'A'.repeat(32)}`).set('X-Forwarded-Proto', 'https')).status, 404);
+
+  db.prepare('UPDATE receipts SET share_expires = ?').run('2000-01-01T00:00:00.000Z');
+  assert.equal((await request(app).get(pathOnly).set('X-Forwarded-Proto', 'https')).status, 410);
+
+  db.prepare('DELETE FROM receipts').run();
+  assert.equal((await request(app).get(pathOnly).set('X-Forwarded-Proto', 'https')).status, 404, 'deleted receipt link stops working');
+});
+
+test('saving a receipt can email the PDF and link to the customer automatically', async () => {
+  const sent = [];
+  const mailer = { enabled: true, async sendBookingAlert() {}, async sendBookingConfirmation() {}, async sendReceipt(m) { sent.push(m); } };
+  const { app } = makeApp({ ADMIN_PASSWORD_HASH: passwordHash }, { mailer });
+  const s = await login(app);
+  const res = await authed(app, 'post', '/api/admin/receipts', s).send(sampleReceipt({ sendEmail: true }));
+  assert.equal(res.status, 201);
+  assert.equal(res.body.emailed, true);
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0].to, 'client@example.com');
+  assert.match(sent[0].link, /\/r\/[A-Za-z0-9_-]{32}$/);
+  assert.equal(sent[0].pdf.subarray(0, 5).toString(), '%PDF-');
+
+  const noEmail = await authed(app, 'post', '/api/admin/receipts', s).send(sampleReceipt({ clientEmail: '', sendEmail: true }));
+  assert.equal(noEmail.body.emailed, false);
+  assert.match(noEmail.body.emailError, /No client email/);
+});
+
+test('saving with email requested explains when email is not set up', async () => {
+  const { app } = makeApp({ ADMIN_PASSWORD_HASH: passwordHash }, { mailer: { enabled: false, async sendBookingAlert() {}, async sendBookingConfirmation() {} } });
+  const s = await login(app);
+  const res = await authed(app, 'post', '/api/admin/receipts', s).send(sampleReceipt({ sendEmail: true }));
+  assert.equal(res.status, 201);
+  assert.equal(res.body.emailed, false);
+  assert.match(res.body.emailError, /not set up/);
+});

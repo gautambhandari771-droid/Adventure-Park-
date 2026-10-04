@@ -131,6 +131,14 @@ Wait a minute, then open `https://yourdomain`. The padlock means SSL is working.
 - Add the site to Google Search Console and submit `https://yourdomain/sitemap.xml`.
 - Add the website link to your Google Business Profile and Instagram bio.
 
+## What customers get automatically
+
+- **While booking:** a live price estimate from the website prices, including the weekend price.
+- **Right after booking:** an on-screen confirmation with their booking reference and estimate, a WhatsApp button, and an email confirmation if they gave an email address (at most 3 per address per day, so the form cannot be abused to spam someone). You get an email alert with the same details and estimate.
+- **After you confirm and take the advance:** the booking receipt PDF by email and by WhatsApp link (see Billing below).
+
+Emails need the Gmail settings in `.env` (`SMTP_USER` and an App Password in `SMTP_PASS`). Without them, bookings are still saved and shown in the admin panel, and WhatsApp sending still works.
+
 ## SEO, AI search and DNS
 
 The site is set up to be found on Google and to be quoted correctly by AI assistants such as ChatGPT, Claude, Gemini, Perplexity and Google's AI Overviews.
@@ -159,7 +167,7 @@ The admin panel has a **Receipts & billing** tab that makes booking receipts in 
 1. **Upload your stamp once.** At the bottom of the tab, upload a photo or scan of your stamp (PNG or JPEG, up to 1 MB). It is kept privately on the server and printed above the signature on every receipt. It is never on the public website, so nobody can copy it to make fake receipts.
 2. **Make a receipt.** Press **Create receipt** on a booking, or **New receipt** for a walk-in customer. The client details, service, date and number of people fill in from the booking. Rates fill in from your price list, including the 20% weekend price for rafting and the season price for guest house rooms. You can change any rate, add up to 10 lines (for example rafting plus camping), and enter the advance.
 3. **Check the live preview**, then press **Save and create PDF**. Totals and balance are worked out by the server, and every receipt gets its own number, such as `AP-2026-0001`. Numbers are never reused.
-4. **Send it.** View or download the PDF, send a summary to the client on WhatsApp, or email the PDF to the client (when email is set up).
+4. **It is sent to the customer.** When you save, the receipt PDF is emailed to the customer automatically, if they gave an email address and email is set up. Then tap **Send receipt on WhatsApp**: WhatsApp opens with the customer's number and a message containing the summary and a secure link to the PDF. The link is long and random, works without a login, is never indexed by search engines, stops working if the receipt is deleted, and expires after one year. You can also view, download or copy the link, or email it again later.
 
 If the receipt is for a booking and an advance was paid, the booking is marked **confirmed** automatically. Every receipt that is created, emailed or deleted is written to the audit log, and **Export CSV** downloads all receipts for your accounts.
 

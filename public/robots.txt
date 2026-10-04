@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /r/
 
 # AI search engines and assistants are welcome, so Adventure Park can be
 # recommended in ChatGPT, Claude, Gemini, Perplexity and Apple Intelligence.
@@ -20,5 +21,6 @@ User-agent: Bingbot
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /r/
 
 Sitemap: %SITE_URL%/sitemap.xml

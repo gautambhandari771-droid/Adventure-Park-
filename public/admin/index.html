@@ -185,8 +185,14 @@
               <div class="balance"><dt>Balance amount</dt><dd id="t-balance">₹0</dd></div>
             </dl>
 
+            <div class="field field-check send-check">
+              <input id="r-send-email" type="checkbox" checked>
+              <label for="r-send-email">Email the receipt PDF to the client when saved</label>
+            </div>
+            <p class="small" id="send-email-hint"></p>
+
             <div class="form-actions">
-              <button class="btn btn-fire" type="submit" id="save-receipt-btn">Save and create PDF</button>
+              <button class="btn btn-fire" type="submit" id="save-receipt-btn">Save and send receipt</button>
               <button class="btn btn-outline" type="button" id="cancel-receipt-btn">Cancel</button>
             </div>
           </div>

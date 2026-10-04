@@ -263,3 +263,34 @@ test('every page loads the theme switch without inline scripts', async () => {
   assert.match(css.text, /:root\[data-theme="dark"\]/);
   assert.match(css.text, /prefers-color-scheme: dark/);
 });
+
+test('customer gets a confirmation email with the price estimate', async () => {
+  const { app, confirmations, sent } = makeApp();
+  const res = await post(app, '/api/bookings', validBooking({ activity: 'rafting-16km', people: 4, message: 'Visit http://spam.example now' }));
+  assert.equal(res.status, 201);
+  assert.equal(res.body.confirmationEmail, true);
+  assert.match(res.body.estimate, /^₹3,(200|840) \(4 × ₹(800|960) per person, (weekday|weekend) price\)$/);
+  assert.equal(confirmations.length, 1);
+  assert.equal(confirmations[0].email, 'rahul@example.com');
+  assert.equal(confirmations[0].reference, res.body.reference);
+  assert.equal(sent[0].estimate, res.body.estimate, 'owner alert has the estimate too');
+});
+
+test('no confirmation email without an address, and at most 3 per address per day', async () => {
+  const { app, confirmations } = makeApp({ RATE_LIMIT_BOOKINGS: '20' });
+  const none = await post(app, '/api/bookings', validBooking({ email: '' }));
+  assert.equal(none.body.confirmationEmail, false);
+  for (let i = 0; i < 5; i += 1) await post(app, '/api/bookings', validBooking({ email: 'victim@example.com' }));
+  assert.equal(confirmations.filter((c) => c.email === 'victim@example.com').length, 3);
+});
+
+test('booking form price list matches the website price list', () => {
+  const { PRICE_LIST } = require('../src/receipts');
+  const js = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'main.js'), 'utf8');
+  const prices = JSON.parse(js.match(/\/\* prices:start \*\/([\s\S]*?)\/\* prices:end \*\//)[1]);
+  for (const [k, v] of Object.entries(PRICE_LIST)) {
+    assert.equal(prices[k].rate, v.rate, k);
+    assert.equal(prices[k].weekendRate, v.weekendRate, k);
+    assert.deepEqual(prices[k].seasonalRate, v.seasonalRate, k);
+  }
+});

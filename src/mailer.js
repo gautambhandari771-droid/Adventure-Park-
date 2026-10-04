@@ -11,7 +11,12 @@ const { ACTIVITIES, BUSINESS } = require('./business');
  */
 function createMailer(config, logger = console) {
   if (!config.mail.host || !config.mail.user || !config.mail.pass) {
-    return { enabled: false, async sendBookingAlert() {}, async sendReceipt() { throw new Error('Email is not set up.'); } };
+    return {
+      enabled: false,
+      async sendBookingAlert() {},
+      async sendBookingConfirmation() {},
+      async sendReceipt() { throw new Error('Email is not set up.'); },
+    };
   }
 
   const transport = nodemailer.createTransport({
@@ -26,7 +31,7 @@ function createMailer(config, logger = console) {
   return {
     enabled: true,
     /** Sent only when a logged-in admin presses "Email receipt". */
-    async sendReceipt({ to, receiptNo, clientName, pdf, fileName }) {
+    async sendReceipt({ to, receiptNo, clientName, pdf, fileName, link }) {
       await transport.sendMail({
         from: `"${BUSINESS.name}" <${config.mail.from}>`,
         to,
@@ -37,13 +42,53 @@ function createMailer(config, logger = console) {
           '',
           'Thank you for booking with Adventure Park, Shivpuri. Your booking receipt is attached.',
           'Please carry it and a valid photo ID on your arrival date.',
+          link ? `You can also open it online: ${link}` : null,
           '',
           `Questions? Call or WhatsApp ${BUSINESS.phoneDisplay}.`,
           '',
           'Adventure Park',
-        ].join('\n'),
+        ].filter((l) => l !== null).join('\n'),
         attachments: [{ filename: fileName, content: pdf, contentType: 'application/pdf' }],
       });
+    },
+    /**
+     * Confirmation to the customer after they book. The text is fixed apart from
+     * validated fields (name, date, activity, people), and the customer's own
+     * message is never included, so the form cannot be used to send spam.
+     */
+    async sendBookingConfirmation(booking) {
+      const lines = [
+        `Dear ${booking.name},`,
+        '',
+        `Thank you for choosing ${BUSINESS.name}, Shivpuri. We have received your booking request.`,
+        '',
+        `Booking reference: ${booking.reference}`,
+        `Activity:          ${ACTIVITIES[booking.activity] || booking.activity}`,
+        `Date:              ${booking.date}`,
+        `People:            ${booking.people}`,
+        booking.estimate ? `Estimated price:   ${booking.estimate}` : null,
+        '',
+        `We will call or WhatsApp you from ${BUSINESS.phoneDisplay} to confirm your slot and the final price.`,
+        'Your booking receipt will be sent to you once the advance is received.',
+        '',
+        'Please note: we only confirm bookings from our official number and email. We never ask for your card PIN, OTP or passwords.',
+        '',
+        `Address: ${BUSINESS.address}`,
+        `Phone / WhatsApp: ${BUSINESS.phoneDisplay}`,
+        '',
+        BUSINESS.name,
+      ].filter((l) => l !== null);
+      try {
+        await transport.sendMail({
+          from: `"${BUSINESS.name}" <${config.mail.from}>`,
+          to: booking.email,
+          replyTo: config.mail.notifyTo,
+          subject: `Booking request received: ${booking.reference}`,
+          text: lines.join('\n'),
+        });
+      } catch (err) {
+        logger.error(`[mail] Could not send confirmation for ${booking.reference}: ${err.message}`);
+      }
     },
     async sendBookingAlert(booking) {
       const lines = [
@@ -56,6 +101,7 @@ function createMailer(config, logger = console) {
         `Activity:  ${ACTIVITIES[booking.activity] || booking.activity}`,
         `Date:      ${booking.date}`,
         `People:    ${booking.people}`,
+        `Estimate:  ${booking.estimate || '-'}`,
         '',
         'Message:',
         booking.message || '-',

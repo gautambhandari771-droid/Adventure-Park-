@@ -10,6 +10,8 @@ const { createMailer } = require('./mailer');
 const { createSessionStore, httpsRedirect, sameOriginOnly } = require('./security');
 const { publicRoutes } = require('./routes/public');
 const { adminRoutes } = require('./routes/admin');
+const { receiptShareRoute } = require('./routes/receipts');
+const { siteUrl } = require('./site-url');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 
@@ -38,15 +40,9 @@ function templatedPages(config) {
     if (req.method !== 'GET' && req.method !== 'HEAD') return next();
     const file = TEMPLATED[req.path];
     if (!file) return next();
-    let siteUrl = config.publicUrl;
-    if (!siteUrl) {
-      // Development fallback; the Host header is strictly checked before use.
-      const host = req.get('host') || '';
-      siteUrl = /^[a-z0-9.-]+(:\d{1,5})?$/i.test(host) ? `${req.protocol}://${host}` : 'http://localhost';
-    }
     res.type(path.extname(file));
     res.set('Cache-Control', 'no-cache');
-    return res.send(read(file).replaceAll('%SITE_URL%', siteUrl));
+    return res.send(read(file).replaceAll('%SITE_URL%', siteUrl(req, config)));
   };
 }
 
@@ -125,6 +121,9 @@ function createApp(config, { logger = console, db: providedDb, mailer: providedM
   api.use('/admin', adminRoutes({ db, config, sessions, logger, mailer }));
   api.use((req, res) => res.status(404).json({ error: 'Not found.' }));
   app.use('/api', api);
+
+  // Customers open their receipt PDF from the link sent on WhatsApp or email.
+  app.get('/r/:token', receiptShareRoute({ db, config, logger }));
 
   // security.txt lives in a dot-folder, which the static server ignores on purpose.
   app.get('/.well-known/security.txt', (req, res) => {

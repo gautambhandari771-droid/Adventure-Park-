@@ -69,6 +69,14 @@ CREATE TABLE IF NOT EXISTS audit_log (
 );
 `;
 
+/** Add columns introduced after the first release to existing databases. */
+function migrate(db) {
+  const cols = db.prepare('PRAGMA table_info(receipts)').all().map((c) => c.name);
+  if (!cols.includes('share_token')) db.exec('ALTER TABLE receipts ADD COLUMN share_token TEXT');
+  if (!cols.includes('share_expires')) db.exec('ALTER TABLE receipts ADD COLUMN share_expires TEXT');
+  db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_receipts_share ON receipts(share_token)');
+}
+
 /**
  * Open (and create if needed) the SQLite database.
  * All queries in this project use prepared statements with bound
@@ -84,6 +92,7 @@ function openDatabase(dbPath) {
   db.exec('PRAGMA busy_timeout = 5000;');
   db.exec('PRAGMA secure_delete = ON;');
   db.exec(SCHEMA);
+  migrate(db);
   if (dbPath !== ':memory:') {
     try {
       fs.chmodSync(dbPath, 0o600);

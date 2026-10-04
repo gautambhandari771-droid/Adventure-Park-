@@ -374,6 +374,7 @@ p { margin: 0 0 1em; }
 .field-check input { width: 22px; height: 22px; min-height: 0; margin-top: 3px; accent-color: var(--fire); }
 .field-check label { font-weight: 400; font-size: .92rem; margin: 0; }
 .field-check .field-error { grid-column: 1 / -1; }
+.estimate { margin: -4px 0 16px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--chip-bg); color: var(--chip-fg); font-weight: 700; font-size: .92rem; }
 .hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .form-status { margin-top: 16px; padding: 16px; border-radius: var(--radius-sm); font-weight: 600; }
 .form-status.success { background: var(--ok-bg); color: var(--success); border: 1px solid var(--ok-border); }
