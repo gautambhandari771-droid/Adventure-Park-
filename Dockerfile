@@ -13,6 +13,7 @@ COPY server.js ./
 COPY src ./src
 COPY public ./public
 COPY scripts ./scripts
+COPY assets ./assets
 
 # Only the data folder is writable, by the unprivileged "node" user.
 RUN mkdir -p /app/data && chown node:node /app/data && chmod 700 /app/data
