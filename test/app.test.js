@@ -247,3 +247,19 @@ test('csvCell escapes quotes and formulas', () => {
   assert.equal(csvCell('+91 98765'), '"\'+91 98765"');
   assert.equal(csvCell(null), '""');
 });
+
+test('every page loads the theme switch without inline scripts', async () => {
+  const { app } = makeApp();
+  for (const url of ['/', '/privacy', '/terms', '/admin/']) {
+    const res = await request(app).get(url);
+    assert.equal(res.status, 200, url);
+    assert.match(res.text, /<script src="\/js\/theme\.js"><\/script>/, url);
+    assert.match(res.text, /class="theme-toggle"/, url);
+  }
+  const js = await request(app).get('/js/theme.js');
+  assert.equal(js.status, 200);
+  assert.match(js.headers['content-type'], /javascript/);
+  const css = await request(app).get('/css/styles.css');
+  assert.match(css.text, /:root\[data-theme="dark"\]/);
+  assert.match(css.text, /prefers-color-scheme: dark/);
+});

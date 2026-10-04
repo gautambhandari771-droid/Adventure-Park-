@@ -59,4 +59,15 @@
     <rect x="16" y="26" width="7" height="6" rx="1" fill="currentColor"/>
     <path d="M28 41V29h6v12" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="i-theme-light" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="8" fill="currentColor"/>
+    <path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-theme-dark" viewBox="0 0 48 48">
+    <path d="M38 30A16 16 0 0 1 18 10a16 16 0 1 0 20 20z" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-theme-auto" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M24 8a16 16 0 0 1 0 32z" fill="currentColor"/>
+  </symbol>
 </svg>
