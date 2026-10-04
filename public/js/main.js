@@ -136,6 +136,89 @@
     return errors;
   }
 
+  // ---- Sending ---------------------------------------------------------------
+  // 1. The website's own server saves the booking (admin panel) when it is running.
+  // 2. FormSubmit (formsubmit.co) emails it to us when there is no server or no email set up.
+  var FORMSUBMIT_URL = form.getAttribute('data-formsubmit') || '';
+
+  function postJson(url, body, timeoutMs) {
+    var controller = window.AbortController ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, timeoutMs) : null;
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      credentials: url.charAt(0) === '/' ? 'same-origin' : 'omit',
+      body: JSON.stringify(body),
+      signal: controller ? controller.signal : undefined
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (b) { return { status: res.status, body: b }; });
+    }).finally(function () { if (timer) clearTimeout(timer); });
+  }
+
+  /* BOOKING-SAVE-START */
+  function saveBooking(data) {
+    // On free static hosting there is no server to save to.
+    if (form.getAttribute('data-static-site') === 'true') return Promise.resolve({ status: 0, body: {} });
+    return postJson('/api/bookings', data, 10000).catch(function () { return { status: 0, body: {} }; });
+  }
+  /* BOOKING-SAVE-END */
+
+  function makeReference() {
+    var alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var bytes = new Uint8Array(6);
+    window.crypto.getRandomValues(bytes);
+    var out = 'AP-';
+    for (var i = 0; i < bytes.length; i += 1) out += alphabet[bytes[i] % alphabet.length];
+    return out;
+  }
+
+  function activityName(value) {
+    var opt = activitySelect ? activitySelect.querySelector('option[value="' + value + '"]') : null;
+    return opt ? opt.textContent : value;
+  }
+
+  function whatsappLink(data, reference, estimate) {
+    var text = [
+      'Hello Adventure Park, I sent booking request ' + reference + '.',
+      'Activity: ' + activityName(data.activity),
+      'Date: ' + data.date + ', People: ' + data.people,
+      estimate ? 'Estimate: ' + estimate : null,
+      'Name: ' + data.name
+    ].filter(Boolean).join('\n');
+    return 'https://wa.me/918755542743?text=' + encodeURIComponent(text);
+  }
+
+  function sendToFormSubmit(data, reference, estimate) {
+    if (!/^https:\/\/formsubmit\.co\/ajax\//.test(FORMSUBMIT_URL)) return Promise.resolve(false);
+    var activity = activityName(data.activity);
+    var payload = {
+      _subject: 'New booking ' + reference + ': ' + data.date + ', ' + data.people + ' people',
+      _template: 'table',
+      _captcha: 'false',
+      _honey: data.website,
+      'Booking reference': reference,
+      Name: data.name,
+      Phone: data.phone,
+      'WhatsApp chat': 'https://wa.me/' + data.phone.replace(/\D/g, '').replace(/^0?(\d{10})$/, '91$1'),
+      Activity: activity,
+      Date: data.date,
+      People: String(data.people),
+      'Estimated price': estimate || 'Price on request',
+      Message: data.message || '-'
+    };
+    if (data.email) {
+      payload.email = data.email;
+      payload._autoresponse = 'Thank you for choosing Adventure Park, Shivpuri. We have received your booking request ' + reference +
+        ' for ' + activity + ' on ' + data.date + ' (' + data.people + (data.people === 1 ? ' person' : ' people') + '). ' +
+        (estimate ? 'Estimated price: ' + estimate + '. ' : '') +
+        'We will call or WhatsApp you from +91 87555 42743 to confirm your slot and the final price. ' +
+        'We only confirm bookings from our official number and email, and we never ask for your card PIN, OTP or passwords.';
+    }
+    return postJson(FORMSUBMIT_URL, payload, 15000)
+      .then(function (r) { return r.status === 200 && String(r.body.success) === 'true'; })
+      .catch(function () { return false; });
+  }
+
   var busy = false;
   form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -168,31 +251,52 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
 
-    fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify(data)
-    })
-      .then(function (res) {
-        return res.json().catch(function () { return {}; }).then(function (body) {
-          return { status: res.status, body: body };
-        });
-      })
-      .then(function (result) {
-        if (result.status === 201 && result.body.ok) {
+    saveBooking(data)
+      .then(function (server) {
+        if (server.status === 422 && server.body.fields) {
+          Object.keys(server.body.fields).forEach(function (n) { setFieldError(n, server.body.fields[n]); });
+          showStatus('error', [para(server.body.error || 'Please check the highlighted fields.')]);
+          return null;
+        }
+        if (server.status === 429 || server.status === 403) {
+          showStatus('error', [para(server.body.error || 'Please call or WhatsApp us at +91 87555 42743.')]);
+          return null;
+        }
+        var saved = server.status === 201 && server.body.ok;
+        var reference = saved ? server.body.reference : makeReference();
+        var estimate = saved ? server.body.estimate : estimateText(data.activity, data.date, data.people);
+        // FormSubmit emails the booking to us (and a confirmation to the customer)
+        // whenever the website's own server is not running or cannot send email.
+        var useFormSubmit = !saved || !server.body.ownerNotified;
+        var forward = useFormSubmit ? sendToFormSubmit(data, reference, estimate) : Promise.resolve(false);
+        return forward.then(function (forwarded) {
+          if (!saved && !forwarded) {
+            var wa = document.createElement('a');
+            wa.className = 'btn btn-water btn-sm';
+            wa.href = whatsappLink(data, reference, estimate);
+            wa.target = '_blank';
+            wa.rel = 'noopener noreferrer';
+            wa.textContent = 'Send your booking on WhatsApp';
+            var pw = document.createElement('p');
+            pw.appendChild(wa);
+            showStatus('error', [para('Sorry, your request could not be sent online. Please send it on WhatsApp instead, or call +91 87555 42743.'), pw]);
+            return null;
+          }
           var ref = document.createElement('span');
           ref.className = 'ref';
-          ref.textContent = result.body.reference;
+          ref.textContent = reference;
           var p1 = document.createElement('p');
           p1.append('Thank you! Your request ', ref, ' has been received. We will call or WhatsApp you soon to confirm.');
           var nodes = [p1];
-          if (result.body.estimate) nodes.push(para('Estimated price: ' + result.body.estimate + '.'));
-          if (result.body.confirmationEmail) nodes.push(para('A confirmation email is on its way to ' + data.email + '.'));
-          if (result.body.whatsappUrl && /^https:\/\/wa\.me\//.test(result.body.whatsappUrl)) {
+          if (estimate) nodes.push(para('Estimated price: ' + estimate + '.'));
+          if ((saved && server.body.confirmationEmail) || (forwarded && data.email)) {
+            nodes.push(para('A confirmation email is on its way to ' + data.email + '. Please check your spam folder if you do not see it.'));
+          }
+          var waUrl = saved && server.body.whatsappUrl ? server.body.whatsappUrl : whatsappLink(data, reference, estimate);
+          if (/^https:\/\/wa\.me\//.test(waUrl)) {
             var a = document.createElement('a');
             a.className = 'btn btn-water btn-sm';
-            a.href = result.body.whatsappUrl;
+            a.href = waUrl;
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
             a.textContent = 'Send details on WhatsApp for a faster reply';
@@ -203,12 +307,8 @@
           showStatus('success', nodes);
           form.reset();
           updateEstimate();
-          return;
-        }
-        if (result.status === 422 && result.body.fields) {
-          Object.keys(result.body.fields).forEach(function (n) { setFieldError(n, result.body.fields[n]); });
-        }
-        showStatus('error', [para(result.body.error || 'Sorry, something went wrong. Please call or WhatsApp us at +91 87555 42743.')]);
+          return null;
+        });
       })
       .catch(function () {
         showStatus('error', [para('Could not connect. Please check your internet, or call or WhatsApp us at +91 87555 42743.')]);

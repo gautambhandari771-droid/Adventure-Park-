@@ -131,6 +131,27 @@ Wait a minute, then open `https://yourdomain`. The padlock means SSL is working.
 - Add the site to Google Search Console and submit `https://yourdomain/sitemap.xml`.
 - Add the website link to your Google Business Profile and Instagram bio.
 
+## Booking emails with FormSubmit
+
+The booking form also uses **FormSubmit** (https://formsubmit.co), a free service that emails form entries to you without needing a mail server.
+
+- On **free static hosting** (no server), every booking request is emailed to adventurepark661@gmail.com through FormSubmit, and the customer gets an automatic confirmation email if they gave their address.
+- On the **full server** without Gmail settings, the booking is saved in the admin panel **and** emailed through FormSubmit.
+- On the full server **with** Gmail settings, the server sends the emails itself and FormSubmit is not used, so you never get two copies.
+- If sending fails, the customer sees a **Send your booking on WhatsApp** button with the details filled in, so no booking is lost.
+
+**Activate it once before going live.** The first booking sent through FormSubmit is not delivered. Instead, FormSubmit emails adventurepark661@gmail.com an **Activate Form** link. Open the live website, send yourself one test booking, click **Activate** in that email (check spam too), and send another test booking to confirm it arrives. After activation FormSubmit also emails you a random code. You can put `https://formsubmit.co/ajax/<that-code>` in the `data-formsubmit` setting of the booking form in `public/index.html` to hide your email address from the page source.
+
+### Free hosting without a server
+
+To put the public website online for free with working booking emails:
+
+```bash
+SITE_URL=https://your-site-address npm run build:static
+```
+
+Upload the `dist` folder to Netlify (drag and drop at https://app.netlify.com/drop), Cloudflare Pages or GitHub Pages. On Netlify you can instead connect the GitHub repository, because `netlify.toml` already contains the build settings. Free SSL is included. The admin panel, saved bookings and receipts need the full server described below.
+
 ## What customers get automatically
 
 - **While booking:** a live price estimate from the website prices, including the weekend price.

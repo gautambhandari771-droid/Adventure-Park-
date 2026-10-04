@@ -294,3 +294,34 @@ test('booking form price list matches the website price list', () => {
     assert.deepEqual(prices[k].seasonalRate, v.seasonalRate, k);
   }
 });
+
+test('booking response tells the page whether FormSubmit is needed, and CSP allows only FormSubmit', async () => {
+  const { app } = makeApp({}, { mailer: { enabled: false, async sendBookingAlert() {}, async sendBookingConfirmation() {} } });
+  const res = await post(app, '/api/bookings', validBooking());
+  assert.equal(res.body.ownerNotified, false);
+  const withMail = makeApp();
+  assert.equal((await post(withMail.app, '/api/bookings', validBooking())).body.ownerNotified, true);
+  const page = await request(app).get('/');
+  const connect = page.headers['content-security-policy'].match(/connect-src ([^;]+)/)[1];
+  assert.equal(connect, "'self' https://formsubmit.co");
+  assert.match(page.text, /data-formsubmit="https:\/\/formsubmit\.co\/ajax\/adventurepark661@gmail\.com"/);
+});
+
+test('static build for free hosting fills in the site address and leaves out the admin panel', () => {
+  const os = require('node:os');
+  const { execFileSync } = require('node:child_process');
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'ap-static-'));
+  execFileSync(process.execPath, [path.join(__dirname, '..', 'scripts', 'build-static.js')], {
+    env: { ...process.env, SITE_URL: 'https://adventurepark.example', STATIC_OUT: path.relative(path.join(__dirname, '..'), out) },
+  });
+  const html = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
+  assert.ok(!html.includes('%SITE_URL%'));
+  assert.match(html, /<link rel="canonical" href="https:\/\/adventurepark\.example\/">/);
+  assert.match(html, /data-static-site="true"/);
+  assert.ok(!fs.existsSync(path.join(out, 'admin')), 'admin panel is not published');
+  const headers = fs.readFileSync(path.join(out, '_headers'), 'utf8');
+  assert.match(headers, /connect-src 'self' https:\/\/formsubmit\.co/);
+  assert.match(headers, /Strict-Transport-Security/);
+  assert.match(fs.readFileSync(path.join(out, 'llms.txt'), 'utf8'), /https:\/\/adventurepark\.example\/#book/);
+  fs.rmSync(out, { recursive: true, force: true });
+});

@@ -15,6 +15,7 @@
     "hash-password": "node scripts/hash-password.js",
     "backup": "node --disable-warning=ExperimentalWarning scripts/backup-db.js",
     "schema": "node scripts/build-schema.js",
+    "build:static": "node scripts/build-static.js",
     "check-dns": "node scripts/check-dns.js"
   },
   "license": "UNLICENSED",

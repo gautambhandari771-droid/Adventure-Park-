@@ -72,7 +72,8 @@ function createApp(config, { logger = console, db: providedDb, mailer: providedM
           styleSrc: ["'self'"],
           imgSrc: ["'self'", 'data:'],
           fontSrc: ["'self'"],
-          connectSrc: ["'self'"],
+          // FormSubmit forwards booking requests by email (see public/js/main.js).
+          connectSrc: ["'self'", 'https://formsubmit.co'],
           formAction: ["'self'"],
           frameAncestors: ["'none'"],
           frameSrc: ["'none'"],

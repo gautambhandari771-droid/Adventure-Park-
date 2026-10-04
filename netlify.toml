@@ -1,0 +1,8 @@
+# Free static hosting on Netlify: the public website with bookings emailed
+# through FormSubmit. (The admin panel and receipts need the full server.)
+[build]
+  command = "npm run build:static"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

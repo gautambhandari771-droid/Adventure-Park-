@@ -99,6 +99,8 @@ function publicRoutes({ db, config, mailer, logger }) {
       reference,
       estimate: estimateText,
       confirmationEmail,
+      // When false, the page also sends the booking through FormSubmit.
+      ownerNotified: Boolean(mailer.enabled),
       whatsappUrl: `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(waText)}`,
     });
   });

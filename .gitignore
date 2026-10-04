@@ -4,3 +4,4 @@ backups/
 .env
 *.log
 .DS_Store
+dist/
