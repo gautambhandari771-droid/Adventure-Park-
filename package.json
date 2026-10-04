@@ -13,7 +13,9 @@
     "dev": "NODE_ENV=development node --disable-warning=ExperimentalWarning --watch server.js",
     "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
     "hash-password": "node scripts/hash-password.js",
-    "backup": "node --disable-warning=ExperimentalWarning scripts/backup-db.js"
+    "backup": "node --disable-warning=ExperimentalWarning scripts/backup-db.js",
+    "schema": "node scripts/build-schema.js",
+    "check-dns": "node scripts/check-dns.js"
   },
   "license": "UNLICENSED",
   "dependencies": {

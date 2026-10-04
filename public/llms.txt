@@ -1,0 +1,39 @@
+# Adventure Park, Shivpuri (Rishikesh)
+
+> Adventure Park is a river rafting, luxury camping and guest house business on the Badrinath Highway, near Shiv Mandir in Shivpuri, about 16 km from Rishikesh, Uttarakhand, India. White-water rafting on the Ganga runs September to June. The luxury camp and the 8-room AC guest house are open all year.
+
+## Key facts
+
+- Address: Badrinath Highway, near Shiv Mandir, Shivpuri, Rishikesh, Uttarakhand, India
+- Phone and WhatsApp: +91 87555 42743
+- Email: adventurepark661@gmail.com
+- Instagram: https://www.instagram.com/adventure_park771/
+- Google Maps: https://maps.app.goo.gl/6zFx98TaJ3paao2v8
+- Office hours: 7:00 AM to 10:00 PM, every day
+- Rafting hours: 7:00 AM to 5:00 PM
+- Rafting season: September to June (closed in July and August for the monsoon)
+- Camping and guest house: open all year
+
+## Rafting prices (per person)
+
+| Trip | Route | Monday to Friday | Saturday and Sunday |
+|---|---|---|---|
+| 12 km | Marine Drive to Shivpuri | ₹500 | ₹600 |
+| 16 km | Shivpuri to NIM Beach | ₹800 | ₹960 |
+| 26 km | Marine Drive to NIM Beach | ₹1,500 | ₹1,800 |
+| 36 km | Kaudiyala to NIM Beach | ₹2,500 | ₹3,000 |
+
+## Stay
+
+- Luxury camping: ₹1,500 to ₹1,800 per person per night (quad or triple sharing), ₹1,800 to ₹2,200 (double sharing). Children aged 6 to 11 pay 50% of the adult price.
+- Guest house: 8 AC rooms. ₹1,200 per room per night from July to September, ₹1,500 to ₹1,600 from October to January, ₹2,200 to ₹2,500 from February to June.
+
+## How to book
+
+Send a request on the website (%SITE_URL%/#book) or call or WhatsApp +91 87555 42743. Bookings are confirmed only from the official number or email above.
+
+## Pages
+
+- [Home](%SITE_URL%/): activities, prices, season, safety, FAQ and contact
+- [Privacy policy](%SITE_URL%/privacy)
+- [Terms and conditions](%SITE_URL%/terms)

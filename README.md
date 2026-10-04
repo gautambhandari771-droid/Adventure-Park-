@@ -131,6 +131,20 @@ Wait a minute, then open `https://yourdomain`. The padlock means SSL is working.
 - Add the site to Google Search Console and submit `https://yourdomain/sitemap.xml`.
 - Add the website link to your Google Business Profile and Instagram bio.
 
+## SEO, AI search and DNS
+
+The site is set up to be found on Google and to be quoted correctly by AI assistants such as ChatGPT, Claude, Gemini, Perplexity and Google's AI Overviews.
+
+- **Structured data (JSON-LD, schema.org).** The home page describes the business as a local business, tourist attraction and lodging. It includes the address, phone, hours, map, Instagram, each rafting trip with weekday and weekend prices, luxury camping prices, the guest house rooms and seasonal prices, a booking action and the FAQ. The privacy and terms pages have breadcrumbs. The markup is generated from the same price list as the website and receipts. After changing prices or FAQ answers, run `npm run schema`. A test fails if you forget.
+- **AI-friendly content.** A short "About Adventure Park" summary and an "at a glance" facts list give AI assistants clear sentences to quote. The FAQ answers common questions about prices, stays, distance, season and safety.
+- **`/llms.txt`.** A plain summary of the business, prices and contact details for AI assistants.
+- **`/robots.txt`.** Search engines and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others) may read the public pages. The admin panel and API are blocked for all of them.
+- **`/sitemap.xml`**, canonical links, Open Graph and Twitter tags, `en-IN` language and location meta tags.
+
+After going live, paste your address into Google's Rich Results Test (https://search.google.com/test/rich-results) and the Schema Markup Validator (https://validator.schema.org) to confirm the markup. Also claim your Google Business Profile with the same name, address and phone number, because matching details everywhere helps local ranking.
+
+**DNS:** see [docs/DNS.md](docs/DNS.md) for the exact records to add at your registrar. They cover the address records, the SSL certificate restriction (CAA), anti-spoofing email records (SPF, DMARC, null MX), Google Search Console and domain security. After adding them, run `npm run check-dns -- yourdomain.in` to check everything.
+
 ## Daily use
 
 - **See bookings:** go to `https://yourdomain/admin` and log in.

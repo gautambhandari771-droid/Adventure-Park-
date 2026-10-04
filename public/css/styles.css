@@ -604,3 +604,15 @@ h1, h2, h3, .eyebrow { width: fit-content; max-width: 100%; }
   .marquee-list[aria-hidden="true"] { display: none; }
   .marquee-list { flex-wrap: wrap; justify-content: center; row-gap: 8px; }
 }
+
+/* About / at a glance */
+.about { padding-bottom: 24px; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+@media (max-width: 860px) { .about-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+#about-summary p:not(.eyebrow) { color: var(--ink-soft); max-width: 60ch; }
+.facts-list { margin: 0; background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); padding: 8px 20px; }
+.facts-list div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.facts-list div:last-child { border-bottom: 0; }
+.facts-list dt { font-weight: 800; font-size: .88rem; color: var(--ink-soft); }
+.facts-list dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+@media (max-width: 420px) { .facts-list div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }

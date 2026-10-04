@@ -23,6 +23,7 @@ const TEMPLATED = {
   '/terms.html': 'terms.html',
   '/robots.txt': 'robots.txt',
   '/sitemap.xml': 'sitemap.xml',
+  '/llms.txt': 'llms.txt',
 };
 
 function templatedPages(config) {

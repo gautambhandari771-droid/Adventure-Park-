@@ -58,7 +58,7 @@
   var selector = [
     '.section-head', '.cards > .card', '.features > .feature', '.bring', '.steps > li',
     '.two-col > div', '.book-intro', '.book-form', '#faq details', '.contact-grid > a',
-    '.map-card', '.stats-grid > .stat-item'
+    '.map-card', '.stats-grid > .stat-item', '.about-grid > *'
   ].join(',');
   var fold = window.innerHeight;
   var revealObserver = new IntersectionObserver(function (entries) {
