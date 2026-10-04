@@ -59,7 +59,7 @@ Anything a visitor can see in a browser can be copied. Text, images and page cod
 
 All text is in `public/index.html`. Please check these points, since only you know them:
 
-- [ ] **Activities.** The site lists four rafting trips: 12 km for ₹520, 16 km for ₹820, 26 km for ₹1,500 and 36 km for ₹2,500 per person. Saturday and Sunday prices are 20% higher: ₹624, ₹984, ₹1,800 and ₹3,000. It also lists riverside camping and a rafting + camping package. If you change the list, also update `src/business.js`, because a test checks that both match.
+- [ ] **Activities.** The site lists four rafting trips: 12 km for ₹500, 16 km for ₹800, 26 km for ₹1,500 and 36 km for ₹2,500 per person. Saturday and Sunday prices are 20% higher: ₹600, ₹960, ₹1,800 and ₹3,000. It also lists riverside camping and a rafting + camping package. If you change the list, also update `src/business.js`, because a test checks that both match.
 - [ ] **Start points, durations and rapid grades.** The 12 km trip is shown as Marine Drive to Shivpuri, the 26 km trip as Marine Drive to NIM Beach and the 36 km trip as Kaudiyala to NIM Beach. Durations and grades are typical values. Correct them to match your trips.
 - [ ] **Camping prices.** Camping and the rafting + camping package say "Price on request". Add prices there if you want to show them.
 - [ ] **Tagline.** I suggested "Ride the Ganga. Feel the wild." Change it in the hero section if you like.
