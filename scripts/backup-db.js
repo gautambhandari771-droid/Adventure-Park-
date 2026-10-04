@@ -1,23 +1,17 @@
 'use strict';
 
 /**
- * Make a consistent copy of the bookings database.
- * Usage: npm run backup   (writes to ./backups/ by default)
+ * Make a backup copy of the bookings database now.
+ * Usage: npm run backup   (writes to BACKUP_DIR, or data/backups by default)
  */
-const fs = require('node:fs');
 const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
 const { loadConfig } = require('../src/config');
+const { backupDatabase } = require('../src/backup');
 
 const config = loadConfig();
-const outDir = path.resolve(process.env.BACKUP_DIR || path.join(__dirname, '..', 'backups'));
-fs.mkdirSync(outDir, { recursive: true, mode: 0o700 });
-
-const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-const outFile = path.join(outDir, `adventure-park-${stamp}.db`);
-
+const dir = path.resolve(process.env.BACKUP_DIR || path.join(config.dataDir, 'backups'));
 const db = new DatabaseSync(config.dbPath, { readOnly: true });
-db.prepare('VACUUM INTO ?').run(outFile);
+const file = backupDatabase(db, dir, { keep: Number(process.env.BACKUP_KEEP) || 14 });
 db.close();
-fs.chmodSync(outFile, 0o600);
-console.log(`Backup written to ${outFile}`);
+console.log(`Backup written to ${file}`);

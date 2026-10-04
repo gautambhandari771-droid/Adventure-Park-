@@ -45,6 +45,8 @@ function loadConfig(env = process.env) {
     admin: {
       username: env.ADMIN_USERNAME || 'admin',
       passwordHash: env.ADMIN_PASSWORD_HASH || '',
+      // Two-step login secret for an authenticator app (npm run setup-2fa).
+      totpSecret: (env.ADMIN_TOTP_SECRET || '').replace(/\s+/g, '').toUpperCase(),
       sessionIdleMinutes: int(env.SESSION_IDLE_MINUTES, 120),
       sessionMaxHours: int(env.SESSION_MAX_HOURS, 12),
     },
@@ -82,6 +84,12 @@ function validateConfig(config, logger = console) {
     if (config.ipHashSecret.length < 32) {
       problems.push('IP_HASH_SECRET must be at least 32 random characters in production.');
     }
+  }
+  if (config.admin.totpSecret && !/^[A-Z2-7]{16,}$/.test(config.admin.totpSecret)) {
+    problems.push('ADMIN_TOTP_SECRET is not valid. Run "npm run setup-2fa" to create a new one.');
+  }
+  if (config.isProduction && config.admin.passwordHash && !config.admin.totpSecret) {
+    logger.warn('[config] Two-step login is off. Run "npm run setup-2fa" to protect the admin panel with a 6-digit code.');
   }
   if (!config.admin.passwordHash) {
     logger.warn('[config] ADMIN_PASSWORD_HASH is not set: the admin panel login is disabled.');

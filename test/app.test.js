@@ -132,7 +132,7 @@ test('admin API requires login', async () => {
   assert.equal((await request(app).get('/api/admin/bookings.csv')).status, 401);
   assert.equal((await post(app, '/api/admin/logout', {})).status, 401);
   const s = await request(app).get('/api/admin/session');
-  assert.deepEqual(s.body, { authenticated: false });
+  assert.deepEqual(s.body, { authenticated: false, twoFactor: false });
 });
 
 test('admin login rejects wrong credentials and is disabled without a hash', async () => {
@@ -324,4 +324,51 @@ test('static build for free hosting fills in the site address and leaves out the
   assert.match(headers, /Strict-Transport-Security/);
   assert.match(fs.readFileSync(path.join(out, 'llms.txt'), 'utf8'), /https:\/\/adventurepark\.example\/#book/);
   fs.rmSync(out, { recursive: true, force: true });
+});
+
+test('two-step login needs the authenticator code, and each code works once', async () => {
+  const { generateSecret, totp } = require('../src/totp');
+  const secret = generateSecret();
+  const { app } = makeApp({ ADMIN_PASSWORD_HASH: passwordHash, ADMIN_TOTP_SECRET: secret, RATE_LIMIT_LOGIN: '20' });
+  const session = await request(app).get('/api/admin/session');
+  assert.equal(session.body.twoFactor, true);
+
+  const noCode = await post(app, '/api/admin/login', { username: 'admin', password: PASSWORD });
+  assert.equal(noCode.status, 401);
+  assert.equal(noCode.body.error, 'Wrong username, password or code.');
+  const badCode = await post(app, '/api/admin/login', { username: 'admin', password: PASSWORD, code: '000000' === totp(secret) ? '111111' : '000000' });
+  assert.equal(badCode.status, 401);
+  const wrongPassGoodCode = await post(app, '/api/admin/login', { username: 'admin', password: 'wrong password!!', code: totp(secret) });
+  assert.equal(wrongPassGoodCode.status, 401, 'a valid code does not help without the password');
+
+  const code = totp(secret);
+  const ok = await post(app, '/api/admin/login', { username: 'admin', password: PASSWORD, code });
+  assert.equal(ok.status, 200);
+  const replay = await post(app, '/api/admin/login', { username: 'admin', password: PASSWORD, code });
+  assert.equal(replay.status, 401, 'the same code cannot be used twice');
+});
+
+test('an invalid two-step secret stops the server from starting', () => {
+  const { loadConfig, validateConfig } = require('../src/config');
+  const quiet = { warn() {} };
+  const problems = validateConfig(loadConfig({ ADMIN_TOTP_SECRET: 'not-base32!' }), quiet);
+  assert.ok(problems.some((p) => /ADMIN_TOTP_SECRET/.test(p)));
+});
+
+test('database backups are consistent copies and only the newest are kept', () => {
+  const os = require('node:os');
+  const { DatabaseSync } = require('node:sqlite');
+  const { backupDatabase } = require('../src/backup');
+  const { db } = makeApp();
+  db.prepare("INSERT INTO bookings (reference, name, phone, activity, activity_date, people, created_at, updated_at) VALUES ('AP-BACKUP', 'Test', '+919876543210', 'camping', '2026-12-01', 2, 'x', 'x')").run();
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ap-backup-'));
+  let last;
+  for (let i = 0; i < 4; i += 1) last = backupDatabase(db, dir, { keep: 3, now: new Date(Date.UTC(2026, 9, 1 + i)) });
+  const files = fs.readdirSync(dir);
+  assert.equal(files.length, 3, 'oldest copy removed');
+  assert.ok(!files.some((f) => f.includes('2026-10-01')));
+  const copy = new DatabaseSync(last, { readOnly: true });
+  assert.equal(copy.prepare("SELECT name FROM bookings WHERE reference = 'AP-BACKUP'").get().name, 'Test');
+  copy.close();
+  fs.rmSync(dir, { recursive: true, force: true });
 });

@@ -13,6 +13,7 @@
     "dev": "NODE_ENV=development node --disable-warning=ExperimentalWarning --watch server.js",
     "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
     "hash-password": "node scripts/hash-password.js",
+    "setup-2fa": "node scripts/setup-2fa.js",
     "backup": "node --disable-warning=ExperimentalWarning scripts/backup-db.js",
     "schema": "node scripts/build-schema.js",
     "build:static": "node scripts/build-static.js",

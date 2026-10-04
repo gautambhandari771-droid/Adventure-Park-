@@ -196,15 +196,27 @@ Receipts print the website phone number, +91 87555 42743, and use the website pr
 
 ## Backups
 
-Bookings live in a SQLite database inside the Docker volume. Back it up weekly:
+The server backs up all bookings and receipts automatically **once a day**, keeping the last 14 days in `data/backups` (inside the Docker volume). To make a backup right now:
 
 ```bash
-sudo docker compose exec -e BACKUP_DIR=/app/data/backups app \
-  node --disable-warning=ExperimentalWarning scripts/backup-db.js
+sudo docker compose exec app node --disable-warning=ExperimentalWarning scripts/backup-db.js
+```
+
+Copy the backups somewhere else every week, for example to Google Drive or a USB drive, so they survive even if the server is lost:
+
+```bash
 sudo docker compose cp app:/app/data/backups ./backups
 ```
 
-Keep a copy somewhere else, such as Google Drive or a USB drive.
+## Two-step login (recommended)
+
+Protect the admin panel with a 6-digit code from Google Authenticator or Microsoft Authenticator, on top of your password:
+
+```bash
+sudo docker run --rm -it -v "$PWD":/app -w /app node:22-alpine node scripts/setup-2fa.js
+```
+
+Follow the steps it prints: add the key to the authenticator app on your phone, put the `ADMIN_TOTP_SECRET=...` line in `.env`, and restart with `sudo docker compose up -d`. The login page then asks for the code. Each code works only once. Keep the key printed somewhere safe in case you lose your phone.
 
 ## Updating the website
 

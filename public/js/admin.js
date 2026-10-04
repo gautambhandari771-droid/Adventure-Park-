@@ -220,10 +220,11 @@
     showError('login-error', '');
     var btn = e.target.querySelector('button');
     btn.disabled = true;
-    api('POST', '/api/admin/login', { username: $('l-user').value, password: $('l-pass').value })
+    api('POST', '/api/admin/login', { username: $('l-user').value, password: $('l-pass').value, code: $('l-code').value.trim() })
       .then(function (data) {
         csrfToken = data.csrfToken;
         $('l-pass').value = '';
+        $('l-code').value = '';
         showDashboard(data.username);
       })
       .catch(function (err) { showError('login-error', err.message); })
@@ -715,6 +716,7 @@
         csrfToken = data.csrfToken;
         showDashboard(data.username);
       } else {
+        $('l-code-field').hidden = !data.twoFactor;
         showLogin();
       }
     })

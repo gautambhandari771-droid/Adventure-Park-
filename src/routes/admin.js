@@ -7,6 +7,7 @@ const { ACTIVITIES } = require('../business');
 const { validateBookingUpdate, STATUSES } = require('../validation');
 const { verifyPassword, safeEqual, parseCookies, createLoginGuard, requireJson } = require('../security');
 const { receiptRoutes } = require('./receipts');
+const { verifyTotp } = require('../totp');
 
 const PAGE_SIZE = 50;
 
@@ -20,6 +21,8 @@ function csvCell(value) {
 function adminRoutes({ db, config, sessions, logger, mailer }) {
   const router = express.Router();
   const guard = createLoginGuard();
+  const twoFactor = Boolean(config.admin.totpSecret);
+  let lastTotpStep = -1; // each code can be used only once
 
   // Admin responses must never be cached or indexed.
   router.use((req, res, next) => {
@@ -66,19 +69,27 @@ function adminRoutes({ db, config, sessions, logger, mailer }) {
     if (guard.isLocked()) {
       return res.status(429).json({ error: 'Login is temporarily locked. Try again in 15 minutes.' });
     }
-    const { username, password } = req.body || {};
+    const { username, password, code } = req.body || {};
+    const wrong = twoFactor ? 'Wrong username, password or code.' : 'Wrong username or password.';
     if (typeof username !== 'string' || typeof password !== 'string' || !config.admin.passwordHash) {
       await verifyPassword('x', '');
-      return res.status(401).json({ error: 'Wrong username or password.' });
+      return res.status(401).json({ error: wrong });
     }
     const userOk = safeEqual(username, config.admin.username);
     const passOk = await verifyPassword(password, config.admin.passwordHash);
-    if (!userOk || !passOk) {
+    let codeOk = true;
+    let step = null;
+    if (twoFactor) {
+      step = verifyTotp(config.admin.totpSecret, typeof code === 'string' ? code : '');
+      codeOk = step !== null && step > lastTotpStep;
+    }
+    if (!userOk || !passOk || !codeOk) {
       guard.fail();
       audit(db, 'anonymous', 'login_failed', `ip=${req.ip}`);
       logger.warn(`[admin] failed login from ${req.ip}`);
-      return res.status(401).json({ error: 'Wrong username or password.' });
+      return res.status(401).json({ error: wrong });
     }
+    if (twoFactor) lastTotpStep = step;
     guard.succeed();
     // Drop any session the browser already had (prevents session fixation).
     sessions.destroy(parseCookies(req.headers.cookie)[config.sessionCookieName]);
@@ -93,7 +104,7 @@ function adminRoutes({ db, config, sessions, logger, mailer }) {
 
   router.get('/session', (req, res) => {
     const { session } = readSession(req);
-    if (!session) return res.json({ authenticated: false });
+    if (!session) return res.json({ authenticated: false, twoFactor });
     return res.json({ authenticated: true, username: session.username, csrfToken: session.csrfToken });
   });
 

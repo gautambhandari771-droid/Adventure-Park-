@@ -37,6 +37,10 @@
           <label for="l-pass">Password</label>
           <input id="l-pass" name="password" type="password" autocomplete="current-password" required maxlength="200">
         </div>
+        <div class="field" id="l-code-field" hidden>
+          <label for="l-code">6-digit code from your authenticator app</label>
+          <input id="l-code" name="code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code">
+        </div>
         <button class="btn btn-fire btn-block" type="submit">Log in</button>
         <p class="form-status error" id="login-error" role="alert" hidden></p>
       </form>
