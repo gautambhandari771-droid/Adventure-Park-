@@ -5,7 +5,8 @@
   var KEY = 'ap-theme';
   var root = document.documentElement;
   var NEXT = { auto: 'light', light: 'dark', dark: 'auto' };
-  var NAMES = { auto: 'Auto', light: 'Light', dark: 'Dark' };
+  var HINDI = /^hi\b/i.test(root.lang || '');
+  var NAMES = HINDI ? { auto: 'ऑटो', light: 'लाइट', dark: 'डार्क' } : { auto: 'Auto', light: 'Light', dark: 'Dark' };
 
   function read() {
     try {
@@ -35,8 +36,10 @@
     var buttons = document.querySelectorAll('.theme-toggle');
     for (var i = 0; i < buttons.length; i += 1) {
       var btn = buttons[i];
-      btn.setAttribute('aria-label', 'Theme: ' + NAMES[mode] + '. Tap to change to ' + NAMES[NEXT[mode]] + '.');
-      btn.title = 'Theme: ' + NAMES[mode];
+      btn.setAttribute('aria-label', HINDI
+        ? 'थीम: ' + NAMES[mode] + '। ' + NAMES[NEXT[mode]] + ' पर बदलने के लिए टैप करें।'
+        : 'Theme: ' + NAMES[mode] + '. Tap to change to ' + NAMES[NEXT[mode]] + '.');
+      btn.title = (HINDI ? 'थीम: ' : 'Theme: ') + NAMES[mode];
       var use = btn.querySelector('use');
       if (use) use.setAttribute('href', use.getAttribute('href').split('#')[0] + '#i-theme-' + mode);
       var label = btn.querySelector('.theme-label');

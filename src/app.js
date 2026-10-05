@@ -19,6 +19,9 @@ const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const TEMPLATED = {
   '/': 'index.html',
   '/index.html': 'index.html',
+  // Hindi version. "/hi" (no slash) is redirected to "/hi/" by the static file server.
+  '/hi/': 'hi/index.html',
+  '/hi/index.html': 'hi/index.html',
   '/privacy': 'privacy.html',
   '/privacy.html': 'privacy.html',
   '/terms': 'terms.html',

@@ -31,6 +31,81 @@
   var inrFmt = new Intl.NumberFormat('en-IN');
   function inr(n) { return '₹' + inrFmt.format(n); }
 
+  // Messages in the page's language (English, or Hindi on /hi/).
+  var HINDI = /^hi\b/i.test(document.documentElement.lang || '');
+  var T = HINDI ? {
+    perPersonPrice: function (n, rate, weekend) { return n + ' × ' + inr(rate) + ' प्रति व्यक्ति, ' + (weekend ? 'वीकेंड' : 'सामान्य दिन') + ' का रेट'; },
+    perRoom: function (rate) { return inr(rate) + ' प्रति कमरा प्रति रात से (उस सीज़न का रेट)'; },
+    perNight: function (total, n, rate) { return inr(total) + ' प्रति रात से (' + n + ' × ' + inr(rate) + ' प्रति व्यक्ति)'; },
+    estimateLine: function (text) { return 'अनुमानित कीमत: ' + text + '। सही कीमत हम कॉल पर कन्फ़र्म करेंगे।'; },
+    estimate: 'अनुमानित कीमत: ',
+    name: 'कृपया अपना नाम लिखें।',
+    phone: 'कृपया सही मोबाइल नंबर लिखें।',
+    activity: 'कृपया एक्टिविटी चुनें।',
+    date: 'कृपया तारीख़ चुनें।',
+    monsoon: 'जुलाई और अगस्त में (मानसून) राफ्टिंग बंद रहती है। कैंपिंग और गेस्ट हाउस पूरे साल खुले हैं।',
+    past: 'बीती हुई तारीख़ नहीं चुन सकते।',
+    people: 'लोगों की संख्या 1 से 60 के बीच होनी चाहिए।',
+    consent: 'कृपया सहमति दें ताकि हम इस बुकिंग के बारे में आपसे संपर्क कर सकें।',
+    serverField: 'कृपया यह जानकारी जाँचें।',
+    checkFields: 'कृपया लाल रंग में दिखाई गई जानकारी जाँचें।',
+    callUs: 'कृपया हमें +91 87555 42743 पर कॉल या WhatsApp करें।',
+    sending: 'भेजा जा रहा है…',
+    submit: 'बुकिंग अनुरोध भेजें',
+    waFallbackBtn: 'अपनी बुकिंग WhatsApp पर भेजें',
+    notSent: 'माफ़ कीजिए, आपका अनुरोध ऑनलाइन नहीं भेजा जा सका। कृपया इसे WhatsApp पर भेजें या +91 87555 42743 पर कॉल करें।',
+    thanks: ['धन्यवाद! आपका अनुरोध ', ' हमें मिल गया है। हम जल्द ही आपको कॉल या WhatsApp करके कन्फ़र्म करेंगे।'],
+    emailOnWay: function (email) { return 'कन्फ़र्मेशन ईमेल ' + email + ' पर भेजा जा रहा है। अगर न दिखे तो स्पैम फ़ोल्डर देखें।'; },
+    waFaster: 'जल्दी जवाब के लिए जानकारी WhatsApp पर भेजें',
+    offline: 'कनेक्ट नहीं हो सका। कृपया अपना इंटरनेट जाँचें, या +91 87555 42743 पर कॉल या WhatsApp करें।',
+    waText: function (data, reference, activity, estimate) {
+      return ['नमस्ते Adventure Park, मैंने बुकिंग अनुरोध ' + reference + ' भेजा है।', 'एक्टिविटी: ' + activity,
+        'तारीख़: ' + data.date + ', लोग: ' + data.people, estimate ? 'अनुमानित कीमत: ' + estimate : null, 'नाम: ' + data.name];
+    },
+    autoresponse: function (reference, activity, data, estimate) {
+      return 'Adventure Park, शिवपुरी चुनने के लिए धन्यवाद। हमें ' + data.date + ' के लिए ' + activity + ' (' + data.people + ' लोग) का आपका बुकिंग अनुरोध ' +
+        reference + ' मिल गया है। ' + (estimate ? 'अनुमानित कीमत: ' + estimate + '। ' : '') +
+        'हम +91 87555 42743 से कॉल या WhatsApp करके आपका स्लॉट और सही कीमत कन्फ़र्म करेंगे। ' +
+        'हम बुकिंग सिर्फ़ अपने आधिकारिक नंबर और ईमेल से कन्फ़र्म करते हैं, और कभी भी आपका कार्ड PIN, OTP या पासवर्ड नहीं माँगते।';
+    }
+  } : {
+    perPersonPrice: function (n, rate, weekend) { return n + ' × ' + inr(rate) + ' per person, ' + (weekend ? 'weekend' : 'weekday') + ' price'; },
+    perRoom: function (rate) { return 'from ' + inr(rate) + ' per room per night for that season'; },
+    perNight: function (total, n, rate) { return 'from ' + inr(total) + ' per night (' + n + ' × ' + inr(rate) + ' per person)'; },
+    estimateLine: function (text) { return 'Estimated price: ' + text + '. We confirm the final price when we call you.'; },
+    estimate: 'Estimated price: ',
+    name: 'Please enter your name.',
+    phone: 'Please enter a valid mobile number.',
+    activity: 'Please choose an activity.',
+    date: 'Please choose a date.',
+    monsoon: 'Rafting is closed in July and August (monsoon). Camping and the guest house are open all year.',
+    past: 'The date cannot be in the past.',
+    people: 'Group size must be between 1 and 60.',
+    consent: 'Please agree so we can contact you about this booking.',
+    serverField: null,
+    checkFields: 'Please check the highlighted fields.',
+    callUs: 'Please call or WhatsApp us at +91 87555 42743.',
+    sending: 'Sending…',
+    submit: 'Send booking request',
+    waFallbackBtn: 'Send your booking on WhatsApp',
+    notSent: 'Sorry, your request could not be sent online. Please send it on WhatsApp instead, or call +91 87555 42743.',
+    thanks: ['Thank you! Your request ', ' has been received. We will call or WhatsApp you soon to confirm.'],
+    emailOnWay: function (email) { return 'A confirmation email is on its way to ' + email + '. Please check your spam folder if you do not see it.'; },
+    waFaster: 'Send details on WhatsApp for a faster reply',
+    offline: 'Could not connect. Please check your internet, or call or WhatsApp us at +91 87555 42743.',
+    waText: function (data, reference, activity, estimate) {
+      return ['Hello Adventure Park, I sent booking request ' + reference + '.', 'Activity: ' + activity,
+        'Date: ' + data.date + ', People: ' + data.people, estimate ? 'Estimate: ' + estimate : null, 'Name: ' + data.name];
+    },
+    autoresponse: function (reference, activity, data, estimate) {
+      return 'Thank you for choosing Adventure Park, Shivpuri. We have received your booking request ' + reference +
+        ' for ' + activity + ' on ' + data.date + ' (' + data.people + (data.people === 1 ? ' person' : ' people') + '). ' +
+        (estimate ? 'Estimated price: ' + estimate + '. ' : '') +
+        'We will call or WhatsApp you from +91 87555 42743 to confirm your slot and the final price. ' +
+        'We only confirm bookings from our official number and email, and we never ask for your card PIN, OTP or passwords.';
+    }
+  };
+
   function estimateText(activity, date, people) {
     var p = PRICES[activity];
     if (!p || !/^\d{4}-\d{2}-\d{2}$/.test(date || '')) return '';
@@ -39,10 +114,10 @@
       var day = new Date(date + 'T00:00:00Z').getUTCDay();
       var weekend = day === 0 || day === 6;
       var rate = weekend ? p.weekendRate : p.rate;
-      return inr(rate * n) + ' (' + n + ' × ' + inr(rate) + ' per person, ' + (weekend ? 'weekend' : 'weekday') + ' price)';
+      return inr(rate * n) + ' (' + T.perPersonPrice(n, rate, weekend) + ')';
     }
-    if (p.seasonalRate) return 'from ' + inr(p.seasonalRate[Number(date.slice(5, 7))]) + ' per room per night for that season';
-    return 'from ' + inr(p.rate * n) + ' per night (' + n + ' × ' + inr(p.rate) + ' per person)';
+    if (p.seasonalRate) return T.perRoom(p.seasonalRate[Number(date.slice(5, 7))]);
+    return T.perNight(p.rate * n, n, p.rate);
   }
 
   var estimateBox = document.getElementById('price-estimate');
@@ -50,7 +125,7 @@
     if (!estimateBox) return;
     var text = estimateText(form.elements.activity.value, form.elements.date.value, form.elements.people.value);
     estimateBox.hidden = !text;
-    estimateBox.textContent = text ? 'Estimated price: ' + text + '. We confirm the final price when we call you.' : '';
+    estimateBox.textContent = text ? T.estimateLine(text) : '';
   }
   ['change', 'input'].forEach(function (evt) {
     ['activity', 'date', 'people'].forEach(function (name) {
@@ -121,18 +196,18 @@
 
   function clientChecks(data) {
     var errors = {};
-    if (!data.name || data.name.trim().length < 2) errors.name = 'Please enter your name.';
-    if (!/^[+\d][\d\s\-()]{6,18}$/.test(data.phone || '')) errors.phone = 'Please enter a valid mobile number.';
-    if (!data.activity) errors.activity = 'Please choose an activity.';
+    if (!data.name || data.name.trim().length < 2) errors.name = T.name;
+    if (!/^[+\d][\d\s\-()]{6,18}$/.test(data.phone || '')) errors.phone = T.phone;
+    if (!data.activity) errors.activity = T.activity;
     if (!data.date) {
-      errors.date = 'Please choose a date.';
+      errors.date = T.date;
     } else {
       var month = Number(data.date.slice(5, 7));
-      if ((month === 7 || month === 8) && data.activity.indexOf('rafting-') === 0) errors.date = 'Rafting is closed in July and August (monsoon). Camping and the guest house are open all year.';
-      else if (data.date < todayInIndia()) errors.date = 'The date cannot be in the past.';
+      if ((month === 7 || month === 8) && data.activity.indexOf('rafting-') === 0) errors.date = T.monsoon;
+      else if (data.date < todayInIndia()) errors.date = T.past;
     }
-    if (!(data.people >= 1 && data.people <= 60)) errors.people = 'Group size must be between 1 and 60.';
-    if (!data.consent) errors.consent = 'Please agree so we can contact you about this booking.';
+    if (!(data.people >= 1 && data.people <= 60)) errors.people = T.people;
+    if (!data.consent) errors.consent = T.consent;
     return errors;
   }
 
@@ -178,13 +253,7 @@
   }
 
   function whatsappLink(data, reference, estimate) {
-    var text = [
-      'Hello Adventure Park, I sent booking request ' + reference + '.',
-      'Activity: ' + activityName(data.activity),
-      'Date: ' + data.date + ', People: ' + data.people,
-      estimate ? 'Estimate: ' + estimate : null,
-      'Name: ' + data.name
-    ].filter(Boolean).join('\n');
+    var text = T.waText(data, reference, activityName(data.activity), estimate).filter(Boolean).join('\n');
     return 'https://wa.me/918755542743?text=' + encodeURIComponent(text);
   }
 
@@ -206,13 +275,10 @@
       'Estimated price': estimate || 'Price on request',
       Message: data.message || '-'
     };
+    if (HINDI) payload.Language = 'Hindi (booked on the Hindi page)';
     if (data.email) {
       payload.email = data.email;
-      payload._autoresponse = 'Thank you for choosing Adventure Park, Shivpuri. We have received your booking request ' + reference +
-        ' for ' + activity + ' on ' + data.date + ' (' + data.people + (data.people === 1 ? ' person' : ' people') + '). ' +
-        (estimate ? 'Estimated price: ' + estimate + '. ' : '') +
-        'We will call or WhatsApp you from +91 87555 42743 to confirm your slot and the final price. ' +
-        'We only confirm bookings from our official number and email, and we never ask for your card PIN, OTP or passwords.';
+      payload._autoresponse = T.autoresponse(reference, activity, data, estimate);
     }
     return postJson(FORMSUBMIT_URL, payload, 15000)
       .then(function (r) { return r.status === 200 && String(r.body.success) === 'true'; })
@@ -249,22 +315,23 @@
 
     busy = true;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
+    submitBtn.textContent = T.sending;
 
     saveBooking(data)
       .then(function (server) {
         if (server.status === 422 && server.body.fields) {
-          Object.keys(server.body.fields).forEach(function (n) { setFieldError(n, server.body.fields[n]); });
-          showStatus('error', [para(server.body.error || 'Please check the highlighted fields.')]);
+          Object.keys(server.body.fields).forEach(function (n) { setFieldError(n, T.serverField || server.body.fields[n]); });
+          showStatus('error', [para(HINDI ? T.checkFields : server.body.error || T.checkFields)]);
           return null;
         }
         if (server.status === 429 || server.status === 403) {
-          showStatus('error', [para(server.body.error || 'Please call or WhatsApp us at +91 87555 42743.')]);
+          showStatus('error', [para(HINDI ? T.callUs : server.body.error || T.callUs)]);
           return null;
         }
         var saved = server.status === 201 && server.body.ok;
         var reference = saved ? server.body.reference : makeReference();
-        var estimate = saved ? server.body.estimate : estimateText(data.activity, data.date, data.people);
+        // The server writes its estimate in English, so the Hindi page uses its own (same price list).
+        var estimate = saved && !HINDI ? server.body.estimate : estimateText(data.activity, data.date, data.people);
         // FormSubmit emails the booking to us (and a confirmation to the customer)
         // whenever the website's own server is not running or cannot send email.
         var useFormSubmit = !saved || !server.body.ownerNotified;
@@ -276,30 +343,30 @@
             wa.href = whatsappLink(data, reference, estimate);
             wa.target = '_blank';
             wa.rel = 'noopener noreferrer';
-            wa.textContent = 'Send your booking on WhatsApp';
+            wa.textContent = T.waFallbackBtn;
             var pw = document.createElement('p');
             pw.appendChild(wa);
-            showStatus('error', [para('Sorry, your request could not be sent online. Please send it on WhatsApp instead, or call +91 87555 42743.'), pw]);
+            showStatus('error', [para(T.notSent), pw]);
             return null;
           }
           var ref = document.createElement('span');
           ref.className = 'ref';
           ref.textContent = reference;
           var p1 = document.createElement('p');
-          p1.append('Thank you! Your request ', ref, ' has been received. We will call or WhatsApp you soon to confirm.');
+          p1.append(T.thanks[0], ref, T.thanks[1]);
           var nodes = [p1];
-          if (estimate) nodes.push(para('Estimated price: ' + estimate + '.'));
+          if (estimate) nodes.push(para(T.estimate + estimate + (HINDI ? '।' : '.')));
           if ((saved && server.body.confirmationEmail) || (forwarded && data.email)) {
-            nodes.push(para('A confirmation email is on its way to ' + data.email + '. Please check your spam folder if you do not see it.'));
+            nodes.push(para(T.emailOnWay(data.email)));
           }
-          var waUrl = saved && server.body.whatsappUrl ? server.body.whatsappUrl : whatsappLink(data, reference, estimate);
+          var waUrl = saved && server.body.whatsappUrl && !HINDI ? server.body.whatsappUrl : whatsappLink(data, reference, estimate);
           if (/^https:\/\/wa\.me\//.test(waUrl)) {
             var a = document.createElement('a');
             a.className = 'btn btn-water btn-sm';
             a.href = waUrl;
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
-            a.textContent = 'Send details on WhatsApp for a faster reply';
+            a.textContent = T.waFaster;
             var p2 = document.createElement('p');
             p2.appendChild(a);
             nodes.push(p2);
@@ -311,12 +378,12 @@
         });
       })
       .catch(function () {
-        showStatus('error', [para('Could not connect. Please check your internet, or call or WhatsApp us at +91 87555 42743.')]);
+        showStatus('error', [para(T.offline)]);
       })
       .finally(function () {
         busy = false;
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Send booking request';
+        submitBtn.textContent = T.submit;
       });
   });
 })();

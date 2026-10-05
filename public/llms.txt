@@ -13,6 +13,7 @@
 - Rafting hours: 7:00 AM to 5:00 PM
 - Rafting season: September to June (closed in July and August for the monsoon)
 - Camping and guest house: open all year
+- Languages: English and Hindi (website and phone)
 
 ## Rafting prices (per person)
 
@@ -35,5 +36,6 @@ Send a request on the website (%SITE_URL%/#book) or call or WhatsApp +91 87555 4
 ## Pages
 
 - [Home](%SITE_URL%/): activities, prices, season, safety, FAQ and contact
+- [Hindi home page (हिंदी)](%SITE_URL%/hi/): the same information in Hindi
 - [Privacy policy](%SITE_URL%/privacy)
 - [Terms and conditions](%SITE_URL%/terms)

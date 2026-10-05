@@ -22,7 +22,7 @@ if (!/^https:\/\/[a-z0-9.-]+\.[a-z]{2,}$/i.test(siteUrl)) {
   process.exit(1);
 }
 
-const TEMPLATED = new Set(['index.html', 'privacy.html', 'terms.html', 'robots.txt', 'sitemap.xml', 'llms.txt']);
+const TEMPLATED = new Set(['index.html', 'hi/index.html', 'privacy.html', 'terms.html', 'robots.txt', 'sitemap.xml', 'llms.txt']);
 const SKIP = new Set(['admin']);
 
 function copyDir(from, to) {
@@ -32,7 +32,7 @@ function copyDir(from, to) {
     const src = path.join(from, entry.name);
     const dest = path.join(to, entry.name);
     if (entry.isDirectory()) copyDir(src, dest);
-    else if (TEMPLATED.has(entry.name) && from === PUBLIC) {
+    else if (TEMPLATED.has(path.relative(PUBLIC, src).split(path.sep).join('/'))) {
       let text = fs.readFileSync(src, 'utf8').replaceAll('%SITE_URL%', siteUrl);
       if (entry.name === 'index.html') {
         // No server here: send bookings straight to FormSubmit.

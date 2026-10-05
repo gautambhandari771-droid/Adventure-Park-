@@ -617,3 +617,44 @@ h1, h2, h3, .eyebrow { width: fit-content; max-width: 100%; }
 .facts-list dt { font-weight: 800; font-size: .88rem; color: var(--ink-soft); }
 .facts-list dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 @media (max-width: 420px) { .facts-list div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+
+/* Language switch (English / हिंदी) */
+.lang-switch {
+  display: inline-flex; align-items: center; flex-shrink: 0;
+  min-height: 40px; padding: 6px 12px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+  font-size: .85rem; font-weight: 700; text-decoration: none;
+}
+.lang-switch:hover { border-color: var(--link); color: var(--link); }
+.header-inner .lang-switch { order: 3; }
+@media (max-width: 880px) { .header-inner .lang-switch { order: 0; } }
+.lang-short { display: none; }
+@media (max-width: 480px) {
+  .lang-switch { width: 40px; padding: 0; justify-content: center; }
+  .lang-full { display: none; }
+  .lang-short { display: inline; }
+  .header-inner { gap: 8px; }
+}
+/* Devanagari needs a little more line height to read well. */
+html[lang^="hi"] body { line-height: 1.7; }
+html[lang^="hi"] .brand-place, html[lang^="hi"] .eyebrow { letter-spacing: 0; }
+html[lang^="hi"] h1, html[lang^="hi"] h2, html[lang^="hi"] h3 { line-height: 1.4; letter-spacing: 0; }
+@media (max-width: 480px) {
+  .brand img { width: 40px; height: 40px; }
+  .brand-name { font-size: 1.05rem; }
+  .brand-place { font-size: .68rem; letter-spacing: .04em; }
+}
+@media (max-width: 360px) {
+  .brand img { width: 34px; height: 34px; }
+  .brand-name { font-size: .98rem; }
+  .brand-place { font-size: .62rem; letter-spacing: .02em; }
+}
+@media (max-width: 340px) {
+  .header-inner { gap: 6px; }
+  .brand { gap: 6px; }
+  .brand img { width: 30px; height: 30px; }
+  .brand-name { font-size: .92rem; }
+  .brand-place { display: none; }
+  .lang-switch, .theme-toggle { width: 36px; min-height: 36px; padding: 0; justify-content: center; }
+  .nav-toggle { width: 38px; }
+}
