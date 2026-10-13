@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-labelledby="t d">
+  <title id="t">Rafting paddle, white and grey</title>
+  <desc id="d">Rafting paddle with a white T-grip, charcoal aluminium shaft with grey grip sleeve, and a white blade with grey edge and spine.</desc>
+  <defs>
+    <radialGradient id="pbg" cx="0.5" cy="0.42" r="0.75">
+      <stop offset="0" stop-color="#F3F5F7"/>
+      <stop offset="0.55" stop-color="#E1E6EA"/>
+      <stop offset="1" stop-color="#B9C1C8"/>
+    </radialGradient>
+    <linearGradient id="pfloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.07"/>
+    </linearGradient>
+    <filter id="pbggrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#pbg)"/>
+  <rect y="760" width="1200" height="440" fill="url(#pfloor)"/>
+  <rect width="1200" height="1200" filter="url(#pbggrain)"/>
+  <defs>
+    <filter id="pb3" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="3"/></filter><filter id="pb6" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="6"/></filter><filter id="pb10" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="10"/></filter><filter id="pb22" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="22"/></filter><filter id="pb40" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="pplastic" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+    </filter>
+    <filter id="pfabric" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6 0.22" numOctaves="2" seed="11"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.15"/></feComponentTransfer>
+    </filter>
+    <filter id="pwebbing" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 2.4" numOctaves="1" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="preflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C9D0D6"/>
+      <stop offset="0.3" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B4BCC3"/>
+      <stop offset="0.75" stop-color="#F4F6F8"/>
+      <stop offset="1" stop-color="#AEB7BF"/>
+    </linearGradient>
+    <linearGradient id="pbuckle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5056"/>
+      <stop offset="0.25" stop-color="#2A2E32"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="pshaft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#262A2E"/>
+      <stop offset="0.25" stop-color="#5E666D"/>
+      <stop offset="0.42" stop-color="#C9D0D6"/>
+      <stop offset="0.52" stop-color="#8E979E"/>
+      <stop offset="0.8" stop-color="#40464C"/>
+      <stop offset="1" stop-color="#1C1F22"/>
+    </linearGradient>
+    <linearGradient id="psleeve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#55606A"/>
+      <stop offset="0.4" stop-color="#B2BAC1"/>
+      <stop offset="0.6" stop-color="#8A939B"/>
+      <stop offset="1" stop-color="#454C53"/>
+    </linearGradient>
+    <linearGradient id="pgrip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#E3E8EC"/>
+      <stop offset="1" stop-color="#A1AAB2"/>
+    </linearGradient>
+    <linearGradient id="pblade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B3BBC2"/>
+      <stop offset="0.18" stop-color="#ECEFF2"/>
+      <stop offset="0.4" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#F3F5F7"/>
+      <stop offset="0.85" stop-color="#D0D6DB"/>
+      <stop offset="1" stop-color="#9EA7AF"/>
+    </linearGradient>
+    <linearGradient id="pspine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4C535A"/>
+      <stop offset="0.45" stop-color="#A9B2BA"/>
+      <stop offset="0.6" stop-color="#7B848C"/>
+      <stop offset="1" stop-color="#3A4046"/>
+    </linearGradient>
+    <clipPath id="pbladeClip"><path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z"/></clipPath>
+    <pattern id="pknurl" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0 L0 10 M0 0 L10 0" stroke="#000" stroke-width="2" opacity="0.28"/>
+    </pattern>
+  </defs>
+  <g transform="translate(600 600) rotate(40) scale(0.98) translate(0 -572)">
+    <!-- cast shadow -->
+    <g transform="translate(70 40)" opacity="0.32" filter="url(#pb22)">
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="#1F252A"/>
+    <rect x="-17" y="70" width="34" height="650" fill="#1F252A"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="#1F252A"/></g>
+    <g transform="translate(24 12)" opacity="0.28" filter="url(#pb6)">
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="#1F252A"/>
+    <rect x="-17" y="70" width="34" height="650" fill="#1F252A"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="#1F252A"/></g>
+
+    <!-- shaft -->
+    <rect x="-17" y="70" width="34" height="650" fill="url(#pshaft)"/>
+    <rect x="-17" y="70" width="34" height="650" filter="url(#pplastic)"/>
+    <rect x="-19" y="96" width="38" height="150" rx="4" fill="url(#psleeve)"/>
+    <rect x="-19" y="96" width="38" height="150" rx="4" fill="url(#pknurl)"/>
+    <rect x="-19" y="96" width="38" height="6" rx="3" fill="#2C3136"/>
+    <rect x="-19" y="240" width="38" height="6" rx="3" fill="#2C3136"/>
+
+    <!-- T-grip -->
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="url(#pgrip)"/>
+    <path d="M-66 2 C-50 -2 50 -2 66 2" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-76 22 C-70 34 -50 36 -30 34 M76 22 C70 34 50 36 30 34" fill="none" stroke="#7F8890" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <rect x="-16" y="64" width="32" height="14" rx="3" fill="#868F97"/>
+
+    <!-- blade -->
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="url(#pblade)"/>
+    <g clip-path="url(#pbladeClip)">
+      <path d="M-16 690 C-16 742 -62 764 -88 792" fill="none" stroke="#000" stroke-width="18" opacity="0.16" filter="url(#pb10)"/>
+      <ellipse cx="-34" cy="920" rx="26" ry="190" fill="#FFFFFF" opacity="0.85" filter="url(#pb10)"/>
+      <!-- moulded lip just inside the edge -->
+      <path d="M-6 742 C-30 768 -64 784 -78 802 C-86 814 -88 836 -86 862 L-80 1074 C-77 1118 -46 1136 0 1136 C46 1136 77 1118 80 1074 L86 862 C88 836 86 814 78 802 C64 784 30 768 6 742" fill="none" stroke="#B9C1C8" stroke-width="5" opacity="0.8"/>
+      <path d="M-6 742 C-30 768 -64 784 -78 802 C-86 814 -88 836 -86 862 L-80 1074 C-77 1118 -46 1136 0 1136 C46 1136 77 1118 80 1074 L86 862 C88 836 86 814 78 802 C64 784 30 768 6 742" fill="none" stroke="#FFFFFF" stroke-width="2" transform="translate(-2 -2)" opacity="0.9"/>
+      <rect x="-120" y="680" width="240" height="500" filter="url(#pplastic)"/>
+    </g>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="none" stroke="#5F676E" stroke-width="9"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="none" stroke="#B5BDC4" stroke-width="2" transform="translate(-1 -1)" opacity="0.7"/>
+    <!-- centre spine and ferrule -->
+    <path d="M-14 712 L-11 1096 Q0 1114 11 1096 L14 712 Z" fill="url(#pspine)"/>
+    <path d="M-3 716 L-2 1098" stroke="#D5DBE0" stroke-width="2.5" opacity="0.8"/>
+    <rect x="-20" y="690" width="40" height="26" rx="5" fill="url(#pshaft)"/>
+    <rect x="-20" y="690" width="40" height="4" rx="2" fill="#1C1F22"/>
+    <text transform="translate(54 1060) rotate(-90)" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="21" letter-spacing="3" fill="#5F676E">ADVENTURE PARK</text>
+  </g>
+  
+</svg>

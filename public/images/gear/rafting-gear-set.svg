@@ -1,0 +1,448 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-labelledby="t d">
+  <title id="t">Rafting gear set, white and grey</title>
+  <desc id="d">Matching white and grey rafting kit: life jacket, helmet and paddle.</desc>
+  <defs>
+    <radialGradient id="kbg" cx="0.5" cy="0.42" r="0.75">
+      <stop offset="0" stop-color="#F3F5F7"/>
+      <stop offset="0.55" stop-color="#E1E6EA"/>
+      <stop offset="1" stop-color="#B9C1C8"/>
+    </radialGradient>
+    <linearGradient id="kfloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.07"/>
+    </linearGradient>
+    <filter id="kbggrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#kbg)"/>
+  <rect y="760" width="1200" height="440" fill="url(#kfloor)"/>
+  <rect width="1200" height="1200" filter="url(#kbggrain)"/><g transform="translate(480 110) scale(0.68)">
+  <defs>
+    <filter id="kpb3" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="3"/></filter><filter id="kpb6" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="6"/></filter><filter id="kpb10" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="10"/></filter><filter id="kpb22" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="22"/></filter><filter id="kpb40" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="kpplastic" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+    </filter>
+    <filter id="kpfabric" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6 0.22" numOctaves="2" seed="11"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.15"/></feComponentTransfer>
+    </filter>
+    <filter id="kpwebbing" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 2.4" numOctaves="1" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="kpreflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C9D0D6"/>
+      <stop offset="0.3" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B4BCC3"/>
+      <stop offset="0.75" stop-color="#F4F6F8"/>
+      <stop offset="1" stop-color="#AEB7BF"/>
+    </linearGradient>
+    <linearGradient id="kpbuckle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5056"/>
+      <stop offset="0.25" stop-color="#2A2E32"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="kpshaft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#262A2E"/>
+      <stop offset="0.25" stop-color="#5E666D"/>
+      <stop offset="0.42" stop-color="#C9D0D6"/>
+      <stop offset="0.52" stop-color="#8E979E"/>
+      <stop offset="0.8" stop-color="#40464C"/>
+      <stop offset="1" stop-color="#1C1F22"/>
+    </linearGradient>
+    <linearGradient id="kpsleeve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#55606A"/>
+      <stop offset="0.4" stop-color="#B2BAC1"/>
+      <stop offset="0.6" stop-color="#8A939B"/>
+      <stop offset="1" stop-color="#454C53"/>
+    </linearGradient>
+    <linearGradient id="kpgrip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#E3E8EC"/>
+      <stop offset="1" stop-color="#A1AAB2"/>
+    </linearGradient>
+    <linearGradient id="kpblade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B3BBC2"/>
+      <stop offset="0.18" stop-color="#ECEFF2"/>
+      <stop offset="0.4" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#F3F5F7"/>
+      <stop offset="0.85" stop-color="#D0D6DB"/>
+      <stop offset="1" stop-color="#9EA7AF"/>
+    </linearGradient>
+    <linearGradient id="kpspine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4C535A"/>
+      <stop offset="0.45" stop-color="#A9B2BA"/>
+      <stop offset="0.6" stop-color="#7B848C"/>
+      <stop offset="1" stop-color="#3A4046"/>
+    </linearGradient>
+    <clipPath id="kpbladeClip"><path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z"/></clipPath>
+    <pattern id="kpknurl" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0 L0 10 M0 0 L10 0" stroke="#000" stroke-width="2" opacity="0.28"/>
+    </pattern>
+  </defs>
+  <g transform="translate(600 600) rotate(40) scale(0.98) translate(0 -572)">
+    <!-- cast shadow -->
+    <g transform="translate(70 40)" opacity="0.32" filter="url(#kpb22)">
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="#1F252A"/>
+    <rect x="-17" y="70" width="34" height="650" fill="#1F252A"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="#1F252A"/></g>
+    <g transform="translate(24 12)" opacity="0.28" filter="url(#kpb6)">
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="#1F252A"/>
+    <rect x="-17" y="70" width="34" height="650" fill="#1F252A"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="#1F252A"/></g>
+
+    <!-- shaft -->
+    <rect x="-17" y="70" width="34" height="650" fill="url(#kpshaft)"/>
+    <rect x="-17" y="70" width="34" height="650" filter="url(#kpplastic)"/>
+    <rect x="-19" y="96" width="38" height="150" rx="4" fill="url(#kpsleeve)"/>
+    <rect x="-19" y="96" width="38" height="150" rx="4" fill="url(#kpknurl)"/>
+    <rect x="-19" y="96" width="38" height="6" rx="3" fill="#2C3136"/>
+    <rect x="-19" y="240" width="38" height="6" rx="3" fill="#2C3136"/>
+
+    <!-- T-grip -->
+    <path d="M-80 14 C-82 -2 -66 -10 -44 -8 L44 -8 C66 -10 82 -2 80 14 C80 34 64 42 42 40 L24 40 C14 40 12 48 12 58 L12 78 L-12 78 L-12 58 C-12 48 -14 40 -24 40 L-42 40 C-64 42 -80 34 -80 14 Z" fill="url(#kpgrip)"/>
+    <path d="M-66 2 C-50 -2 50 -2 66 2" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-76 22 C-70 34 -50 36 -30 34 M76 22 C70 34 50 36 30 34" fill="none" stroke="#7F8890" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <rect x="-16" y="64" width="32" height="14" rx="3" fill="#868F97"/>
+
+    <!-- blade -->
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="url(#kpblade)"/>
+    <g clip-path="url(#kpbladeClip)">
+      <path d="M-16 690 C-16 742 -62 764 -88 792" fill="none" stroke="#000" stroke-width="18" opacity="0.16" filter="url(#kpb10)"/>
+      <ellipse cx="-34" cy="920" rx="26" ry="190" fill="#FFFFFF" opacity="0.85" filter="url(#kpb10)"/>
+      <!-- moulded lip just inside the edge -->
+      <path d="M-6 742 C-30 768 -64 784 -78 802 C-86 814 -88 836 -86 862 L-80 1074 C-77 1118 -46 1136 0 1136 C46 1136 77 1118 80 1074 L86 862 C88 836 86 814 78 802 C64 784 30 768 6 742" fill="none" stroke="#B9C1C8" stroke-width="5" opacity="0.8"/>
+      <path d="M-6 742 C-30 768 -64 784 -78 802 C-86 814 -88 836 -86 862 L-80 1074 C-77 1118 -46 1136 0 1136 C46 1136 77 1118 80 1074 L86 862 C88 836 86 814 78 802 C64 784 30 768 6 742" fill="none" stroke="#FFFFFF" stroke-width="2" transform="translate(-2 -2)" opacity="0.9"/>
+      <rect x="-120" y="680" width="240" height="500" filter="url(#kpplastic)"/>
+    </g>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="none" stroke="#5F676E" stroke-width="9"/>
+    <path d="M-16 700 C-16 742 -62 764 -88 792 C-100 806 -102 832 -100 862 L-94 1080 C-90 1132 -52 1152 0 1152 C52 1152 90 1132 94 1080 L100 862 C102 832 100 806 88 792 C62 764 16 742 16 700 Z" fill="none" stroke="#B5BDC4" stroke-width="2" transform="translate(-1 -1)" opacity="0.7"/>
+    <!-- centre spine and ferrule -->
+    <path d="M-14 712 L-11 1096 Q0 1114 11 1096 L14 712 Z" fill="url(#kpspine)"/>
+    <path d="M-3 716 L-2 1098" stroke="#D5DBE0" stroke-width="2.5" opacity="0.8"/>
+    <rect x="-20" y="690" width="40" height="26" rx="5" fill="url(#kpshaft)"/>
+    <rect x="-20" y="690" width="40" height="4" rx="2" fill="#1C1F22"/>
+    <text transform="translate(54 1060) rotate(-90)" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="21" letter-spacing="3" fill="#5F676E">ADVENTURE PARK</text>
+  </g>
+  </g><g transform="translate(-50 120) scale(0.76)">
+  <defs>
+    <filter id="kjb3" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="3"/></filter><filter id="kjb6" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="6"/></filter><filter id="kjb10" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="10"/></filter><filter id="kjb22" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="22"/></filter><filter id="kjb40" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="kjplastic" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+    </filter>
+    <filter id="kjfabric" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6 0.22" numOctaves="2" seed="11"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.15"/></feComponentTransfer>
+    </filter>
+    <filter id="kjwebbing" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 2.4" numOctaves="1" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="kjreflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C9D0D6"/>
+      <stop offset="0.3" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B4BCC3"/>
+      <stop offset="0.75" stop-color="#F4F6F8"/>
+      <stop offset="1" stop-color="#AEB7BF"/>
+    </linearGradient>
+    <linearGradient id="kjbuckle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5056"/>
+      <stop offset="0.25" stop-color="#2A2E32"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="kjchan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C3CAD0"/>
+      <stop offset="0.22" stop-color="#EEF1F4"/>
+      <stop offset="0.55" stop-color="#FFFFFF"/>
+      <stop offset="0.85" stop-color="#E2E7EB"/>
+      <stop offset="1" stop-color="#B7BFC6"/>
+    </linearGradient>
+    <radialGradient id="kjchest" cx="0.55" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#EEF1F4"/>
+      <stop offset="1" stop-color="#C6CDD3"/>
+    </radialGradient>
+    <linearGradient id="kjside" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#555D64"/>
+      <stop offset="0.6" stop-color="#868F97"/>
+      <stop offset="1" stop-color="#9DA6AE"/>
+    </linearGradient>
+    <radialGradient id="kjcollar" cx="0.5" cy="0.38" r="0.62">
+      <stop offset="0" stop-color="#9AA2AA"/>
+      <stop offset="0.7" stop-color="#868F97"/>
+      <stop offset="1" stop-color="#5E666D"/>
+    </radialGradient>
+    <linearGradient id="kjinner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#596168"/>
+      <stop offset="1" stop-color="#2B3035"/>
+    </linearGradient>
+    <linearGradient id="kjhem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.16"/>
+    </linearGradient>
+    <clipPath id="kjpanelClip"><path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z"/></clipPath>
+    <clipPath id="kjcollarClip"><path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420 Z"/></clipPath>
+  </defs>
+
+  <!-- drop shadow on the backdrop -->
+  <g filter="url(#kjb40)" opacity="0.32" transform="translate(14 34)">
+    <path d="M436 240 C470 210 540 196 600 196 C660 196 730 210 764 240 L840 560 L846 950 L354 950 L360 560 Z" fill="#20262B"/>
+  </g>
+
+  <!-- grey head-support collar -->
+  <path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420 Z" fill="url(#kjcollar)"/>
+  <g clip-path="url(#kjcollarClip)">
+    <path d="M600 196 L600 300" stroke="#5E666D" stroke-width="2" stroke-dasharray="6 5"/>
+    <path d="M466 266 C508 244 552 236 600 236 C648 236 692 244 734 266" fill="none" stroke="#4A5157" stroke-width="18"/>
+    <path d="M466 266 C508 244 552 236 600 236 C648 236 692 244 734 266" fill="none" stroke="url(#kjreflect)" stroke-width="14"/>
+    <rect width="1200" height="1200" filter="url(#kjfabric)"/>
+  </g>
+  <path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420" fill="none" stroke="#3F454B" stroke-width="10" stroke-linejoin="round"/>
+  <!-- inside of the back, seen through the neck -->
+  <path d="M500 300 L700 300 L700 560 L500 560 Z" fill="url(#kjinner)"/>
+  <ellipse cx="600" cy="330" rx="110" ry="40" fill="#000" opacity="0.3" filter="url(#kjb10)"/>
+  <rect x="574" y="318" width="52" height="34" rx="3" fill="#E7EBEE"/>
+  <rect x="584" y="326" width="32" height="3" fill="#8A9299"/><rect x="584" y="334" width="24" height="3" fill="#8A9299"/><rect x="584" y="342" width="28" height="3" fill="#8A9299"/>
+
+  <!-- zipper -->
+  <rect x="588" y="470" width="24" height="476" fill="#2E3338"/>
+  <path d="M600 478 L600 942" stroke="#9AA2AA" stroke-width="12" stroke-dasharray="3 3"/>
+  <path d="M600 478 L600 942" stroke="#5A6168" stroke-width="2"/>
+
+  
+  <g transform="">
+    <g clip-path="url(#kjpanelClip)">
+      <rect x="340" y="280" width="260" height="280" fill="url(#kjchest)"/>
+      <rect x="356" y="552" width="76" height="400" fill="url(#kjchan)"/><rect x="432" y="552" width="80" height="400" fill="url(#kjchan)"/><rect x="512" y="552" width="78" height="400" fill="url(#kjchan)"/>
+      <rect x="340" y="552" width="52" height="420" fill="url(#kjside)"/>
+      <path d="M392 552 L392 950" stroke="#3F454B" stroke-width="2" stroke-dasharray="6 5"/>
+      <rect x="340" y="820" width="260" height="140" fill="url(#kjhem)"/>
+      <path d="M560 300 C556 380 570 440 600 486" fill="none" stroke="#000" stroke-width="30" opacity="0.18" filter="url(#kjb10)"/>
+      <path d="M440 330 C436 400 420 520 376 570" fill="none" stroke="#000" stroke-width="24" opacity="0.14" filter="url(#kjb10)"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#7D868E" stroke-width="10" opacity="0.16"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <path d="M432 556 L432 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M432 556 L432 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/><path d="M512 556 L512 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M512 556 L512 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <!-- reflective tape across the shoulder -->
+      <path d="M440 326 L558 322 L559 344 L440 349 Z" fill="#4A5157"/><path d="M440 329 L558 325 L559 341 L440 346 Z" fill="url(#kjreflect)"/>
+      <rect width="1200" height="1200" filter="url(#kjfabric)"/>
+    </g>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#3F454B" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#7C848C" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.6"/>
+  </g>
+  <g transform="translate(1200 0) scale(-1 1)">
+    <g clip-path="url(#kjpanelClip)">
+      <rect x="340" y="280" width="260" height="280" fill="url(#kjchest)"/>
+      <rect x="356" y="552" width="76" height="400" fill="url(#kjchan)"/><rect x="432" y="552" width="80" height="400" fill="url(#kjchan)"/><rect x="512" y="552" width="78" height="400" fill="url(#kjchan)"/>
+      <rect x="340" y="552" width="52" height="420" fill="url(#kjside)"/>
+      <path d="M392 552 L392 950" stroke="#3F454B" stroke-width="2" stroke-dasharray="6 5"/>
+      <rect x="340" y="820" width="260" height="140" fill="url(#kjhem)"/>
+      <path d="M560 300 C556 380 570 440 600 486" fill="none" stroke="#000" stroke-width="30" opacity="0.18" filter="url(#kjb10)"/>
+      <path d="M440 330 C436 400 420 520 376 570" fill="none" stroke="#000" stroke-width="24" opacity="0.14" filter="url(#kjb10)"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#7D868E" stroke-width="10" opacity="0.16"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <path d="M432 556 L432 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M432 556 L432 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/><path d="M512 556 L512 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M512 556 L512 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <!-- reflective tape across the shoulder -->
+      <path d="M440 326 L558 322 L559 344 L440 349 Z" fill="#4A5157"/><path d="M440 329 L558 325 L559 341 L440 346 Z" fill="url(#kjreflect)"/>
+      <rect width="1200" height="1200" filter="url(#kjfabric)"/>
+    </g>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#3F454B" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#7C848C" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.6"/>
+  </g>
+
+  <!-- brand print on the wearer's left chest -->
+  <text x="688" y="490" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="18" letter-spacing="2.5" fill="#3F454B" transform="rotate(-3 688 490)">ADVENTURE</text>
+  <text x="688" y="514" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="18" letter-spacing="2.5" fill="#3F454B" transform="rotate(-3 688 514)">PARK</text>
+
+  
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#000" opacity="0.28" filter="url(#kjb6)" transform="translate(0 6)"/>
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#191C1F"/>
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#000" filter="url(#kjwebbing)"/>
+    <path d="M346 630 Q600 652 854 630" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 650 Q600 672 854 650" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 626 L876 634 L876 662 L854 654 Z" fill="#191C1F"/>
+    <g transform="translate(600 651)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#kjbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#kjbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#000" opacity="0.28" filter="url(#kjb6)" transform="translate(0 6)"/>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#191C1F"/>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#000" filter="url(#kjwebbing)"/>
+    <path d="M346 734 Q600 756 854 734" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 754 Q600 776 854 754" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 730 L876 738 L876 766 L854 758 Z" fill="#191C1F"/>
+    <g transform="translate(600 755)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#kjbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#kjbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#000" opacity="0.28" filter="url(#kjb6)" transform="translate(0 6)"/>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#191C1F"/>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#000" filter="url(#kjwebbing)"/>
+    <path d="M346 838 Q600 860 854 838" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 858 Q600 880 854 858" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 834 L876 842 L876 870 L854 862 Z" fill="#191C1F"/>
+    <g transform="translate(600 859)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#kjbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#kjbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+  <!-- zipper pull -->
+  <rect x="592" y="480" width="16" height="34" rx="5" fill="#2C3136"/>
+  <rect x="596" y="486" width="8" height="18" rx="3" fill="#7A828A"/>
+  </g><g transform="translate(450 500) scale(0.64)">
+  <defs>
+    <filter id="khb3" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="3"/></filter><filter id="khb6" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="6"/></filter><filter id="khb10" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="10"/></filter><filter id="khb22" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="22"/></filter><filter id="khb40" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="khplastic" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+    </filter>
+    <filter id="khfabric" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6 0.22" numOctaves="2" seed="11"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.15"/></feComponentTransfer>
+    </filter>
+    <filter id="khwebbing" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 2.4" numOctaves="1" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="khreflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C9D0D6"/>
+      <stop offset="0.3" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B4BCC3"/>
+      <stop offset="0.75" stop-color="#F4F6F8"/>
+      <stop offset="1" stop-color="#AEB7BF"/>
+    </linearGradient>
+    <linearGradient id="khbuckle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5056"/>
+      <stop offset="0.25" stop-color="#2A2E32"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="khshell" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.42" stop-color="#EDF0F3"/>
+      <stop offset="0.8" stop-color="#C8CFD5"/>
+      <stop offset="1" stop-color="#959FA8"/>
+    </linearGradient>
+    <linearGradient id="khstripe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#727A82"/>
+      <stop offset="0.5" stop-color="#3F454B"/>
+      <stop offset="1" stop-color="#2C3136"/>
+    </linearGradient>
+    <linearGradient id="khpeak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#626A71"/>
+      <stop offset="0.55" stop-color="#2C3136"/>
+      <stop offset="1" stop-color="#1B1E21"/>
+    </linearGradient>
+    <radialGradient id="khear" cx="0.38" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#BCC3CA"/>
+      <stop offset="0.6" stop-color="#868F97"/>
+      <stop offset="1" stop-color="#5F676E"/>
+    </radialGradient>
+    <linearGradient id="khvent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0E1012"/>
+      <stop offset="1" stop-color="#3A4046"/>
+    </linearGradient>
+    <clipPath id="khshellClip"><path d="M392 646 C380 520 456 356 650 334 C806 318 904 424 906 568 C907 634 894 680 872 704 C866 712 858 715 846 714 C770 712 660 702 560 692 C490 686 430 672 392 646 Z"/></clipPath>
+    <path id="khdecalPath" d="M450 574 C540 516 680 496 890 520"/>
+  </defs>
+
+  <!-- floor shadows -->
+  <ellipse cx="640" cy="726" rx="320" ry="40" fill="#000" opacity="0.2" filter="url(#khb22)"/>
+  <path d="M400 652 C440 680 500 694 560 700 C660 710 770 718 860 720" fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" opacity="0.4" filter="url(#khb6)" transform="translate(0 6)"/>
+
+  <!-- chin strap spilling onto the floor -->
+  <path d="M520 700 C512 760 540 796 600 806 C670 814 742 800 790 724" fill="none" stroke="#000" stroke-width="26" opacity="0.22" filter="url(#khb6)" transform="translate(4 8)"/>
+  <path d="M520 694 C512 752 538 788 590 798" fill="none" stroke="#191C1F" stroke-width="20" stroke-linecap="round"/>
+  <path d="M792 718 C774 780 722 802 660 802" fill="none" stroke="#191C1F" stroke-width="20" stroke-linecap="round"/>
+  <path d="M514 694 C506 752 532 784 586 792" fill="none" stroke="#454B51" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <path d="M786 718 C768 774 718 794 660 795" fill="none" stroke="#454B51" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <g transform="translate(624 800) rotate(-2)">
+    <rect x="-40" y="-17" width="46" height="34" rx="7" fill="url(#khbuckle)"/>
+    <path d="M6 -14 L38 -10 C44 -9 46 -4 46 0 C46 4 44 9 38 10 L6 14 Z" fill="url(#khbuckle)"/>
+    <rect x="-34" y="-11" width="16" height="22" rx="3" fill="#0B0D0F"/>
+    <path d="M-38 -14 L2 -14" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M10 -9 L36 -6" stroke="#6E767E" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- shell -->
+  <path d="M392 646 C380 520 456 356 650 334 C806 318 904 424 906 568 C907 634 894 680 872 704 C866 712 858 715 846 714 C770 712 660 702 560 692 C490 686 430 672 392 646 Z" fill="url(#khshell)"/>
+  <g clip-path="url(#khshellClip)">
+    <ellipse cx="910" cy="640" rx="170" ry="220" fill="#56606A" opacity="0.45" filter="url(#khb40)"/>
+    <!-- grey stripe -->
+    <path d="M384 590 C470 486 650 444 920 478 L922 552 C700 512 520 540 380 632 Z" fill="url(#khstripe)"/>
+    <path d="M386 586 C472 482 650 440 920 474" fill="none" stroke="#A3ACB3" stroke-width="3" opacity="0.8"/>
+    <path d="M382 628 C522 536 700 508 922 548" fill="none" stroke="#151719" stroke-width="3" opacity="0.6"/>
+    <!-- soft floor bounce on the lower shell -->
+    <path d="M400 676 C520 690 700 704 900 716" fill="none" stroke="#FFFFFF" stroke-width="30" opacity="0.25" filter="url(#khb10)"/>
+    <!-- softbox reflection -->
+    <rect x="470" y="372" width="230" height="58" rx="29" fill="#FFFFFF" opacity="0.9" transform="rotate(-12 585 401)" filter="url(#khb10)"/>
+    <path d="M500 398 C548 368 608 352 668 350" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" filter="url(#khb3)"/>
+    <path d="M830 392 C884 440 904 508 900 584" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.5" filter="url(#khb3)"/>
+    <!-- charcoal rubber edge trim -->
+    <path d="M380 640 C430 676 490 688 560 696 C660 706 770 716 870 722" fill="none" stroke="#3F454B" stroke-width="30"/>
+    <path d="M380 640 C430 676 490 688 560 696 C660 706 770 716 870 722" fill="none" stroke="#7D858C" stroke-width="2" transform="translate(0 -15)" opacity="0.8"/>
+    <rect width="1200" height="1200" filter="url(#khplastic)"/>
+  </g>
+  <text font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="25" letter-spacing="5" fill="#E9EDF0" opacity="0.92">
+    <textPath href="#khdecalPath" startOffset="16%">ADVENTURE PARK</textPath>
+  </text>
+
+  <!-- vents -->
+  <g transform="rotate(-24 548 384)"><ellipse cx="548" cy="384" rx="42" ry="11" fill="url(#khvent)"/><path d="M508 388 Q548 400 588 388" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.8"/></g>
+  <g transform="rotate(-5 654 354)"><ellipse cx="654" cy="354" rx="44" ry="11" fill="url(#khvent)"/><path d="M612 358 Q654 370 696 358" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.8"/></g>
+  <g transform="rotate(15 760 368)"><ellipse cx="760" cy="368" rx="42" ry="11" fill="url(#khvent)"/><path d="M720 372 Q760 384 800 372" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.6"/></g>
+  <g fill="url(#khvent)">
+    <rect x="770" y="510" width="44" height="9" rx="4.5" transform="rotate(6 792 514)"/>
+    <rect x="830" y="520" width="38" height="9" rx="4.5" transform="rotate(8 849 524)"/>
+  </g>
+
+  <!-- short peak -->
+  <path d="M422 578 C394 580 358 590 338 602 C330 608 332 618 344 620 C372 624 404 628 434 634 C432 612 428 592 422 578 Z" fill="url(#khpeak)"/>
+  <path d="M346 602 C368 592 394 586 420 584" fill="none" stroke="#9AA2A9" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <circle cx="420" cy="608" r="6" fill="#8F979E"/><circle cx="420" cy="608" r="2.5" fill="#3A4046"/>
+
+  <!-- ear cover -->
+  <path d="M662 606 C662 574 702 562 752 564 C802 566 826 592 824 632 C822 692 802 738 752 746 C702 752 666 722 662 682 Z" fill="#000" opacity="0.25" filter="url(#khb10)" transform="translate(4 8)"/>
+  <path d="M662 606 C662 574 702 562 752 564 C802 566 826 592 824 632 C822 692 802 738 752 746 C702 752 666 722 662 682 Z" fill="url(#khear)"/>
+  <path d="M674 604 C676 584 706 576 748 578" fill="none" stroke="#E4E8EB" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <g fill="#2C3136">
+    <circle cx="722" cy="640" r="6"/><circle cx="748" cy="636" r="6"/><circle cx="774" cy="640" r="6"/>
+    <circle cx="734" cy="664" r="6"/><circle cx="760" cy="662" r="6"/><circle cx="786" cy="664" r="5.5"/>
+    <circle cx="746" cy="688" r="5.5"/><circle cx="772" cy="688" r="5.5"/>
+  </g>
+  <circle cx="700" cy="600" r="5" fill="#C9D0D6"/>
+  </g>
+</svg>

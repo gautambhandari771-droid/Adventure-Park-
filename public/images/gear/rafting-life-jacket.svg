@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-labelledby="t d">
+  <title id="t">Rafting life jacket, white and grey</title>
+  <desc id="d">White rafting life jacket with a grey head-support collar, grey side panels and binding, three black buckled straps and reflective tape.</desc>
+  <defs>
+    <radialGradient id="jbg" cx="0.5" cy="0.42" r="0.75">
+      <stop offset="0" stop-color="#F3F5F7"/>
+      <stop offset="0.55" stop-color="#E1E6EA"/>
+      <stop offset="1" stop-color="#B9C1C8"/>
+    </radialGradient>
+    <linearGradient id="jfloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.07"/>
+    </linearGradient>
+    <filter id="jbggrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#jbg)"/>
+  <rect y="760" width="1200" height="440" fill="url(#jfloor)"/>
+  <rect width="1200" height="1200" filter="url(#jbggrain)"/>
+  <defs>
+    <filter id="jb3" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="3"/></filter><filter id="jb6" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="6"/></filter><filter id="jb10" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="10"/></filter><filter id="jb22" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="22"/></filter><filter id="jb40" filterUnits="userSpaceOnUse" x="-800" y="-800" width="2800" height="2800"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="jplastic" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+    </filter>
+    <filter id="jfabric" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6 0.22" numOctaves="2" seed="11"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.15"/></feComponentTransfer>
+    </filter>
+    <filter id="jwebbing" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 2.4" numOctaves="1" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="jreflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C9D0D6"/>
+      <stop offset="0.3" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B4BCC3"/>
+      <stop offset="0.75" stop-color="#F4F6F8"/>
+      <stop offset="1" stop-color="#AEB7BF"/>
+    </linearGradient>
+    <linearGradient id="jbuckle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5056"/>
+      <stop offset="0.25" stop-color="#2A2E32"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="jchan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C3CAD0"/>
+      <stop offset="0.22" stop-color="#EEF1F4"/>
+      <stop offset="0.55" stop-color="#FFFFFF"/>
+      <stop offset="0.85" stop-color="#E2E7EB"/>
+      <stop offset="1" stop-color="#B7BFC6"/>
+    </linearGradient>
+    <radialGradient id="jchest" cx="0.55" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#EEF1F4"/>
+      <stop offset="1" stop-color="#C6CDD3"/>
+    </radialGradient>
+    <linearGradient id="jside" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#555D64"/>
+      <stop offset="0.6" stop-color="#868F97"/>
+      <stop offset="1" stop-color="#9DA6AE"/>
+    </linearGradient>
+    <radialGradient id="jcollar" cx="0.5" cy="0.38" r="0.62">
+      <stop offset="0" stop-color="#9AA2AA"/>
+      <stop offset="0.7" stop-color="#868F97"/>
+      <stop offset="1" stop-color="#5E666D"/>
+    </radialGradient>
+    <linearGradient id="jinner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#596168"/>
+      <stop offset="1" stop-color="#2B3035"/>
+    </linearGradient>
+    <linearGradient id="jhem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.16"/>
+    </linearGradient>
+    <clipPath id="jpanelClip"><path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z"/></clipPath>
+    <clipPath id="jcollarClip"><path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420 Z"/></clipPath>
+  </defs>
+
+  <!-- drop shadow on the backdrop -->
+  <g filter="url(#jb40)" opacity="0.32" transform="translate(14 34)">
+    <path d="M436 240 C470 210 540 196 600 196 C660 196 730 210 764 240 L840 560 L846 950 L354 950 L360 560 Z" fill="#20262B"/>
+  </g>
+
+  <!-- grey head-support collar -->
+  <path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420 Z" fill="url(#jcollar)"/>
+  <g clip-path="url(#jcollarClip)">
+    <path d="M600 196 L600 300" stroke="#5E666D" stroke-width="2" stroke-dasharray="6 5"/>
+    <path d="M466 266 C508 244 552 236 600 236 C648 236 692 244 734 266" fill="none" stroke="#4A5157" stroke-width="18"/>
+    <path d="M466 266 C508 244 552 236 600 236 C648 236 692 244 734 266" fill="none" stroke="url(#jreflect)" stroke-width="14"/>
+    <rect width="1200" height="1200" filter="url(#jfabric)"/>
+  </g>
+  <path d="M436 420 L436 324 C436 236 516 196 600 196 C684 196 764 236 764 324 L764 420" fill="none" stroke="#3F454B" stroke-width="10" stroke-linejoin="round"/>
+  <!-- inside of the back, seen through the neck -->
+  <path d="M500 300 L700 300 L700 560 L500 560 Z" fill="url(#jinner)"/>
+  <ellipse cx="600" cy="330" rx="110" ry="40" fill="#000" opacity="0.3" filter="url(#jb10)"/>
+  <rect x="574" y="318" width="52" height="34" rx="3" fill="#E7EBEE"/>
+  <rect x="584" y="326" width="32" height="3" fill="#8A9299"/><rect x="584" y="334" width="24" height="3" fill="#8A9299"/><rect x="584" y="342" width="28" height="3" fill="#8A9299"/>
+
+  <!-- zipper -->
+  <rect x="588" y="470" width="24" height="476" fill="#2E3338"/>
+  <path d="M600 478 L600 942" stroke="#9AA2AA" stroke-width="12" stroke-dasharray="3 3"/>
+  <path d="M600 478 L600 942" stroke="#5A6168" stroke-width="2"/>
+
+  
+  <g transform="">
+    <g clip-path="url(#jpanelClip)">
+      <rect x="340" y="280" width="260" height="280" fill="url(#jchest)"/>
+      <rect x="356" y="552" width="76" height="400" fill="url(#jchan)"/><rect x="432" y="552" width="80" height="400" fill="url(#jchan)"/><rect x="512" y="552" width="78" height="400" fill="url(#jchan)"/>
+      <rect x="340" y="552" width="52" height="420" fill="url(#jside)"/>
+      <path d="M392 552 L392 950" stroke="#3F454B" stroke-width="2" stroke-dasharray="6 5"/>
+      <rect x="340" y="820" width="260" height="140" fill="url(#jhem)"/>
+      <path d="M560 300 C556 380 570 440 600 486" fill="none" stroke="#000" stroke-width="30" opacity="0.18" filter="url(#jb10)"/>
+      <path d="M440 330 C436 400 420 520 376 570" fill="none" stroke="#000" stroke-width="24" opacity="0.14" filter="url(#jb10)"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#7D868E" stroke-width="10" opacity="0.16"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <path d="M432 556 L432 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M432 556 L432 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/><path d="M512 556 L512 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M512 556 L512 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <!-- reflective tape across the shoulder -->
+      <path d="M440 326 L558 322 L559 344 L440 349 Z" fill="#4A5157"/><path d="M440 329 L558 325 L559 341 L440 346 Z" fill="url(#jreflect)"/>
+      <rect width="1200" height="1200" filter="url(#jfabric)"/>
+    </g>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#3F454B" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#7C848C" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.6"/>
+  </g>
+  <g transform="translate(1200 0) scale(-1 1)">
+    <g clip-path="url(#jpanelClip)">
+      <rect x="340" y="280" width="260" height="280" fill="url(#jchest)"/>
+      <rect x="356" y="552" width="76" height="400" fill="url(#jchan)"/><rect x="432" y="552" width="80" height="400" fill="url(#jchan)"/><rect x="512" y="552" width="78" height="400" fill="url(#jchan)"/>
+      <rect x="340" y="552" width="52" height="420" fill="url(#jside)"/>
+      <path d="M392 552 L392 950" stroke="#3F454B" stroke-width="2" stroke-dasharray="6 5"/>
+      <rect x="340" y="820" width="260" height="140" fill="url(#jhem)"/>
+      <path d="M560 300 C556 380 570 440 600 486" fill="none" stroke="#000" stroke-width="30" opacity="0.18" filter="url(#jb10)"/>
+      <path d="M440 330 C436 400 420 520 376 570" fill="none" stroke="#000" stroke-width="24" opacity="0.14" filter="url(#jb10)"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#7D868E" stroke-width="10" opacity="0.16"/>
+      <path d="M380 556 C460 548 530 548 600 552" fill="none" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <path d="M432 556 L432 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M432 556 L432 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/><path d="M512 556 L512 940" stroke="#7D868E" stroke-width="9" opacity="0.16"/>
+     <path d="M512 556 L512 940" stroke="#9AA3AB" stroke-width="2" stroke-dasharray="6 5"/>
+      <!-- reflective tape across the shoulder -->
+      <path d="M440 326 L558 322 L559 344 L440 349 Z" fill="#4A5157"/><path d="M440 329 L558 325 L559 341 L440 346 Z" fill="url(#jreflect)"/>
+      <rect width="1200" height="1200" filter="url(#jfabric)"/>
+    </g>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#3F454B" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M590 476 L590 944 C520 946 440 942 372 934 C360 860 352 760 356 642 C358 604 366 582 382 566 C420 530 434 474 432 424 C430 382 440 334 468 300 L542 298 C548 362 560 424 590 476 Z" fill="none" stroke="#7C848C" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.6"/>
+  </g>
+
+  <!-- brand print on the wearer's left chest -->
+  <text x="688" y="490" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="18" letter-spacing="2.5" fill="#3F454B" transform="rotate(-3 688 490)">ADVENTURE</text>
+  <text x="688" y="514" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', 'DejaVu Sans', sans-serif" font-weight="700" font-size="18" letter-spacing="2.5" fill="#3F454B" transform="rotate(-3 688 514)">PARK</text>
+
+  
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#000" opacity="0.28" filter="url(#jb6)" transform="translate(0 6)"/>
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#191C1F"/>
+    <path d="M346 626 Q600 648 854 626 L854 654 Q600 676 346 654 Z" fill="#000" filter="url(#jwebbing)"/>
+    <path d="M346 630 Q600 652 854 630" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 650 Q600 672 854 650" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 626 L876 634 L876 662 L854 654 Z" fill="#191C1F"/>
+    <g transform="translate(600 651)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#jbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#jbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#000" opacity="0.28" filter="url(#jb6)" transform="translate(0 6)"/>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#191C1F"/>
+    <path d="M346 730 Q600 752 854 730 L854 758 Q600 780 346 758 Z" fill="#000" filter="url(#jwebbing)"/>
+    <path d="M346 734 Q600 756 854 734" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 754 Q600 776 854 754" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 730 L876 738 L876 766 L854 758 Z" fill="#191C1F"/>
+    <g transform="translate(600 755)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#jbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#jbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#000" opacity="0.28" filter="url(#jb6)" transform="translate(0 6)"/>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#191C1F"/>
+    <path d="M346 834 Q600 856 854 834 L854 862 Q600 884 346 862 Z" fill="#000" filter="url(#jwebbing)"/>
+    <path d="M346 838 Q600 860 854 838" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M346 858 Q600 880 854 858" fill="none" stroke="#4A5057" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <path d="M854 834 L876 842 L876 870 L854 862 Z" fill="#191C1F"/>
+    <g transform="translate(600 859)">
+      <rect x="-60" y="-25" width="62" height="50" rx="9" fill="url(#jbuckle)"/>
+      <rect x="-52" y="-16" width="20" height="32" rx="4" fill="#0B0D0F"/>
+      <path d="M2 -21 L46 -15 C54 -14 58 -7 58 0 C58 7 54 14 46 15 L2 21 Z" fill="url(#jbuckle)"/>
+      <path d="M14 -10 L44 -7 M14 10 L44 7" stroke="#0B0D0F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-56 -21 L0 -21" stroke="#8A9299" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M6 -17 L44 -12" stroke="#7A828A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+  <!-- zipper pull -->
+  <rect x="592" y="480" width="16" height="34" rx="5" fill="#2C3136"/>
+  <rect x="596" y="486" width="8" height="18" rx="3" fill="#7A828A"/>
+  
+</svg>
